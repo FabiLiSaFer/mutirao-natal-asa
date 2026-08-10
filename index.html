@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="txt-titulo-pagina">Gestão de Campanhas Solidárias</title>
+    <title id="txt-titulo-pagina">Plataforma de Gestão Solidária - Mutirão de Natal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -20,12 +20,16 @@
 <body class="min-h-screen flex flex-col justify-between">
 
     <!-- CABEÇALHO -->
-    <header class="w-full bg-white shadow-sm py-4 px-6 flex justify-between items-center border-b border-dourado/30">
+    <header class="w-full bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b border-dourado/30">
         <div class="flex items-center space-x-3">
-            <span class="bg-dourado text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">SYS</span>
+            <!-- LOGO PERSONALIZADA -->
+            <div class="w-10 h-10 rounded-full overflow-hidden border border-dourado/40 shadow-sm flex-shrink-0 bg-[#F5EFEB] flex items-center justify-center">
+                <!-- Substitua o src abaixo pelo link ou arquivo da sua logo -->
+                <img src="data:image/jpeg;base64,..." alt="Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-[10px] font-bold text-dourado\'>LOG</span>'">
+            </div>
             <div>
-                <h1 id="txt-logo-titulo" class="text-lg font-bold text-verde-asa leading-tight">Campanha Solidária</h1>
-                <p id="subtitulo-igreja" class="text-xs text-dourado font-medium uppercase tracking-wider">Gestão e Arrecadação</p>
+                <h1 id="txt-logo-titulo" class="text-base font-bold text-verde-asa leading-tight">Mutirão de Natal</h1>
+                <p id="subtitulo-topo" class="text-[11px] text-dourado font-medium uppercase tracking-wider">Gestão Solidária</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
@@ -47,7 +51,7 @@
         <div id="tela-boas-vindas" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
-            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner overflow-hidden">
                 <svg class="w-9 h-9 text-dourado" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
@@ -55,7 +59,7 @@
 
             <h2 id="txt-bemvindo" class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
             <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-8 leading-relaxed">
-                Ferramenta profissional de gestão e controle de arrecadação para coordenadores e equipes de campo.
+                Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
             </p>
 
             <button onclick="irParaConfiguracaoOuLogin()" id="btn-entrar-sistema" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
@@ -104,7 +108,7 @@
             <button onclick="fazerLoginCoordenador()" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
         </div>
 
-        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR -->
+        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR (COM PLACAR DA GINCANA) -->
         <div id="painel-coordenador" class="hidden w-full space-y-6">
             <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-100 gap-4">
@@ -118,6 +122,7 @@
                 <!-- ABAS DE NAVEGAÇÃO -->
                 <div class="flex space-x-2 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
                     <button onclick="mudarAbaCoordenador('estoque')" id="btn-aba-estoque" class="text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap">Gestão de Itens & Estoque</button>
+                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar da Gincana (Equipes)</button>
                     <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
                     <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
                 </div>
@@ -151,6 +156,15 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- PLACAR DA GINCANA (EQUIPES) -->
+                <div id="conteudo-aba-gincana" class="hidden space-y-4">
+                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Equipes (Gincana Solidária)</h4>
+                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada equipe responsável e seus arrecadadores.</p>
+                    <div id="lista-placar-gincana" class="space-y-3">
+                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por equipes ainda.</p>
                     </div>
                 </div>
 
@@ -189,7 +203,7 @@
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                         <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                            <input type="text" id="vol-nome-input" placeholder="Nome do Voluntário Responsável" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="text" id="vol-nome-input" placeholder="Nome do Responsável / Líder da Equipe" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <button onclick="gerarLinkVoluntario()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link Individual</button>
                         </div>
                     </div>
@@ -205,12 +219,16 @@
             </div>
         </div>
 
-        <!-- 3. TELA DO VOLUNTÁRIO -->
+        <!-- 3. TELA DO VOLUNTÁRIO (COM EQUIPE FIXA E PLACAR DA EQUIPE) -->
         <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
             <div class="text-center mb-6">
                 <span class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
                 <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Coleta</h2>
                 <p class="text-xs text-gray-500">Registre abaixo os itens arrecadados pela sua equipe</p>
+                <!-- PLACAR INDIVIDUAL DA EQUIPE -->
+                <div class="mt-3 bg-amber-50 p-2.5 rounded-xl border border-dourado/30 inline-block">
+                    <span class="text-xs font-bold text-dourado">Total Arrecadado pela sua Equipe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
+                </div>
             </div>
 
             <!-- CADASTRO/LOGIN DE SENHA DO VOLUNTÁRIO -->
@@ -222,6 +240,17 @@
 
             <!-- FORMULÁRIO DE LANÇAMENTO -->
             <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
+                
+                <!-- GERENCIAMENTO DA EQUIPE FIXA -->
+                <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
+                    <label class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Equipe:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da equipe" class="flex-grow text-xs p-2 rounded border border-gray-300">
+                        <button onclick="adicionarMembroEquipeFixo()" class="bg-dourado text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#b08d4b]">Adicionar</button>
+                    </div>
+                    <div id="lista-membros-fixos-badge" class="flex flex-wrap gap-1.5 pt-1"></div>
+                </div>
+
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Selecione o Item</label>
                     <select id="vol-select-produto" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
@@ -232,15 +261,9 @@
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Quantidade Arrecadada</label>
                     <input type="number" id="vol-qtd-produto" placeholder="Ex: 5" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
-
-                <!-- AUXILIARES DA EQUIPE (ADICIONAR UM A UM) -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Auxiliares da Equipe:</label>
-                    <div class="flex gap-2 mb-2">
-                        <input type="text" id="input-auxiliar-nome" placeholder="Nome do auxiliar" class="flex-grow text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
-                        <button onclick="adicionarAuxiliarEquipe()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-xl hover:bg-[#b08d4b]">Adicionar</button>
-                    </div>
-                    <div id="lista-auxiliares-badge" class="flex flex-wrap gap-1.5 mt-2"></div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Quem doou ou entregou a você?</label>
+                    <input type="text" id="vol-quem-doou" placeholder="Nome do doador ou colaborador" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
 
                 <button onclick="voluntarioRegistrarColeta()" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
@@ -257,38 +280,42 @@
 
     <!-- RODAPÉ -->
     <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/20 mt-auto">
-        <p>© 2026 Gestão de Campanhas Solidárias. Todos os direitos reservados.</p>
+        <p>© 2026 Plataforma de Gestão Solidária. Todos os direitos reservados.</p>
     </footer>
 
     <script>
         // TRADUÇÕES (PT, EN, ES, FR)
         const traducoes = {
             pt: {
-                titulo: "Gestão de Campanhas Solidárias",
-                logoTitulo: "Campanha Solidária",
+                titulo: "Plataforma de Gestão Solidária - Mutirão de Natal",
+                logoTitulo: "Mutirão de Natal",
+                subTopo: "Gestão Solidária",
                 bemVindo: "Bem-vindo(a)!",
-                descBoasVindas: "Ferramenta profissional de gestão e controle de arrecadação para coordenadores e equipes de campo.",
+                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
                 entrar: "Entrar no Sistema"
             },
             en: {
-                titulo: "Solidarity Campaign Management",
-                logoTitulo: "Solidarity Campaign",
+                titulo: "Solidarity Management Platform - Christmas Drive",
+                logoTitulo: "Christmas Drive",
+                subTopo: "Solidarity Management",
                 bemVindo: "Welcome!",
-                descBoasVindas: "Professional donation management and control tool for coordinators and field teams.",
+                descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families control.",
                 entrar: "Enter System"
             },
             es: {
-                titulo: "Gestión de Campañas Solidarias",
-                logoTitulo: "Campaña Solidaria",
+                titulo: "Plataforma de Gestión Solidaria - Mutirón de Navidad",
+                logoTitulo: "Mutirón de Navidad",
+                subTopo: "Gestión Solidaria",
                 bemVindo: "¡Bienvenido/a!",
-                descBoasVindas: "Herramienta profesional de gestión y control de donaciones para coordinadores y equipos de campo.",
+                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
                 entrar: "Entrar al Sistema"
             },
             fr: {
-                titulo: "Gestion des Campagnes Solidaires",
-                logoTitulo: "Campagne Solidaire",
+                titulo: "Plateforme de Gestion Solidaire - Noël Solidaire",
+                logoTitulo: "Noël Solidaire",
+                subTopo: "Gestion Solidaire",
                 bemVindo: "Bienvenue !",
-                descBoasVindas: "Outil professionnel de gestion et de contrôle des dons pour les coordinateurs et les équipes de terrain.",
+                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
                 entrar: "Entrer dans le Système"
             }
         };
@@ -296,6 +323,7 @@
         function mudarIdioma(lang) {
             document.getElementById('txt-titulo-pagina').innerText = traducoes[lang].titulo;
             document.getElementById('txt-logo-titulo').innerText = traducoes[lang].logoTitulo;
+            document.getElementById('subtitulo-topo').innerText = traducoes[lang].subTopo;
             document.getElementById('txt-bemvindo').innerText = traducoes[lang].bemVindo;
             document.getElementById('txt-desc-boasvindas').innerText = traducoes[lang].descBoasVindas;
             document.getElementById('btn-entrar-sistema').querySelector('span').innerText = traducoes[lang].entrar;
@@ -308,11 +336,10 @@
             senha: '',
             produtos: [], 
             familias: [], 
-            voluntarios: [] 
+            voluntarios: [] // {nome, senha, equipeFixa: [], totalArrecadado: 0}
         };
 
         let voluntarioLogadoNome = '';
-        let auxiliaresTemporarios = [];
 
         function salvarDadosLocal() {
             localStorage.setItem('sys_campanha_data', JSON.stringify(dadosSistema));
@@ -332,7 +359,7 @@
                 document.getElementById('painel-voluntario').classList.remove('hidden');
                 document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a) Responsável: ${voluntarioParam}`;
                 if(dadosSistema.igreja) {
-                    document.getElementById('subtitulo-igreja').innerText = `Unidade: ${dadosSistema.igreja}`;
+                    document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
                 }
 
                 let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioParam);
@@ -341,6 +368,7 @@
                     if (senhaDigitada === volObj.senha) {
                         document.getElementById('box-voluntario-senha').classList.add('hidden');
                         document.getElementById('box-voluntario-formulario').classList.remove('hidden');
+                        atualizarPlacarE1EquipeVoluntario();
                         popularSelectProdutos();
                     } else {
                         alert('Senha incorreta!');
@@ -351,7 +379,7 @@
                     document.getElementById('box-voluntario-formulario').classList.add('hidden');
                 }
             } else if (dadosSistema.igreja) {
-                document.getElementById('subtitulo-igreja').innerText = `Unidade: ${dadosSistema.igreja}`;
+                document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             }
         };
 
@@ -362,11 +390,14 @@
             let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
             if(volObj) {
                 volObj.senha = novaSenha;
+                if(!volObj.equipeFixa) volObj.equipeFixa = [];
+                if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
                 salvarDadosLocal();
             }
             alert('Senha cadastrada com sucesso!');
             document.getElementById('box-voluntario-senha').classList.add('hidden');
             document.getElementById('box-voluntario-formulario').classList.remove('hidden');
+            atualizarPlacarE1EquipeVoluntario();
             popularSelectProdutos();
         }
 
@@ -418,9 +449,10 @@
             document.getElementById('tela-cadastro-igreja').classList.add('hidden');
             document.getElementById('tela-login-coord').classList.add('hidden');
             document.getElementById('painel-coordenador').classList.remove('hidden');
-            document.getElementById('subtitulo-igreja').innerText = `Unidade: ${dadosSistema.igreja}`;
+            document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;
             atualizarTabelaEstoque();
+            atualizarPlacarGincanaCoordenador();
             atualizarListaFamilias();
             atualizarListaVoluntarios();
         }
@@ -431,9 +463,11 @@
 
         function mudarAbaCoordenador(aba) {
             document.getElementById('conteudo-aba-estoque').classList.add('hidden');
+            document.getElementById('conteudo-aba-gincana').classList.add('hidden');
             document.getElementById('conteudo-aba-familias').classList.add('hidden');
             document.getElementById('conteudo-aba-voluntarios').classList.add('hidden');
             document.getElementById('btn-aba-estoque').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+            document.getElementById('btn-aba-gincana').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
             document.getElementById('btn-aba-familias').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
             document.getElementById('btn-aba-voluntarios').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
 
@@ -476,6 +510,36 @@
                 });
             }
             document.getElementById('tabela-estoque-coordenador').innerHTML = html;
+        }
+
+        function atualizarPlacarGincanaCoordenador() {
+            let html = '';
+            if (!dadosSistema.voluntarios || dadosSistema.voluntarios.length === 0) {
+                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma equipe de voluntário cadastrada.</p>';
+            } else {
+                // Ordenar da maior arrecadação para a menor
+                let ordenados = [...dadosSistema.voluntarios].sort((a, b) => (b.totalArrecadado || 0) - (a.totalArrecadado || 0));
+                ordenados.forEach((v, index) => {
+                    let membrosStr = v.equipeFixa && v.equipeFixa.length > 0 ? v.equipeFixa.join(', ') : 'Nenhum membro cadastrado';
+                    let posicaoBadge = index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index+1}º`;
+                    html += `
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-dourado border border-dourado/30">${posicaoBadge}</span>
+                                    <h5 class="text-sm font-bold text-verde-asa">Líder: ${v.nome}</h5>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Equipe:</strong> ${membrosStr}</p>
+                            </div>
+                            <div class="text-right bg-white p-3 rounded-lg border border-dourado/30 w-full md:w-auto">
+                                <span class="text-[11px] text-gray-500 block">Total Arrecadado</span>
+                                <span class="text-lg font-extrabold text-verde-asa">${v.totalArrecadado || 0}</span> <span class="text-xs text-gray-500">itens/kg</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('lista-placar-gincana').innerHTML = html;
         }
 
         function darSaidaEstoque(idx) {
@@ -580,9 +644,9 @@
 
         function gerarLinkVoluntario() {
             const nome = document.getElementById('vol-nome-input').value.trim();
-            if(!nome) return alert('Digite o nome do voluntário responsável.');
+            if(!nome) return alert('Digite o nome do responsável / líder da equipe.');
 
-            dadosSistema.voluntarios.push({ nome, senha: '' });
+            dadosSistema.voluntarios.push({ nome, senha: '', equipeFixa: [], totalArrecadado: 0 });
             salvarDadosLocal();
             atualizarListaVoluntarios();
             document.getElementById('vol-nome-input').value = '';
@@ -598,7 +662,7 @@
                     const linkUnico = `${baseUrl}?vol=${encodeURIComponent(v.nome)}`;
                     html += `
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Sem senha)'}</p>
+                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Sem senha)'} - Arrecadado: ${v.totalArrecadado || 0} kg</p>
                             <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
                         </div>
                     `;
@@ -616,47 +680,75 @@
             select.innerHTML = html;
         }
 
-        function adicionarAuxiliarEquipe() {
-            const input = document.getElementById('input-auxiliar-nome');
-            const nomeAuxiliar = input.value.trim();
-            if(!nomeAuxiliar) return alert('Digite o nome do auxiliar.');
+        // GERENCIAMENTO DA EQUIPE FIXA DO VOLUNTÁRIO
+        function adicionarMembroEquipeFixo() {
+            const input = document.getElementById('input-novo-membro-equipe');
+            const nomeMembro = input.value.trim();
+            if(!nomeMembro) return alert('Digite o nome do membro.');
 
-            auxiliaresTemporarios.push(nomeAuxiliar);
-            input.value = '';
-            atualizarBadgeAuxiliares();
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            if(volObj) {
+                if(!volObj.equipeFixa) volObj.equipeFixa = [];
+                volObj.equipeFixa.push(nomeMembro);
+                salvarDadosLocal();
+                input.value = '';
+                atualizarPlacarE1EquipeVoluntario();
+            }
         }
 
-        function atualizarBadgeAuxiliares() {
+        function removerMembroEquipeFixo(index) {
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            if(volObj && volObj.equipeFixa) {
+                volObj.equipeFixa.splice(index, 1);
+                salvarDadosLocal();
+                atualizarPlacarE1EquipeVoluntario();
+            }
+        }
+
+        function atualizarPlacarE1EquipeVoluntario() {
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            if(!volObj) return;
+
+            document.getElementById('placar-total-equipe').innerText = volObj.totalArrecadado || 0;
+
             let html = '';
-            auxiliaresTemporarios.forEach((aux, i) => {
-                html += `<span class="bg-amber-100 text-dourado text-[11px] font-semibold px-2.5 py-1 rounded-full border border-dourado/30">${aux} <button onclick="removerAuxiliar(${i})" class="text-red-500 ml-1 font-bold">×</button></span>`;
-            });
-            document.getElementById('lista-auxiliares-badge').innerHTML = html;
-        }
-
-        function removerAuxiliar(index) {
-            auxiliaresTemporarios.splice(index, 1);
-            atualizarBadgeAuxiliares();
+            if(volObj.equipeFixa && volObj.equipeFixa.length > 0) {
+                volObj.equipeFixa.forEach((membro, i) => {
+                    html += `<span class="bg-amber-100 text-dourado text-[11px] font-semibold px-2.5 py-1 rounded-full border border-dourado/30">${membro} <button onclick="removerMembroEquipeFixo(${i})" class="text-red-500 ml-1 font-bold">×</button></span>`;
+                });
+            } else {
+                html = '<span class="text-[11px] text-gray-400">Nenhum membro fixo cadastrado ainda.</span>';
+            }
+            document.getElementById('lista-membros-fixos-badge').innerHTML = html;
         }
 
         function voluntarioRegistrarColeta() {
             const selectIdx = document.getElementById('vol-select-produto').value;
             const qtd = parseInt(document.getElementById('vol-qtd-produto').value);
+            const quemDoou = document.getElementById('vol-quem-doou').value.trim();
 
             if(selectIdx === "" || isNaN(qtd) || qtd <= 0) {
                 alert('Selecione um item e informe uma quantidade válida.');
                 return;
             }
 
+            // Soma no estoque geral
             dadosSistema.produtos[selectIdx].estoque = Number(dadosSistema.produtos[selectIdx].estoque) + qtd;
+
+            // Soma no placar da equipe do voluntário
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            if(volObj) {
+                if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
+                volObj.totalArrecadado += qtd;
+            }
+
             salvarDadosLocal();
 
-            let listaAuxStr = auxiliaresTemporarios.length > 0 ? auxiliaresTemporarios.join(', ') : 'Nenhum';
-            alert(`Doação de ${qtd} registrada com sucesso por ${voluntarioLogadoNome}! Auxiliares: ${listaAuxStr}. Os dados foram somados ao estoque.`);
+            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua equipe foi atualizado.`);
             
             document.getElementById('vol-qtd-produto').value = '';
-            auxiliaresTemporarios = [];
-            atualizarBadgeAuxiliares();
+            document.getElementById('vol-quem-doou').value = '';
+            atualizarPlacarE1EquipeVoluntario();
         }
     </script>
 </body>

@@ -44,8 +44,27 @@
     <!-- CONTEÚDO DINÂMICO -->
     <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full flex items-center justify-center">
 
-        <!-- 0. TELA INICIAL -->
-        <div id="tela-boas-vindas" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
+        <!-- 0. TELA DE ATIVAÇÃO POR CHAVE (TRAVA DE SEGURANÇA DE USO ÚNICO) -->
+        <div id="tela-ativacao-chave" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
+            
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
+                <svg class="w-8 h-8 text-dourado" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4v-3l4.257-4.257A6 6 0 1119 9z"></path></svg>
+            </div>
+
+            <h2 class="text-2xl font-bold text-verde-asa mb-2">Ativação do Sistema</h2>
+            <p class="text-xs text-gray-600 mb-6">Insira sua Chave de Licença exclusiva para liberar o acesso neste dispositivo.</p>
+
+            <div class="space-y-3">
+                <input type="text" id="input-chave-licenca" placeholder="Ex: MUTIRAO-2026-OFICIAL" class="w-full text-xs p-3 rounded-xl border border-gray-300 text-center font-mono uppercase tracking-wider focus:outline-none focus:border-verde-asa">
+                <button onclick="validarChaveLicenca()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 text-xs">
+                    Ativar Licença de Uso
+                </button>
+            </div>
+        </div>
+
+        <!-- 0.1 TELA INICIAL (APÓS ATIVADA) -->
+        <div id="tela-boas-vindas" class="hidden bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
             <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
@@ -55,14 +74,18 @@
             </div>
 
             <h2 id="txt-bemvindo" class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
-            <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-8 leading-relaxed">
+            <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-6 leading-relaxed">
                 Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
             </p>
 
-            <button onclick="irParaConfiguracaoOuLogin()" id="btn-entrar-sistema" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
-                <span>Entrar no Sistema</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+            <div class="space-y-3">
+                <button onclick="irParaLoginUnidadeExistente()" id="btn-entrar-existente" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
+                    Acessar Unidade Cadastrada
+                </button>
+                <button onclick="irParaNovoCadastroUnidade()" id="btn-cadastrar-nova" class="w-full bg-amber-50 hover:bg-amber-100 text-dourado border border-dourado/40 font-medium py-3 px-4 rounded-xl shadow-xs transition duration-200 text-xs">
+                    + Cadastrar Nova Unidade / Outra Igreja
+                </button>
+            </div>
         </div>
 
         <!-- 1. TELA DE CADASTRO INICIAL -->
@@ -103,6 +126,7 @@
             <p id="txt-login-sub" class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
             <input type="password" id="login-senha-coord" placeholder="Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
             <button onclick="fazerLoginCoordenador()" id="btn-login-entrar" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
+            <button onclick="voltarParaInicio()" class="text-xs text-gray-500 hover:underline">Voltar</button>
         </div>
 
         <!-- 2. PAINEL DE CONTROLE DO COORDENADOR -->
@@ -123,6 +147,7 @@
                     <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar das Equipes</button>
                     <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
                     <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
+                    <button onclick="mudarAbaCoordenador('associados')" id="btn-aba-associados" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">👥 Coordenadores Associados</button>
                 </div>
 
                 <!-- ESTOQUE / METAS -->
@@ -157,7 +182,7 @@
                     </div>
                 </div>
 
-                <!-- DESTAQUES E CASADINHOS (COM HISTÓRICO E LIMPEZA INDependente) -->
+                <!-- DESTAQUES E CASADINHOS (COM HISTÓRICO E LIMPEZA INDEPENDENTE) -->
                 <div id="conteudo-aba-destaques" class="hidden space-y-6">
                     <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
@@ -165,7 +190,7 @@
                         <div class="flex gap-2">
                             <input type="text" id="input-destaque-semana" placeholder="Ex: Arroz ou Óleo" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <button onclick="salvarDestaqueSemana()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
-                            <button onclick="limparDestaqueSemana()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntario</button>
+                            <button onclick="limparDestaqueSemana()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntário</button>
                         </div>
                         <div id="historico-destaques" class="text-[11px] text-gray-500 pt-2 border-t border-dourado/20">
                             <strong>Histórico de Destaques Anteriores:</strong> Nenhum registro anterior.
@@ -178,7 +203,7 @@
                         <div class="flex gap-2">
                             <input type="text" id="input-casadinho" placeholder="Ex: Macarrão + Molho" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <button onclick="salvarCasadinho()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
-                            <button onclick="limparCasadinho()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntario</button>
+                            <button onclick="limparCasadinho()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntário</button>
                         </div>
                         <div id="historico-casadinhos" class="text-[11px] text-gray-500 pt-2 border-t border-dourado/20">
                             <strong>Histórico de Casadinhos Anteriores:</strong> Nenhum registro anterior.
@@ -243,10 +268,29 @@
                     </div>
                 </div>
 
+                <!-- COORDENADORES ASSOCIADOS / SECRETÁRIOS -->
+                <div id="conteudo-aba-associados" class="hidden space-y-4">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Acesso para Coordenador Associado / Secretário(a)</h4>
+                        <p class="text-xs text-gray-600 mb-3">Gere um link direto para que outra pessoa da coordenação acesse e ajude a gerenciar esta mesma unidade.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="assoc-nome-input" placeholder="Nome do Coordenador Associado" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="gerarLinkAssociado()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link de Coordenador</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Links de Coordenadores Associados Ativos</h4>
+                        <div id="lista-links-associados" class="space-y-2">
+                            <p class="text-xs text-gray-400">Nenhum associado gerado ainda.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- 3. TELA DO VOLUNTÁRIO -->
+        <!-- 3. TELA DO VOLUNTÁRIO OU COORDENADOR ASSOCIADO -->
         <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
             <div class="text-center mb-6">
                 <span id="txt-badge-vol" class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
@@ -321,6 +365,8 @@
     </footer>
 
     <script>
+        const CHAVE_MESTRE_VALIDA = "MUTIRAO-2026-OFICIAL";
+
         const traducoes = {
             pt: {
                 titulo: "Plataforma de Gestão Solidária - Mutirão de Natal",
@@ -329,7 +375,8 @@
                 restrita: "Área Restrita",
                 bemVindo: "Bem-vindo(a)!",
                 descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
-                entrar: "Entrar no Sistema",
+                entrarExistente: "Acessar Unidade Cadastrada",
+                cadastrarNova: "+ Cadastrar Nova Unidade / Outra Igreja",
                 configTitulo: "Configuração Inicial",
                 configSub: "Cadastre a unidade e o coordenador responsável",
                 lblUnidade: "Nome da Unidade / Projeto",
@@ -347,6 +394,7 @@
                 abaGincana: "🏆 Placar das Equipes",
                 abaFamilias: "Cadastro de Famílias",
                 abaVoluntarios: "Voluntários e Links",
+                abaAssociados: "👥 Coordenadores Associados",
                 cadItemTitulo: "Cadastrar Item para Arrecadação",
                 btnAddItem: "Adicionar à Lista",
                 acompanhamentoTitulo: "Acompanhamento de Estoque (Meta vs Entradas)",
@@ -377,7 +425,8 @@
                 restrita: "Restricted Area",
                 bemVindo: "Welcome!",
                 descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families.",
-                entrar: "Enter System",
+                entrarExistente: "Access Registered Unit",
+                cadastrarNova: "+ Register New Unit / Other Church",
                 configTitulo: "Initial Configuration",
                 configSub: "Register the unit and the responsible coordinator",
                 lblUnidade: "Unit / Project Name",
@@ -395,6 +444,7 @@
                 abaGincana: "🏆 Teams Scoreboard",
                 abaFamilias: "Families Registry",
                 abaVoluntarios: "Volunteers & Links",
+                abaAssociados: "👥 Associated Coordinators",
                 cadItemTitulo: "Register Item for Fundraising",
                 btnAddItem: "Add to List",
                 acompanhamentoTitulo: "Stock Tracking (Goal vs Inputs)",
@@ -425,7 +475,8 @@
                 restrita: "Área Restringida",
                 bemVindo: "¡Bienvenido/a!",
                 descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
-                entrar: "Entrar al Sistema",
+                entrarExistente: "Acceder a la Unidad Registrada",
+                cadastrarNova: "+ Registrar Nueva Unidad / Otra Iglesia",
                 configTitulo: "Configuración Inicial",
                 configSub: "Registre la unidad y el coordinador responsable",
                 lblUnidade: "Nombre de la Unidad / Proyecto",
@@ -443,6 +494,7 @@
                 abaGincana: "🏆 Tablero de Equipos",
                 abaFamilias: "Registro de Familias",
                 abaVoluntarios: "Voluntarios y Enlaces",
+                abaAssociados: "👥 Coordinadores Asociados",
                 cadItemTitulo: "Registrar Ítem para Recaudación",
                 btnAddItem: "Añadir a la Lista",
                 acompanhamentoTitulo: "Seguimiento de Stock (Meta vs Entradas)",
@@ -473,7 +525,8 @@
                 restrita: "Zone Restreinte",
                 bemVindo: "Bienvenue !",
                 descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
-                entrar: "Entrer dans le Système",
+                entrarExistente: "Accéder à l'Unité Enregistrée",
+                cadastrarNova: "+ Enregistrer une Nouvelle Unité / Autre Église",
                 configTitulo: "Configuration Initiale",
                 configSub: "Enregistrez l'unité et le coordinateur responsable",
                 lblUnidade: "Nom de l'Unité / Projet",
@@ -491,6 +544,7 @@
                 abaGincana: "🏆 Tableau des Équipes",
                 abaFamilias: "Registre des Familles",
                 abaVoluntarios: "Bénévoles & Liens",
+                abaAssociados: "👥 Coordinateurs Associés",
                 cadItemTitulo: "Enregistrer un Article",
                 btnAddItem: "Ajouter à la Liste",
                 acompanhamentoTitulo: "Suivi des Stocks (Objectif vs Entrées)",
@@ -524,8 +578,12 @@
             document.getElementById('txt-badge-restrita').innerText = t.restrita;
             document.getElementById('txt-bemvindo').innerText = t.bemVindo;
             document.getElementById('txt-desc-boasvindas').innerText = t.descBoasVindas;
-            document.getElementById('btn-entrar-sistema').querySelector('span').innerText = t.entrar;
             
+            let btnExistente = document.getElementById('btn-entrar-existente');
+            if(btnExistente) btnExistente.innerText = t.entrarExistente;
+            let btnNova = document.getElementById('btn-cadastrar-nova');
+            if(btnNova) btnNova.innerText = t.cadastrarNova;
+
             document.getElementById('txt-config-titulo').innerText = t.configTitulo;
             document.getElementById('txt-config-sub').innerText = t.configSub;
             document.getElementById('txt-label-unidade').innerText = t.lblUnidade;
@@ -546,6 +604,7 @@
             document.getElementById('btn-aba-gincana').innerText = t.abaGincana;
             document.getElementById('btn-aba-familias').innerText = t.abaFamilias;
             document.getElementById('btn-aba-voluntarios').innerText = t.abaVoluntarios;
+            document.getElementById('btn-aba-associados').innerText = t.abaAssociados;
 
             document.getElementById('txt-cad-item-titulo').innerText = t.cadItemTitulo;
             document.getElementById('btn-add-item').innerText = t.btnAddItem;
@@ -574,6 +633,7 @@
         }
 
         let dadosSistema = JSON.parse(localStorage.getItem('sys_campanha_data')) || {
+            ativado: false,
             igreja: '',
             coordenador: '',
             senha: '',
@@ -583,7 +643,8 @@
             historicoCasadinhos: [],
             produtos: [], 
             familias: [], 
-            voluntarios: [] 
+            voluntarios: [],
+            associados: []
         };
 
         let voluntarioLogadoNome = '';
@@ -597,11 +658,27 @@
             document.getElementById('seletor-idioma').value = savedLang;
             mudarIdioma(savedLang);
 
+            // Verificar Trava de Licença
+            if (!dadosSistema.ativado) {
+                document.getElementById('tela-ativacao-chave').classList.remove('hidden');
+                document.getElementById('tela-boas-vindas').classList.add('hidden');
+                return;
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const voluntarioParam = urlParams.get('vol');
+            const associadoParam = urlParams.get('assoc');
 
-            if (voluntarioParam) {
+            if (associadoParam) {
+                document.getElementById('tela-ativacao-chave').classList.add('hidden');
+                document.getElementById('tela-boas-vindas').classList.add('hidden');
+                if(dadosSistema.igreja) {
+                    document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+                }
+                abrirPainelCoordenador();
+            } else if (voluntarioParam) {
                 voluntarioLogadoNome = voluntarioParam;
+                document.getElementById('tela-ativacao-chave').classList.add('hidden');
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
                 document.getElementById('painel-voluntario').classList.remove('hidden');
                 document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a) / Líder: ${voluntarioParam}`;
@@ -635,12 +712,51 @@
                     document.getElementById('box-voluntario-senha').classList.remove('hidden');
                     document.getElementById('box-voluntario-formulario').classList.add('hidden');
                 }
-            } else if (dadosSistema.igreja) {
-                document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+            } else {
+                document.getElementById('tela-ativacao-chave').classList.add('hidden');
+                document.getElementById('tela-boas-vindas').classList.remove('hidden');
+                if(dadosSistema.igreja) {
+                    document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+                }
             }
 
             atualizarHistoricoDestaquesInterface();
         };
+
+        function validarChaveLicenca() {
+            const chaveDigitada = document.getElementById('input-chave-licenca').value.trim().toUpperCase();
+            if (chaveDigitada === CHAVE_MESTRE_VALIDA) {
+                dadosSistema.ativado = true;
+                salvarDadosLocal();
+                alert('Licença ativada com sucesso!');
+                document.getElementById('tela-ativacao-chave').classList.add('hidden');
+                document.getElementById('tela-boas-vindas').classList.remove('hidden');
+            } else {
+                alert('Chave de licença inválida ou incorreta!');
+            }
+        }
+
+        function irParaLoginUnidadeExistente() {
+            document.getElementById('tela-boas-vindas').classList.add('hidden');
+            if (dadosSistema.igreja) {
+                document.getElementById('titulo-login-igreja').innerText = `Área Restrita - ${dadosSistema.igreja}`;
+                document.getElementById('tela-login-coord').classList.remove('hidden');
+            } else {
+                alert('Nenhuma unidade cadastrada neste navegador. Cadastre uma nova!');
+                document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
+            }
+        }
+
+        function irParaNovoCadastroUnidade() {
+            document.getElementById('tela-boas-vindas').classList.add('hidden');
+            document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
+        }
+
+        function voltarParaInicio() {
+            document.getElementById('tela-login-coord').classList.add('hidden');
+            document.getElementById('tela-cadastro-igreja').classList.add('hidden');
+            document.getElementById('tela-boas-vindas').classList.remove('hidden');
+        }
 
         function salvarDestaqueSemana() {
             const destaque = document.getElementById('input-destaque-semana').value.trim();
@@ -734,16 +850,6 @@
             popularSelectProdutos();
         }
 
-        function irParaConfiguracaoOuLogin() {
-            document.getElementById('tela-boas-vindas').classList.add('hidden');
-            if (dadosSistema.igreja) {
-                document.getElementById('titulo-login-igreja').innerText = `Área Restrita - ${dadosSistema.igreja}`;
-                document.getElementById('tela-login-coord').classList.remove('hidden');
-            } else {
-                document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
-            }
-        }
-
         function salvarCadastroInicial() {
             const igreja = document.getElementById('reg-igreja').value.trim();
             const coord = document.getElementById('reg-coordenador').value.trim();
@@ -778,6 +884,7 @@
         }
 
         function abrirPainelCoordenador() {
+            document.getElementById('tela-ativacao-chave').classList.add('hidden');
             document.getElementById('tela-boas-vindas').classList.add('hidden');
             document.getElementById('tela-cadastro-igreja').classList.add('hidden');
             document.getElementById('tela-login-coord').classList.add('hidden');
@@ -788,6 +895,7 @@
             atualizarPlacarGincanaCoordenador();
             atualizarListaFamilias();
             atualizarListaVoluntarios();
+            atualizarListaAssociados();
             atualizarHistoricoDestaquesInterface();
         }
 
@@ -796,7 +904,7 @@
         }
 
         function mudarAbaCoordenador(aba) {
-            ['estoque', 'destaques', 'gincana', 'familias', 'voluntarios'].forEach(a => {
+            ['estoque', 'destaques', 'gincana', 'familias', 'voluntarios', 'associados'].forEach(a => {
                 let elConteudo = document.getElementById(`conteudo-aba-${a}`);
                 let elBtn = document.getElementById(`btn-aba-${a}`);
                 if(elConteudo) elConteudo.classList.add('hidden');
@@ -980,13 +1088,42 @@
                     const linkUnico = `${baseUrl}?vol=${encodeURIComponent(v.nome)}`;
                     html += `
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Sem senha)'} - Arrecadado: ${v.totalArrecadado || 0} kg</p>
+                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Sem senha)'}</p>
                             <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
                         </div>
                     `;
                 });
             }
             document.getElementById('lista-links-voluntarios').innerHTML = html;
+        }
+
+        function gerarLinkAssociado() {
+            const nome = document.getElementById('assoc-nome-input').value.trim();
+            if(!nome) return alert('Digite o nome do coordenador associado.');
+            if(!dadosSistema.associados) dadosSistema.associados = [];
+            dadosSistema.associados.push({ nome });
+            salvarDadosLocal();
+            atualizarListaAssociados();
+            document.getElementById('assoc-nome-input').value = '';
+        }
+
+        function atualizarListaAssociados() {
+            let html = '';
+            const baseUrl = window.location.origin + window.location.pathname;
+            if(!dadosSistema.associados || dadosSistema.associados.length === 0) {
+                html = '<p class="text-xs text-gray-400">Nenhum associado gerado ainda.</p>';
+            } else {
+                dadosSistema.associados.forEach(a => {
+                    const linkUnico = `${baseUrl}?assoc=${encodeURIComponent(a.nome)}`;
+                    html += `
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
+                            <p class="font-bold text-verde-asa">Coordenador(a): ${a.nome}</p>
+                            <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('lista-links-associados').innerHTML = html;
         }
 
         function popularSelectProdutos() {

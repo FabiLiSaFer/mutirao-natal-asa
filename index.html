@@ -22,36 +22,33 @@
     <!-- CABEÇALHO -->
     <header class="w-full bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b border-dourado/30">
         <div class="flex items-center space-x-3">
-            <!-- LOGO PERSONALIZADA -->
             <div class="w-10 h-10 rounded-full overflow-hidden border border-dourado/40 shadow-sm flex-shrink-0 bg-[#F5EFEB] flex items-center justify-center">
-                <!-- Substitua o src abaixo pelo link ou arquivo da sua logo -->
-                <img src="data:image/jpeg;base64,..." alt="Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-[10px] font-bold text-dourado\'>LOG</span>'">
+                <span class="text-xs font-bold text-dourado">🌟</span>
             </div>
             <div>
                 <h1 id="txt-logo-titulo" class="text-base font-bold text-verde-asa leading-tight">Mutirão de Natal</h1>
-                <p id="subtitulo-topo" class="text-[11px] text-dourado font-medium uppercase tracking-wider">Gestão Solidária</p>
+                <p id="txt-sub-topo" class="text-[11px] text-dourado font-medium uppercase tracking-wider">Gestão Solidária</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
-            <!-- SELETOR DE IDIOMAS (PT, EN, ES, FR) -->
             <select id="seletor-idioma" onchange="mudarIdioma(this.value)" class="text-xs p-1.5 rounded-lg border border-dourado/40 bg-amber-50 text-dourado font-semibold focus:outline-none">
                 <option value="pt">🇧🇷 Português</option>
                 <option value="en">🇺🇸 English</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="fr">🇫🇷 Français</option>
             </select>
-            <span id="badge-status" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs hidden md:inline-block">Área Restrita</span>
+            <span id="txt-badge-restrita" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs hidden md:inline-block">Área Restrita</span>
         </div>
     </header>
 
-    <!-- CONTEÚDO DINÂMICO (TELAS) -->
+    <!-- CONTEÚDO DINÂMICO -->
     <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full flex items-center justify-center">
 
-        <!-- 0. TELA INICIAL (BOAS-VINDAS) -->
+        <!-- 0. TELA INICIAL -->
         <div id="tela-boas-vindas" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
-            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner overflow-hidden">
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
                 <svg class="w-9 h-9 text-dourado" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
@@ -59,7 +56,7 @@
 
             <h2 id="txt-bemvindo" class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
             <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-8 leading-relaxed">
-                Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
+                Plataforma de Gestão Solidária para controle de arrecadações, turmas da Escola Sabatina e famílias assistidas.
             </p>
 
             <button onclick="irParaConfiguracaoOuLogin()" id="btn-entrar-sistema" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
@@ -68,33 +65,33 @@
             </button>
         </div>
 
-        <!-- 1. TELA DE CADASTRO INICIAL DA UNIDADE E COORDENADOR -->
+        <!-- 1. TELA DE CADASTRO INICIAL -->
         <div id="tela-cadastro-igreja" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-verde-asa">Configuração Inicial</h2>
-                <p class="text-xs text-gray-500 mt-1">Cadastre a unidade e o coordenador responsável</p>
+                <h2 id="txt-config-titulo" class="text-2xl font-bold text-verde-asa">Configuração Inicial</h2>
+                <p id="txt-config-sub" class="text-xs text-gray-500 mt-1">Cadastre a unidade e o coordenador responsável</p>
             </div>
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome da Unidade / Projeto</label>
+                    <label id="txt-label-unidade" class="block text-xs font-semibold text-gray-600 mb-1">Nome da Unidade / Projeto</label>
                     <input type="text" id="reg-igreja" placeholder="Ex: Projeto Solidário Central" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
+                    <label id="txt-label-coord" class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
                     <input type="text" id="reg-coordenador" placeholder="Ex: Vera Lima" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
+                    <label id="txt-label-senha" class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
                     <input type="password" id="reg-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
+                    <label id="txt-label-confsenha" class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
                     <input type="password" id="reg-confirma-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
-                <button onclick="salvarCadastroInicial()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
+                <button onclick="salvarCadastroInicial()" id="btn-salvar-config" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
                     Acessar Painel do Coordenador
                 </button>
             </div>
@@ -103,52 +100,53 @@
         <!-- TELA DE LOGIN DO COORDENADOR -->
         <div id="tela-login-coord" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full text-center space-y-4">
             <h2 id="titulo-login-igreja" class="text-2xl font-bold text-verde-asa">Área Restrita</h2>
-            <p class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
+            <p id="txt-login-sub" class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
             <input type="password" id="login-senha-coord" placeholder="Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
-            <button onclick="fazerLoginCoordenador()" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
+            <button onclick="fazerLoginCoordenador()" id="btn-login-entrar" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
         </div>
 
-        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR (COM PLACAR DA GINCANA) -->
+        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR -->
         <div id="painel-coordenador" class="hidden w-full space-y-6">
             <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-100 gap-4">
                     <div>
-                        <h3 class="text-xl font-bold text-verde-asa">Painel de Gestão - Coordenador(a)</h3>
+                        <h3 id="txt-painel-coord-titulo" class="text-xl font-bold text-verde-asa">Painel de Gestão - Coordenador(a)</h3>
                         <p id="info-coordenador-logado" class="text-xs text-dourado font-medium mt-0.5"></p>
                     </div>
-                    <button onclick="sairDoSistema()" class="text-xs text-red-600 hover:underline font-semibold bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">Sair do Sistema</button>
+                    <button onclick="sairDoSistema()" id="btn-sair-sistema" class="text-xs text-red-600 hover:underline font-semibold bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">Sair do Sistema</button>
                 </div>
 
                 <!-- ABAS DE NAVEGAÇÃO -->
                 <div class="flex space-x-2 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
                     <button onclick="mudarAbaCoordenador('estoque')" id="btn-aba-estoque" class="text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap">Gestão de Itens & Estoque</button>
-                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar da Gincana (Equipes)</button>
+                    <button onclick="mudarAbaCoordenador('destaques')" id="btn-aba-destaques" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">⭐ Destaques & Casadinhos</button>
+                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar das Classes</button>
                     <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
-                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
+                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Professores / Líderes</button>
                 </div>
 
                 <!-- ESTOQUE / METAS -->
                 <div id="conteudo-aba-estoque" class="space-y-6">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Cadastrar Item para Arrecadação</h4>
+                        <h4 id="txt-cad-item-titulo" class="text-sm font-bold text-verde-asa mb-3">Cadastrar Item para Arrecadação</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <input type="text" id="novo-produto-nome" placeholder="Nome (ex: Arroz 5kg)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <input type="number" id="novo-produto-meta" placeholder="Meta Necessária (Qtd)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="adicionarProdutoMeta()" class="bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20]">Adicionar à Lista</button>
+                            <button onclick="adicionarProdutoMeta()" id="btn-add-item" class="bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20]">Adicionar à Lista</button>
                         </div>
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Acompanhamento de Estoque (Meta vs Entradas)</h4>
+                        <h4 id="txt-acompanhamento-titulo" class="text-sm font-bold text-verde-asa mb-3">Acompanhamento de Estoque (Meta vs Entradas)</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border-collapse">
                                 <thead class="bg-amber-50 text-dourado border-b border-dourado/30">
                                     <tr>
-                                        <th class="p-3">Item</th>
-                                        <th class="p-3">Meta Fixa Necessária</th>
-                                        <th class="p-3">Total Arrecadado (Entradas)</th>
-                                        <th class="p-3">Falta para a Meta</th>
-                                        <th class="p-3">Ações</th>
+                                        <th id="th-item" class="p-3">Item</th>
+                                        <th id="th-meta" class="p-3">Meta Fixa Necessária</th>
+                                        <th id="th-arrecadado" class="p-3">Total Arrecadado (Entradas)</th>
+                                        <th id="th-falta" class="p-3">Falta para a Meta</th>
+                                        <th id="th-acoes" class="p-3">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabela-estoque-coordenador" class="divide-y divide-gray-100 text-gray-700">
@@ -159,16 +157,37 @@
                     </div>
                 </div>
 
-                <!-- PLACAR DA GINCANA (EQUIPES) -->
-                <div id="conteudo-aba-gincana" class="hidden space-y-4">
-                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Equipes (Gincana Solidária)</h4>
-                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada equipe responsável e seus arrecadadores.</p>
-                    <div id="lista-placar-gincana" class="space-y-3">
-                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por equipes ainda.</p>
+                <!-- DESTAQUES E CASADINHOS (SEPARADOS) -->
+                <div id="conteudo-aba-destaques" class="hidden space-y-6">
+                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
+                        <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
+                        <p class="text-xs text-gray-600">Defina qual é o item prioritário da semana para orientar as turmas.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input type="text" id="input-destaque-semana" placeholder="Ex: Arroz ou Óleo" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="salvarDestaqueSemana()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar Destaque da Semana</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
+                        <h4 class="text-sm font-bold text-verde-asa">🎁 2. Combos Casadinhos (Reta Final)</h4>
+                        <p class="text-xs text-gray-600">Defina kits especiais combinados (ex: Macarrão + Molho de Tomate).</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input type="text" id="input-casadinho" placeholder="Ex: Macarrão + Molho" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="salvarCasadinho()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar Combo Casadinho</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- FAMÍLIAS (COM PROTEÇÃO ANÔNIMA DE CRIANÇAS - LGPD) -->
+                <!-- PLACAR DAS CLASSES (GINCANA) -->
+                <div id="conteudo-aba-gincana" class="hidden space-y-4">
+                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Classes da Escola Sabatina</h4>
+                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada classe e seus professores líderes.</p>
+                    <div id="lista-placar-gincana" class="space-y-3">
+                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por turmas ainda.</p>
+                    </div>
+                </div>
+
+                <!-- FAMÍLIAS -->
                 <div id="conteudo-aba-familias" class="hidden space-y-6">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">Cadastrar Família Assistida</h4>
@@ -198,18 +217,18 @@
                     </div>
                 </div>
 
-                <!-- VOLUNTÁRIOS E LINKS -->
+                <!-- PROFESSORES / LÍDERES E LINKS -->
                 <div id="conteudo-aba-voluntarios" class="hidden space-y-4">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Professor / Líder da Classe</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                            <input type="text" id="vol-nome-input" placeholder="Nome do Responsável / Líder da Equipe" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="text" id="vol-nome-input" placeholder="Nome do Professor / Líder (ex: Prof. João - Classe A)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <button onclick="gerarLinkVoluntario()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link Individual</button>
                         </div>
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Voluntários e Links Ativos</h4>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Líderes e Links Ativos</h4>
                         <div id="lista-links-voluntarios" class="space-y-2">
                             <p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>
                         </div>
@@ -219,33 +238,42 @@
             </div>
         </div>
 
-        <!-- 3. TELA DO VOLUNTÁRIO (COM EQUIPE FIXA E PLACAR DA EQUIPE) -->
+        <!-- 3. TELA DO VOLUNTÁRIO / PROFESSOR -->
         <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
             <div class="text-center mb-6">
-                <span class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
-                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Coleta</h2>
-                <p class="text-xs text-gray-500">Registre abaixo os itens arrecadados pela sua equipe</p>
-                <!-- PLACAR INDIVIDUAL DA EQUIPE -->
+                <span class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Professor / Líder</span>
+                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Turma</h2>
+                
+                <!-- BANNERS DE DESTAQUE E CASADINHO (SÓ APARECEM SE PREENCHIDOS) -->
+                <div id="banner-destaque-voluntario" class="mt-3 bg-amber-100/70 p-3 rounded-xl border border-dourado/40 hidden">
+                    <span class="text-[11px] font-bold text-dourado uppercase tracking-wider block">⭐ ALIMENTO EM DESTAQUE DA SEMANA:</span>
+                    <span id="texto-destaque-exibicao" class="text-xs font-extrabold text-verde-asa"></span>
+                </div>
+
+                <div id="banner-casadinho-voluntario" class="mt-2 bg-emerald-100/70 p-3 rounded-xl border border-emerald-400 hidden">
+                    <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">🎁 COMBO CASADINHO DA SEMANA:</span>
+                    <span id="texto-casadinho-exibicao" class="text-xs font-extrabold text-emerald-900"></span>
+                </div>
+
                 <div class="mt-3 bg-amber-50 p-2.5 rounded-xl border border-dourado/30 inline-block">
-                    <span class="text-xs font-bold text-dourado">Total Arrecadado pela sua Equipe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
+                    <span class="text-xs font-bold text-dourado">Total Arrecadado pela sua Classe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
                 </div>
             </div>
 
-            <!-- CADASTRO/LOGIN DE SENHA DO VOLUNTÁRIO -->
+            <!-- SENHA DO VOLUNTÁRIO -->
             <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4">
                 <p class="text-xs font-bold text-verde-asa">Defina sua senha de acesso pessoal para este link:</p>
                 <input type="password" id="vol-senha-cadastro" placeholder="Crie sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
                 <button onclick="ativarSenhaVoluntario()" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
             </div>
 
-            <!-- FORMULÁRIO DE LANÇAMENTO -->
+            <!-- FORMULÁRIO -->
             <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
                 
-                <!-- GERENCIAMENTO DA EQUIPE FIXA -->
                 <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
-                    <label class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Equipe:</label>
+                    <label class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Classe / Equipe:</label>
                     <div class="flex gap-2">
-                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da equipe" class="flex-grow text-xs p-2 rounded border border-gray-300">
+                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da classe" class="flex-grow text-xs p-2 rounded border border-gray-300">
                         <button onclick="adicionarMembroEquipeFixo()" class="bg-dourado text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#b08d4b]">Adicionar</button>
                     </div>
                     <div id="lista-membros-fixos-badge" class="flex flex-wrap gap-1.5 pt-1"></div>
@@ -278,55 +306,192 @@
 
     </main>
 
-    <!-- RODAPÉ -->
-    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/20 mt-auto">
+    <!-- RODAPÉ COM DEDICATÓRIA -->
+    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/20 mt-auto space-y-1">
         <p>© 2026 Plataforma de Gestão Solidária. Todos os direitos reservados.</p>
+        <p class="text-dourado font-medium">Dedicado com carinho a Vera Lima.</p>
     </footer>
 
     <script>
-        // TRADUÇÕES (PT, EN, ES, FR)
         const traducoes = {
             pt: {
                 titulo: "Plataforma de Gestão Solidária - Mutirão de Natal",
                 logoTitulo: "Mutirão de Natal",
                 subTopo: "Gestão Solidária",
+                restrita: "Área Restrita",
                 bemVindo: "Bem-vindo(a)!",
-                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
-                entrar: "Entrar no Sistema"
+                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, turmas da Escola Sabatina e famílias assistidas.",
+                entrar: "Entrar no Sistema",
+                configTitulo: "Configuração Inicial",
+                configSub: "Cadastre a unidade e o coordenador responsável",
+                lblUnidade: "Nome da Unidade / Projeto",
+                lblCoord: "Nome do Coordenador",
+                lblSenha: "Senha de Acesso",
+                lblConfSenha: "Confirmar Senha",
+                btnSalvarConfig: "Acessar Painel do Coordenador",
+                tituloLogin: "Área Restrita",
+                loginSub: "Digite a senha da coordenação para entrar",
+                btnLoginEntrar: "Entrar como Coordenador",
+                painelCoordTitulo: "Painel de Gestão - Coordenador(a)",
+                btnSair: "Sair do Sistema",
+                abaEstoque: "Gestão de Itens & Estoque",
+                abaDestaques: "⭐ Destaques & Casadinhos",
+                abaGincana: "🏆 Placar das Classes",
+                abaFamilias: "Cadastro de Famílias",
+                abaVoluntarios: "Professores / Líderes",
+                cadItemTitulo: "Cadastrar Item para Arrecadação",
+                btnAddItem: "Adicionar à Lista",
+                acompanhamentoTitulo: "Acompanhamento de Estoque (Meta vs Entradas)",
+                thItem: "Item",
+                thMeta: "Meta Fixa Necessária",
+                thArrecadado: "Total Arrecadado (Entradas)",
+                thFalta: "Falta para a Meta",
+                thAcoes: "Ações"
             },
             en: {
                 titulo: "Solidarity Management Platform - Christmas Drive",
                 logoTitulo: "Christmas Drive",
                 subTopo: "Solidarity Management",
+                restrita: "Restricted Area",
                 bemVindo: "Welcome!",
-                descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families control.",
-                entrar: "Enter System"
+                descBoasVindas: "Solidarity Management Platform for fundraising, Sabbath School classes, and assisted families.",
+                entrar: "Enter System",
+                configTitulo: "Initial Configuration",
+                configSub: "Register the unit and the responsible coordinator",
+                lblUnidade: "Unit / Project Name",
+                lblCoord: "Coordinator Name",
+                lblSenha: "Password",
+                lblConfSenha: "Confirm Password",
+                btnSalvarConfig: "Access Coordinator Panel",
+                tituloLogin: "Restricted Area",
+                loginSub: "Enter coordination password to login",
+                btnLoginEntrar: "Login as Coordinator",
+                painelCoordTitulo: "Management Panel - Coordinator",
+                btnSair: "Log Out",
+                abaEstoque: "Items & Stock Management",
+                abaDestaques: "⭐ Highlights & Combos",
+                abaGincana: "🏆 Classes Scoreboard",
+                abaFamilias: "Families Registry",
+                abaVoluntarios: "Teachers / Leaders",
+                cadItemTitulo: "Register Item for Fundraising",
+                btnAddItem: "Add to List",
+                acompanhamentoTitulo: "Stock Tracking (Goal vs Inputs)",
+                thItem: "Item",
+                thMeta: "Required Fixed Goal",
+                thArrecadado: "Total Raised (Inputs)",
+                thFalta: "Remaining to Goal",
+                thAcoes: "Actions"
             },
             es: {
                 titulo: "Plataforma de Gestión Solidaria - Mutirón de Navidad",
                 logoTitulo: "Mutirón de Navidad",
                 subTopo: "Gestión Solidaria",
+                restrita: "Área Restringida",
                 bemVindo: "¡Bienvenido/a!",
-                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
-                entrar: "Entrar al Sistema"
+                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, clases de Escuela Sabática y familias asistidas.",
+                entrar: "Entrar al Sistema",
+                configTitulo: "Configuración Inicial",
+                configSub: "Registre la unidad y el coordinador responsable",
+                lblUnidade: "Nombre de la Unidad / Proyecto",
+                lblCoord: "Nombre del Coordinador",
+                lblSenha: "Contraseña",
+                lblConfSenha: "Confirmar Contraseña",
+                btnSalvarConfig: "Acceder al Panel del Coordinador",
+                tituloLogin: "Área Restringida",
+                loginSub: "Ingrese la contraseña de coordinación para entrar",
+                btnLoginEntrar: "Entrar como Coordinador",
+                painelCoordTitulo: "Panel de Gestión - Coordinador(a)",
+                btnSair: "Salir del Sistema",
+                abaEstoque: "Gestión de Ítems y Stock",
+                abaDestaques: "⭐ Destacados y Combos",
+                abaGincana: "🏆 Tablero de Clases",
+                abaFamilias: "Registro de Familias",
+                abaVoluntarios: "Profesores / Líderes",
+                cadItemTitulo: "Registrar Ítem para Recaudación",
+                btnAddItem: "Añadir a la Lista",
+                acompanhamentoTitulo: "Seguimiento de Stock (Meta vs Entradas)",
+                thItem: "Ítem",
+                thMeta: "Meta Fija Necesaria",
+                thArrecadado: "Total Recaudado (Entradas)",
+                thFalta: "Falta para la Meta",
+                thAcoes: "Acciones"
             },
             fr: {
                 titulo: "Plateforme de Gestion Solidaire - Noël Solidaire",
                 logoTitulo: "Noël Solidaire",
                 subTopo: "Gestion Solidaire",
+                restrita: "Zone Restreinte",
                 bemVindo: "Bienvenue !",
-                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
-                entrar: "Entrer dans le Système"
+                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des classes de l'École du Sabbat et des familles aidées.",
+                entrar: "Entrer dans le Système",
+                configTitulo: "Configuration Initiale",
+                configSub: "Enregistrez l'unité et le coordinateur responsable",
+                lblUnidade: "Nom de l'Unité / Projet",
+                lblCoord: "Nom du Coordinateur",
+                lblSenha: "Mot de Passe",
+                lblConfSenha: "Confirmer le Mot de Passe",
+                btnSalvarConfig: "Accéder au Panneau du Coordinateur",
+                tituloLogin: "Zone Restreinte",
+                loginSub: "Entrez le mot de passe de coordination",
+                btnLoginEntrar: "Se connecter en tant que Coordinateur",
+                painelCoordTitulo: "Panneau de Gestion - Coordinateur",
+                btnSair: "Se Déconnecter",
+                abaEstoque: "Gestion des Articles & Stock",
+                abaDestaques: "⭐ Points Forts & Combos",
+                abaGincana: "🏆 Tableau des Classes",
+                abaFamilias: "Registre des Familles",
+                abaVoluntarios: "Enseignants / Leaders",
+                cadItemTitulo: "Enregistrer un Article",
+                btnAddItem: "Ajouter à la Liste",
+                acompanhamentoTitulo: "Suivi des Stocks (Objectif vs Entrées)",
+                thItem: "Article",
+                thMeta: "Objectif Fixe Requis",
+                thArrecadado: "Total Collecté (Entrées)",
+                thFalta: "Reste pour l'Objectif",
+                thAcoes: "Actions"
             }
         };
 
         function mudarIdioma(lang) {
-            document.getElementById('txt-titulo-pagina').innerText = traducoes[lang].titulo;
-            document.getElementById('txt-logo-titulo').innerText = traducoes[lang].logoTitulo;
-            document.getElementById('subtitulo-topo').innerText = traducoes[lang].subTopo;
-            document.getElementById('txt-bemvindo').innerText = traducoes[lang].bemVindo;
-            document.getElementById('txt-desc-boasvindas').innerText = traducoes[lang].descBoasVindas;
-            document.getElementById('btn-entrar-sistema').querySelector('span').innerText = traducoes[lang].entrar;
+            let t = traducoes[lang];
+            document.getElementById('txt-titulo-pagina').innerText = t.titulo;
+            document.getElementById('txt-logo-titulo').innerText = t.logoTitulo;
+            document.getElementById('txt-sub-topo').innerText = t.subTopo;
+            document.getElementById('txt-badge-restrita').innerText = t.restrita;
+            document.getElementById('txt-bemvindo').innerText = t.bemVindo;
+            document.getElementById('txt-desc-boasvindas').innerText = t.descBoasVindas;
+            document.getElementById('btn-entrar-sistema').querySelector('span').innerText = t.entrar;
+            
+            document.getElementById('txt-config-titulo').innerText = t.configTitulo;
+            document.getElementById('txt-config-sub').innerText = t.configSub;
+            document.getElementById('txt-label-unidade').innerText = t.lblUnidade;
+            document.getElementById('txt-label-coord').innerText = t.lblCoord;
+            document.getElementById('txt-label-senha').innerText = t.lblSenha;
+            document.getElementById('txt-label-confsenha').innerText = t.lblConfSenha;
+            document.getElementById('btn-salvar-config').innerText = t.btnSalvarConfig;
+
+            document.getElementById('titulo-login-igreja').innerText = t.tituloLogin;
+            document.getElementById('txt-login-sub').innerText = t.loginSub;
+            document.getElementById('btn-login-entrar').innerText = t.btnLoginEntrar;
+
+            document.getElementById('txt-painel-coord-titulo').innerText = t.painelCoordTitulo;
+            document.getElementById('btn-sair-sistema').innerText = t.btnSair;
+
+            document.getElementById('btn-aba-estoque').innerText = t.abaEstoque;
+            document.getElementById('btn-aba-destaques').innerText = t.abaDestaques;
+            document.getElementById('btn-aba-gincana').innerText = t.abaGincana;
+            document.getElementById('btn-aba-familias').innerText = t.abaFamilias;
+            document.getElementById('btn-aba-voluntarios').innerText = t.abaVoluntarios;
+
+            document.getElementById('txt-cad-item-titulo').innerText = t.cadItemTitulo;
+            document.getElementById('btn-add-item').innerText = t.btnAddItem;
+            document.getElementById('txt-acompanhamento-titulo').innerText = t.acompanhamentoTitulo;
+            document.getElementById('th-item').innerText = t.thItem;
+            document.getElementById('th-meta').innerText = t.thMeta;
+            document.getElementById('th-arrecadado').innerText = t.thArrecadado;
+            document.getElementById('th-falta').innerText = t.thFalta;
+            document.getElementById('th-acoes').innerText = t.thAcoes;
+
             localStorage.setItem('sys_idioma', lang);
         }
 
@@ -334,9 +499,11 @@
             igreja: '',
             coordenador: '',
             senha: '',
+            destaqueSemana: '',
+            comboCasadinho: '',
             produtos: [], 
             familias: [], 
-            voluntarios: [] // {nome, senha, equipeFixa: [], totalArrecadado: 0}
+            voluntarios: [] 
         };
 
         let voluntarioLogadoNome = '';
@@ -357,9 +524,21 @@
                 voluntarioLogadoNome = voluntarioParam;
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
                 document.getElementById('painel-voluntario').classList.remove('hidden');
-                document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a) Responsável: ${voluntarioParam}`;
+                document.getElementById('voluntario-titulo-nome').innerText = `Líder / Professor: ${voluntarioParam}`;
                 if(dadosSistema.igreja) {
-                    document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+                    document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+                }
+
+                // Exibir Destaque da Semana se preenchido
+                if(dadosSistema.destaqueSemana) {
+                    document.getElementById('banner-destaque-voluntario').classList.remove('hidden');
+                    document.getElementById('texto-destaque-exibicao').innerText = dadosSistema.destaqueSemana;
+                }
+
+                // Exibir Combo Casadinho se preenchido
+                if(dadosSistema.comboCasadinho) {
+                    document.getElementById('banner-casadinho-voluntario').classList.remove('hidden');
+                    document.getElementById('texto-casadinho-exibicao').innerText = dadosSistema.comboCasadinho;
                 }
 
                 let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioParam);
@@ -379,9 +558,27 @@
                     document.getElementById('box-voluntario-formulario').classList.add('hidden');
                 }
             } else if (dadosSistema.igreja) {
-                document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+                document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             }
         };
+
+        function salvarDestaqueSemana() {
+            const destaque = document.getElementById('input-destaque-semana').value.trim();
+            if(!destaque) return alert('Digite o alimento em destaque.');
+            dadosSistema.destaqueSemana = destaque;
+            salvarDadosLocal();
+            alert('Alimento em destaque da semana atualizado com sucesso!');
+            document.getElementById('input-destaque-semana').value = '';
+        }
+
+        function salvarCasadinho() {
+            const casadinho = document.getElementById('input-casadinho').value.trim();
+            if(!casadinho) return alert('Digite o combo casadinho.');
+            dadosSistema.comboCasadinho = casadinho;
+            salvarDadosLocal();
+            alert('Combo casadinho atualizado com sucesso!');
+            document.getElementById('input-casadinho').value = '';
+        }
 
         function ativarSenhaVoluntario() {
             const novaSenha = document.getElementById('vol-senha-cadastro').value.trim();
@@ -449,7 +646,7 @@
             document.getElementById('tela-cadastro-igreja').classList.add('hidden');
             document.getElementById('tela-login-coord').classList.add('hidden');
             document.getElementById('painel-coordenador').classList.remove('hidden');
-            document.getElementById('subtitulo-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
+            document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;
             atualizarTabelaEstoque();
             atualizarPlacarGincanaCoordenador();
@@ -462,14 +659,12 @@
         }
 
         function mudarAbaCoordenador(aba) {
-            document.getElementById('conteudo-aba-estoque').classList.add('hidden');
-            document.getElementById('conteudo-aba-gincana').classList.add('hidden');
-            document.getElementById('conteudo-aba-familias').classList.add('hidden');
-            document.getElementById('conteudo-aba-voluntarios').classList.add('hidden');
-            document.getElementById('btn-aba-estoque').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
-            document.getElementById('btn-aba-gincana').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
-            document.getElementById('btn-aba-familias').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
-            document.getElementById('btn-aba-voluntarios').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+            ['estoque', 'destaques', 'gincana', 'familias', 'voluntarios'].forEach(a => {
+                let elConteudo = document.getElementById(`conteudo-aba-${a}`);
+                let elBtn = document.getElementById(`btn-aba-${a}`);
+                if(elConteudo) elConteudo.classList.add('hidden');
+                if(elBtn) elBtn.className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+            });
 
             document.getElementById(`conteudo-aba-${aba}`).classList.remove('hidden');
             document.getElementById(`btn-aba-${aba}`).className = 'text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap';
@@ -478,9 +673,7 @@
         function adicionarProdutoMeta() {
             const nome = document.getElementById('novo-produto-nome').value.trim();
             const meta = parseInt(document.getElementById('novo-produto-meta').value) || 0;
-
             if(!nome) return alert('Informe o nome do item.');
-
             dadosSistema.produtos.push({ nome, meta, estoque: 0 });
             salvarDadosLocal();
             atualizarTabelaEstoque();
@@ -515,9 +708,8 @@
         function atualizarPlacarGincanaCoordenador() {
             let html = '';
             if (!dadosSistema.voluntarios || dadosSistema.voluntarios.length === 0) {
-                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma equipe de voluntário cadastrada.</p>';
+                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma classe/turma cadastrada.</p>';
             } else {
-                // Ordenar da maior arrecadação para a menor
                 let ordenados = [...dadosSistema.voluntarios].sort((a, b) => (b.totalArrecadado || 0) - (a.totalArrecadado || 0));
                 ordenados.forEach((v, index) => {
                     let membrosStr = v.equipeFixa && v.equipeFixa.length > 0 ? v.equipeFixa.join(', ') : 'Nenhum membro cadastrado';
@@ -527,9 +719,9 @@
                             <div>
                                 <div class="flex items-center space-x-2">
                                     <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-dourado border border-dourado/30">${posicaoBadge}</span>
-                                    <h5 class="text-sm font-bold text-verde-asa">Líder: ${v.nome}</h5>
+                                    <h5 class="text-sm font-bold text-verde-asa">Líder / Professor: ${v.nome}</h5>
                                 </div>
-                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Equipe:</strong> ${membrosStr}</p>
+                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Classe:</strong> ${membrosStr}</p>
                             </div>
                             <div class="text-right bg-white p-3 rounded-lg border border-dourado/30 w-full md:w-auto">
                                 <span class="text-[11px] text-gray-500 block">Total Arrecadado</span>
@@ -559,7 +751,6 @@
             const qtd = parseInt(document.getElementById('fam-qtd-criancas').value) || 0;
             const container = document.getElementById('container-criancas-detalhes');
             const lista = document.getElementById('lista-inputs-criancas');
-
             if (qtd > 0) {
                 container.classList.remove('hidden');
                 let html = '';
@@ -596,12 +787,8 @@
             if (qtdCriancas > 0) {
                 const idades = document.querySelectorAll('.crianca-idade');
                 const generos = document.querySelectorAll('.crianca-genero');
-
                 for (let i = 0; i < qtdCriancas; i++) {
-                    criancasDetalhes.push({
-                        idade: idades[i].value.trim() || '?',
-                        genero: generos[i].value
-                    });
+                    criancasDetalhes.push({ idade: idades[i].value.trim() || '?', genero: generos[i].value });
                 }
             }
 
@@ -615,7 +802,6 @@
             document.getElementById('fam-qtd-criancas').value = '';
             document.getElementById('container-criancas-detalhes').classList.add('hidden');
             document.getElementById('lista-inputs-criancas').innerHTML = '';
-            
             alert('Família cadastrada com sucesso!');
         }
 
@@ -625,11 +811,7 @@
                 html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma família cadastrada.</p>';
             } else {
                 dadosSistema.familias.forEach(f => {
-                    let criancasHtml = 'Nenhuma';
-                    if (Array.isArray(f.criancas) && f.criancas.length > 0) {
-                        criancasHtml = f.criancas.map(c => `${c.idade} anos (${c.genero})`).join(', ');
-                    }
-
+                    let criancasHtml = Array.isArray(f.criancas) && f.criancas.length > 0 ? f.criancas.map(c => `${c.idade} anos (${c.genero})`).join(', ') : 'Nenhuma';
                     html += `
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
                             <p><strong>Responsável:</strong> ${f.responsavel} (${f.totalPessoas} pessoas no grupo)</p>
@@ -644,8 +826,7 @@
 
         function gerarLinkVoluntario() {
             const nome = document.getElementById('vol-nome-input').value.trim();
-            if(!nome) return alert('Digite o nome do responsável / líder da equipe.');
-
+            if(!nome) return alert('Digite o nome do professor / líder.');
             dadosSistema.voluntarios.push({ nome, senha: '', equipeFixa: [], totalArrecadado: 0 });
             salvarDadosLocal();
             atualizarListaVoluntarios();
@@ -680,12 +861,10 @@
             select.innerHTML = html;
         }
 
-        // GERENCIAMENTO DA EQUIPE FIXA DO VOLUNTÁRIO
         function adicionarMembroEquipeFixo() {
             const input = document.getElementById('input-novo-membro-equipe');
             const nomeMembro = input.value.trim();
             if(!nomeMembro) return alert('Digite o nome do membro.');
-
             let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
             if(volObj) {
                 if(!volObj.equipeFixa) volObj.equipeFixa = [];
@@ -708,9 +887,7 @@
         function atualizarPlacarE1EquipeVoluntario() {
             let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
             if(!volObj) return;
-
             document.getElementById('placar-total-equipe').innerText = volObj.totalArrecadado || 0;
-
             let html = '';
             if(volObj.equipeFixa && volObj.equipeFixa.length > 0) {
                 volObj.equipeFixa.forEach((membro, i) => {
@@ -732,10 +909,7 @@
                 return;
             }
 
-            // Soma no estoque geral
             dadosSistema.produtos[selectIdx].estoque = Number(dadosSistema.produtos[selectIdx].estoque) + qtd;
-
-            // Soma no placar da equipe do voluntário
             let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
             if(volObj) {
                 if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
@@ -743,9 +917,7 @@
             }
 
             salvarDadosLocal();
-
-            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua equipe foi atualizado.`);
-            
+            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua turma foi atualizado.`);
             document.getElementById('vol-qtd-produto').value = '';
             document.getElementById('vol-quem-doou').value = '';
             atualizarPlacarE1EquipeVoluntario();

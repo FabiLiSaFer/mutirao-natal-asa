@@ -56,7 +56,7 @@
 
             <h2 id="txt-bemvindo" class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
             <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-8 leading-relaxed">
-                Plataforma de Gestão Solidária para controle de arrecadações, turmas da Escola Sabatina e famílias assistidas.
+                Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
             </p>
 
             <button onclick="irParaConfiguracaoOuLogin()" id="btn-entrar-sistema" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
@@ -120,9 +120,9 @@
                 <div class="flex space-x-2 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
                     <button onclick="mudarAbaCoordenador('estoque')" id="btn-aba-estoque" class="text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap">Gestão de Itens & Estoque</button>
                     <button onclick="mudarAbaCoordenador('destaques')" id="btn-aba-destaques" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">⭐ Destaques & Casadinhos</button>
-                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar das Classes</button>
+                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar das Equipes</button>
                     <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
-                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Professores / Líderes</button>
+                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
                 </div>
 
                 <!-- ESTOQUE / METAS -->
@@ -157,33 +157,41 @@
                     </div>
                 </div>
 
-                <!-- DESTAQUES E CASADINHOS (SEPARADOS) -->
+                <!-- DESTAQUES E CASADINHOS (COM HISTÓRICO E LIMPEZA INDependente) -->
                 <div id="conteudo-aba-destaques" class="hidden space-y-6">
                     <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
-                        <p class="text-xs text-gray-600">Defina qual é o item prioritário da semana para orientar as turmas.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <input type="text" id="input-destaque-semana" placeholder="Ex: Arroz ou Óleo" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="salvarDestaqueSemana()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar Destaque da Semana</button>
+                        <p class="text-xs text-gray-600">Defina qual é o item prioritário. Ao limpar, ele some da tela do voluntário mas fica salvo no histórico da coordenação.</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-destaque-semana" placeholder="Ex: Arroz ou Óleo" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="salvarDestaqueSemana()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
+                            <button onclick="limparDestaqueSemana()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntario</button>
+                        </div>
+                        <div id="historico-destaques" class="text-[11px] text-gray-500 pt-2 border-t border-dourado/20">
+                            <strong>Histórico de Destaques Anteriores:</strong> Nenhum registro anterior.
                         </div>
                     </div>
 
                     <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">🎁 2. Combos Casadinhos (Reta Final)</h4>
                         <p class="text-xs text-gray-600">Defina kits especiais combinados (ex: Macarrão + Molho de Tomate).</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <input type="text" id="input-casadinho" placeholder="Ex: Macarrão + Molho" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="salvarCasadinho()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar Combo Casadinho</button>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-casadinho" placeholder="Ex: Macarrão + Molho" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="salvarCasadinho()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
+                            <button onclick="limparCasadinho()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar da Tela do Voluntario</button>
+                        </div>
+                        <div id="historico-casadinhos" class="text-[11px] text-gray-500 pt-2 border-t border-dourado/20">
+                            <strong>Histórico de Casadinhos Anteriores:</strong> Nenhum registro anterior.
                         </div>
                     </div>
                 </div>
 
-                <!-- PLACAR DAS CLASSES (GINCANA) -->
+                <!-- PLACAR DAS EQUIPES (GINCANA) -->
                 <div id="conteudo-aba-gincana" class="hidden space-y-4">
-                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Classes da Escola Sabatina</h4>
-                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada classe e seus professores líderes.</p>
+                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Equipes</h4>
+                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada equipe responsável e seus arrecadadores.</p>
                     <div id="lista-placar-gincana" class="space-y-3">
-                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por turmas ainda.</p>
+                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por equipes ainda.</p>
                     </div>
                 </div>
 
@@ -217,18 +225,18 @@
                     </div>
                 </div>
 
-                <!-- PROFESSORES / LÍDERES E LINKS -->
+                <!-- VOLUNTÁRIOS E LINKS -->
                 <div id="conteudo-aba-voluntarios" class="hidden space-y-4">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Professor / Líder da Classe</h4>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                            <input type="text" id="vol-nome-input" placeholder="Nome do Professor / Líder (ex: Prof. João - Classe A)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="text" id="vol-nome-input" placeholder="Nome do Responsável / Líder da Equipe" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
                             <button onclick="gerarLinkVoluntario()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link Individual</button>
                         </div>
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Líderes e Links Ativos</h4>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Voluntários e Links Ativos</h4>
                         <div id="lista-links-voluntarios" class="space-y-2">
                             <p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>
                         </div>
@@ -238,69 +246,69 @@
             </div>
         </div>
 
-        <!-- 3. TELA DO VOLUNTÁRIO / PROFESSOR -->
+        <!-- 3. TELA DO VOLUNTÁRIO -->
         <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
             <div class="text-center mb-6">
-                <span class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Professor / Líder</span>
-                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Turma</h2>
+                <span id="txt-badge-vol" class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
+                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Coleta</h2>
                 
-                <!-- BANNERS DE DESTAQUE E CASADINHO (SÓ APARECEM SE PREENCHIDOS) -->
+                <!-- BANNERS DINÂMICOS -->
                 <div id="banner-destaque-voluntario" class="mt-3 bg-amber-100/70 p-3 rounded-xl border border-dourado/40 hidden">
-                    <span class="text-[11px] font-bold text-dourado uppercase tracking-wider block">⭐ ALIMENTO EM DESTAQUE DA SEMANA:</span>
+                    <span id="txt-lbl-destaque-semana" class="text-[11px] font-bold text-dourado uppercase tracking-wider block">⭐ ALIMENTO EM DESTAQUE DA SEMANA:</span>
                     <span id="texto-destaque-exibicao" class="text-xs font-extrabold text-verde-asa"></span>
                 </div>
 
                 <div id="banner-casadinho-voluntario" class="mt-2 bg-emerald-100/70 p-3 rounded-xl border border-emerald-400 hidden">
-                    <span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">🎁 COMBO CASADINHO DA SEMANA:</span>
+                    <span id="txt-lbl-combo-casadinho" class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">🎁 COMBO CASADINHO DA SEMANA:</span>
                     <span id="texto-casadinho-exibicao" class="text-xs font-extrabold text-emerald-900"></span>
                 </div>
 
                 <div class="mt-3 bg-amber-50 p-2.5 rounded-xl border border-dourado/30 inline-block">
-                    <span class="text-xs font-bold text-dourado">Total Arrecadado pela sua Classe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
+                    <span id="txt-placar-equipe-label" class="text-xs font-bold text-dourado">Total Arrecadado pela sua Equipe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
                 </div>
             </div>
 
             <!-- SENHA DO VOLUNTÁRIO -->
             <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4">
-                <p class="text-xs font-bold text-verde-asa">Defina sua senha de acesso pessoal para este link:</p>
+                <p id="txt-vol-senha-msg" class="text-xs font-bold text-verde-asa">Defina sua senha de acesso pessoal para este link:</p>
                 <input type="password" id="vol-senha-cadastro" placeholder="Crie sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
-                <button onclick="ativarSenhaVoluntario()" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
+                <button onclick="ativarSenhaVoluntario()" id="btn-vol-salvar-senha" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
             </div>
 
             <!-- FORMULÁRIO -->
             <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
                 
                 <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
-                    <label class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Classe / Equipe:</label>
+                    <label id="txt-membros-fixos-lbl" class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Equipe:</label>
                     <div class="flex gap-2">
-                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da classe" class="flex-grow text-xs p-2 rounded border border-gray-300">
-                        <button onclick="adicionarMembroEquipeFixo()" class="bg-dourado text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#b08d4b]">Adicionar</button>
+                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da equipe" class="flex-grow text-xs p-2 rounded border border-gray-300">
+                        <button onclick="adicionarMembroEquipeFixo()" id="btn-add-membro" class="bg-dourado text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#b08d4b]">Adicionar</button>
                     </div>
                     <div id="lista-membros-fixos-badge" class="flex flex-wrap gap-1.5 pt-1"></div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Selecione o Item</label>
+                    <label id="txt-sel-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Selecione o Item</label>
                     <select id="vol-select-produto" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                         <option value="">Carregando itens...</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Quantidade Arrecadada</label>
+                    <label id="txt-qtd-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Quantidade Arrecadada</label>
                     <input type="number" id="vol-qtd-produto" placeholder="Ex: 5" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Quem doou ou entregou a você?</label>
+                    <label id="txt-doador-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Quem doou ou entregou a você?</label>
                     <input type="text" id="vol-quem-doou" placeholder="Nome do doador ou colaborador" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
 
-                <button onclick="voluntarioRegistrarColeta()" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
+                <button onclick="voluntarioRegistrarColeta()" id="btn-registrar-doacao" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
                     Registrar Doação (Modo Offline Seguro)
                 </button>
             </div>
 
             <div class="mt-6 text-center">
-                <button onclick="sairDoSistema()" class="text-xs text-red-600 hover:underline font-medium">Sair / Trocar Acesso</button>
+                <button onclick="sairDoSistema()" id="btn-vol-sair" class="text-xs text-red-600 hover:underline font-medium">Sair / Trocar Acesso</button>
             </div>
         </div>
 
@@ -320,7 +328,7 @@
                 subTopo: "Gestão Solidária",
                 restrita: "Área Restrita",
                 bemVindo: "Bem-vindo(a)!",
-                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, turmas da Escola Sabatina e famílias assistidas.",
+                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
                 entrar: "Entrar no Sistema",
                 configTitulo: "Configuração Inicial",
                 configSub: "Cadastre a unidade e o coordenador responsável",
@@ -336,9 +344,9 @@
                 btnSair: "Sair do Sistema",
                 abaEstoque: "Gestão de Itens & Estoque",
                 abaDestaques: "⭐ Destaques & Casadinhos",
-                abaGincana: "🏆 Placar das Classes",
+                abaGincana: "🏆 Placar das Equipes",
                 abaFamilias: "Cadastro de Famílias",
-                abaVoluntarios: "Professores / Líderes",
+                abaVoluntarios: "Voluntários e Links",
                 cadItemTitulo: "Cadastrar Item para Arrecadação",
                 btnAddItem: "Adicionar à Lista",
                 acompanhamentoTitulo: "Acompanhamento de Estoque (Meta vs Entradas)",
@@ -346,7 +354,21 @@
                 thMeta: "Meta Fixa Necessária",
                 thArrecadado: "Total Arrecadado (Entradas)",
                 thFalta: "Falta para a Meta",
-                thAcoes: "Ações"
+                thAcoes: "Ações",
+                badgeVol: "Área do Voluntário",
+                lblDestaqueSem: "⭐ ALIMENTO EM DESTAQUE DA SEMANA:",
+                lblComboCas: "🎁 COMBO CASADINHO DA SEMANA:",
+                placarEquipe: "Total Arrecadado pela sua Equipe: ",
+                volSenhaMsg: "Defina sua senha de acesso pessoal para este link:",
+                btnVolSenha: "Salvar Senha e Entrar",
+                membrosFixosLbl: "Membros Fixos da sua Equipe:",
+                btnAddMembro: "Adicionar",
+                selItemLbl: "Selecione o Item",
+                qtdItemLbl: "Quantidade Arrecadada",
+                doadorItemLbl: "Quem doou ou entregou a você?",
+                btnRegDoacao: "Registrar Doação (Modo Offline Seguro)",
+                btnVolSair: "Sair / Trocar Acesso",
+                logOutBtn: "Sair"
             },
             en: {
                 titulo: "Solidarity Management Platform - Christmas Drive",
@@ -354,7 +376,7 @@
                 subTopo: "Solidarity Management",
                 restrita: "Restricted Area",
                 bemVindo: "Welcome!",
-                descBoasVindas: "Solidarity Management Platform for fundraising, Sabbath School classes, and assisted families.",
+                descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families.",
                 entrar: "Enter System",
                 configTitulo: "Initial Configuration",
                 configSub: "Register the unit and the responsible coordinator",
@@ -370,9 +392,9 @@
                 btnSair: "Log Out",
                 abaEstoque: "Items & Stock Management",
                 abaDestaques: "⭐ Highlights & Combos",
-                abaGincana: "🏆 Classes Scoreboard",
+                abaGincana: "🏆 Teams Scoreboard",
                 abaFamilias: "Families Registry",
-                abaVoluntarios: "Teachers / Leaders",
+                abaVoluntarios: "Volunteers & Links",
                 cadItemTitulo: "Register Item for Fundraising",
                 btnAddItem: "Add to List",
                 acompanhamentoTitulo: "Stock Tracking (Goal vs Inputs)",
@@ -380,7 +402,21 @@
                 thMeta: "Required Fixed Goal",
                 thArrecadado: "Total Raised (Inputs)",
                 thFalta: "Remaining to Goal",
-                thAcoes: "Actions"
+                thAcoes: "Actions",
+                badgeVol: "Volunteer Area",
+                lblDestaqueSem: "⭐ WEEKLY HIGHLIGHT FOOD:",
+                lblComboCas: "🎁 WEEKLY COMBO CASADINHO:",
+                placarEquipe: "Total Raised by your Team: ",
+                volSenhaMsg: "Set your personal access password for this link:",
+                btnVolSenha: "Save Password & Enter",
+                membrosFixosLbl: "Fixed Members of your Team:",
+                btnAddMembro: "Add",
+                selItemLbl: "Select Item",
+                qtdItemLbl: "Quantity Raised",
+                doadorItemLbl: "Who donated or delivered to you?",
+                btnRegDoacao: "Register Donation (Secure Offline Mode)",
+                btnVolSair: "Log Out / Change Access",
+                logOutBtn: "Log Out"
             },
             es: {
                 titulo: "Plataforma de Gestión Solidaria - Mutirón de Navidad",
@@ -388,7 +424,7 @@
                 subTopo: "Gestión Solidaria",
                 restrita: "Área Restringida",
                 bemVindo: "¡Bienvenido/a!",
-                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, clases de Escuela Sabática y familias asistidas.",
+                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
                 entrar: "Entrar al Sistema",
                 configTitulo: "Configuración Inicial",
                 configSub: "Registre la unidad y el coordinador responsable",
@@ -404,9 +440,9 @@
                 btnSair: "Salir del Sistema",
                 abaEstoque: "Gestión de Ítems y Stock",
                 abaDestaques: "⭐ Destacados y Combos",
-                abaGincana: "🏆 Tablero de Clases",
+                abaGincana: "🏆 Tablero de Equipos",
                 abaFamilias: "Registro de Familias",
-                abaVoluntarios: "Profesores / Líderes",
+                abaVoluntarios: "Voluntarios y Enlaces",
                 cadItemTitulo: "Registrar Ítem para Recaudación",
                 btnAddItem: "Añadir a la Lista",
                 acompanhamentoTitulo: "Seguimiento de Stock (Meta vs Entradas)",
@@ -414,7 +450,21 @@
                 thMeta: "Meta Fija Necesaria",
                 thArrecadado: "Total Recaudado (Entradas)",
                 thFalta: "Falta para la Meta",
-                thAcoes: "Acciones"
+                thAcoes: "Acciones",
+                badgeVol: "Área del Voluntario",
+                lblDestaqueSem: "⭐ ALIMENTO DESTACADO DE LA SEMANA:",
+                lblComboCas: "🎁 COMBO CASADINHO DE LA SEMANA:",
+                placarEquipe: "Total Recaudado por su Equipo: ",
+                volSenhaMsg: "Defina su contraseña de acceso personal para este enlace:",
+                btnVolSenha: "Guardar Contraseña y Entrar",
+                membrosFixosLbl: "Miembros Fijos de su Equipo:",
+                btnAddMembro: "Añadir",
+                selItemLbl: "Seleccionar Ítem",
+                qtdItemLbl: "Cantidad Recaudada",
+                doadorItemLbl: "¿Quién donó o entregó a usted?",
+                btnRegDoacao: "Registrar Donación (Modo Sin Conexión Seguro)",
+                btnVolSair: "Salir / Cambiar Acceso",
+                logOutBtn: "Salir"
             },
             fr: {
                 titulo: "Plateforme de Gestion Solidaire - Noël Solidaire",
@@ -422,7 +472,7 @@
                 subTopo: "Gestion Solidaire",
                 restrita: "Zone Restreinte",
                 bemVindo: "Bienvenue !",
-                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des classes de l'École du Sabbat et des familles aidées.",
+                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
                 entrar: "Entrer dans le Système",
                 configTitulo: "Configuration Initiale",
                 configSub: "Enregistrez l'unité et le coordinateur responsable",
@@ -438,9 +488,9 @@
                 btnSair: "Se Déconnecter",
                 abaEstoque: "Gestion des Articles & Stock",
                 abaDestaques: "⭐ Points Forts & Combos",
-                abaGincana: "🏆 Tableau des Classes",
+                abaGincana: "🏆 Tableau des Équipes",
                 abaFamilias: "Registre des Familles",
-                abaVoluntarios: "Enseignants / Leaders",
+                abaVoluntarios: "Bénévoles & Liens",
                 cadItemTitulo: "Enregistrer un Article",
                 btnAddItem: "Ajouter à la Liste",
                 acompanhamentoTitulo: "Suivi des Stocks (Objectif vs Entrées)",
@@ -448,7 +498,21 @@
                 thMeta: "Objectif Fixe Requis",
                 thArrecadado: "Total Collecté (Entrées)",
                 thFalta: "Reste pour l'Objectif",
-                thAcoes: "Actions"
+                thAcoes: "Actions",
+                badgeVol: "Zone Bénévole",
+                lblDestaqueSem: "⭐ ALIMENT PHARES DE LA SEMAINE:",
+                lblComboCas: "🎁 COMBO CASADINHO DE LA SEMAINE:",
+                placarEquipe: "Total Collecté par votre Équipe: ",
+                volSenhaMsg: "Définissez votre mot de passe d'accès personnel pour ce lien:",
+                btnVolSenha: "Enregistrer le Mot de Passe & Entrer",
+                membrosFixosLbl: "Membres Fixes de votre Équipe:",
+                btnAddMembro: "Ajouter",
+                selItemLbl: "Sélectionner l'Article",
+                qtdItemLbl: "Quantité Collectée",
+                doadorItemLbl: "Qui a fait un don ou vous a livré?",
+                btnRegDoacao: "Enregistrer le Don (Mode Hors Ligne Sécurisé)",
+                btnVolSair: "Se Déconnecter / Changer l'Accès",
+                logOutBtn: "Se Déconnecter"
             }
         };
 
@@ -492,6 +556,20 @@
             document.getElementById('th-falta').innerText = t.thFalta;
             document.getElementById('th-acoes').innerText = t.thAcoes;
 
+            // Área do Voluntário
+            document.getElementById('txt-badge-vol').innerText = t.badgeVol;
+            document.getElementById('txt-lbl-destaque-semana').innerText = t.lblDestaqueSem;
+            document.getElementById('txt-lbl-combo-casadinho').innerText = t.lblComboCas;
+            document.getElementById('txt-vol-senha-msg').innerText = t.volSenhaMsg;
+            document.getElementById('btn-vol-salvar-senha').innerText = t.btnVolSenha;
+            document.getElementById('txt-membros-fixos-lbl').innerText = t.membrosFixosLbl;
+            document.getElementById('btn-add-membro').innerText = t.btnAddMembro;
+            document.getElementById('txt-sel-item-lbl').innerText = t.selItemLbl;
+            document.getElementById('txt-qtd-item-lbl').innerText = t.qtdItemLbl;
+            document.getElementById('txt-doador-item-lbl').innerText = t.doadorItemLbl;
+            document.getElementById('btn-registrar-doacao').innerText = t.btnRegDoacao;
+            document.getElementById('btn-vol-sair').innerText = t.btnVolSair;
+
             localStorage.setItem('sys_idioma', lang);
         }
 
@@ -501,6 +579,8 @@
             senha: '',
             destaqueSemana: '',
             comboCasadinho: '',
+            historicoDestaques: [],
+            historicoCasadinhos: [],
             produtos: [], 
             familias: [], 
             voluntarios: [] 
@@ -524,18 +604,16 @@
                 voluntarioLogadoNome = voluntarioParam;
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
                 document.getElementById('painel-voluntario').classList.remove('hidden');
-                document.getElementById('voluntario-titulo-nome').innerText = `Líder / Professor: ${voluntarioParam}`;
+                document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a) / Líder: ${voluntarioParam}`;
                 if(dadosSistema.igreja) {
                     document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
                 }
 
-                // Exibir Destaque da Semana se preenchido
                 if(dadosSistema.destaqueSemana) {
                     document.getElementById('banner-destaque-voluntario').classList.remove('hidden');
                     document.getElementById('texto-destaque-exibicao').innerText = dadosSistema.destaqueSemana;
                 }
 
-                // Exibir Combo Casadinho se preenchido
                 if(dadosSistema.comboCasadinho) {
                     document.getElementById('banner-casadinho-voluntario').classList.remove('hidden');
                     document.getElementById('texto-casadinho-exibicao').innerText = dadosSistema.comboCasadinho;
@@ -560,24 +638,82 @@
             } else if (dadosSistema.igreja) {
                 document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             }
+
+            atualizarHistoricoDestaquesInterface();
         };
 
         function salvarDestaqueSemana() {
             const destaque = document.getElementById('input-destaque-semana').value.trim();
             if(!destaque) return alert('Digite o alimento em destaque.');
+            
+            const dataHoje = new Date().toLocaleDateString('pt-BR');
+            if(!dadosSistema.historicoDestaques) dadosSistema.historicoDestaques = [];
+            dadosSistema.historicoDestaques.unshift({ texto: destaque, data: dataHoje });
+
             dadosSistema.destaqueSemana = destaque;
             salvarDadosLocal();
             alert('Alimento em destaque da semana atualizado com sucesso!');
             document.getElementById('input-destaque-semana').value = '';
+            atualizarHistoricoDestaquesInterface();
+        }
+
+        function limparDestaqueSemana() {
+            dadosSistema.destaqueSemana = '';
+            salvarDadosLocal();
+            alert('Destaque limpo da tela dos voluntários (mantido no histórico da coordenação).');
+            atualizarHistoricoDestaquesInterface();
         }
 
         function salvarCasadinho() {
             const casadinho = document.getElementById('input-casadinho').value.trim();
             if(!casadinho) return alert('Digite o combo casadinho.');
+
+            const dataHoje = new Date().toLocaleDateString('pt-BR');
+            if(!dadosSistema.historicoCasadinhos) dadosSistema.historicoCasadinhos = [];
+            dadosSistema.historicoCasadinhos.unshift({ texto: casadinho, data: dataHoje });
+
             dadosSistema.comboCasadinho = casadinho;
             salvarDadosLocal();
             alert('Combo casadinho atualizado com sucesso!');
             document.getElementById('input-casadinho').value = '';
+            atualizarHistoricoDestaquesInterface();
+        }
+
+        function limparCasadinho() {
+            dadosSistema.comboCasadinho = '';
+            salvarDadosLocal();
+            alert('Casadinho limpo da tela dos voluntários (mantido no histórico da coordenação).');
+            atualizarHistoricoDestaquesInterface();
+        }
+
+        function atualizarHistoricoDestaquesInterface() {
+            const containerD = document.getElementById('historico-destaques');
+            if(containerD) {
+                if(!dadosSistema.historicoDestaques || dadosSistema.historicoDestaques.length === 0) {
+                    containerD.innerHTML = '<strong>Histórico de Destaques Anteriores:</strong> Nenhum registro anterior.';
+                } else {
+                    let html = '<strong>Histórico de Destaques Anteriores:</strong><ul class="list-disc pl-4 mt-1 space-y-0.5">';
+                    dadosSistema.historicoDestaques.forEach(h => {
+                        html += `<li>[${h.data}] ${h.texto}</li>`;
+                    });
+                    html += '</ul>';
+                    containerD.innerHTML = html;
+                }
+            }
+
+            const containerC = document.getElementById('historico-casadinhos');
+            if(containerC) {
+                if(!dadosSistema.historicoCasadinhos || dadosSistema.historicoCasadinhos.length === 0) {
+                    containerC.innerHTML = '<strong>Histórico de Casadinhos Anteriores:</strong> Nenhum registro anterior.';
+                } else {
+                    let html = '<strong>Histórico de Casadinhos Anteriores:</strong><ul class="list-disc pl-4 mt-1 space-y-0.5">';
+                    dadosSistema.historicoCasadinhos.forEach(h => {
+                        html += `<li>[${h.data}] ${h.texto}</li>`;
+                    });
+                    html += '</ul>';
+                    containerC.innerHTML = html;
+                }
+            }
         }
 
         function ativarSenhaVoluntario() {
@@ -652,6 +788,7 @@
             atualizarPlacarGincanaCoordenador();
             atualizarListaFamilias();
             atualizarListaVoluntarios();
+            atualizarHistoricoDestaquesInterface();
         }
 
         function sairDoSistema() {
@@ -708,7 +845,7 @@
         function atualizarPlacarGincanaCoordenador() {
             let html = '';
             if (!dadosSistema.voluntarios || dadosSistema.voluntarios.length === 0) {
-                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma classe/turma cadastrada.</p>';
+                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma equipe de voluntário cadastrada.</p>';
             } else {
                 let ordenados = [...dadosSistema.voluntarios].sort((a, b) => (b.totalArrecadado || 0) - (a.totalArrecadado || 0));
                 ordenados.forEach((v, index) => {
@@ -719,9 +856,9 @@
                             <div>
                                 <div class="flex items-center space-x-2">
                                     <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-dourado border border-dourado/30">${posicaoBadge}</span>
-                                    <h5 class="text-sm font-bold text-verde-asa">Líder / Professor: ${v.nome}</h5>
+                                    <h5 class="text-sm font-bold text-verde-asa">Líder: ${v.nome}</h5>
                                 </div>
-                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Classe:</strong> ${membrosStr}</p>
+                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Equipe:</strong> ${membrosStr}</p>
                             </div>
                             <div class="text-right bg-white p-3 rounded-lg border border-dourado/30 w-full md:w-auto">
                                 <span class="text-[11px] text-gray-500 block">Total Arrecadado</span>
@@ -826,7 +963,7 @@
 
         function gerarLinkVoluntario() {
             const nome = document.getElementById('vol-nome-input').value.trim();
-            if(!nome) return alert('Digite o nome do professor / líder.');
+            if(!nome) return alert('Digite o nome do voluntário / líder.');
             dadosSistema.voluntarios.push({ nome, senha: '', equipeFixa: [], totalArrecadado: 0 });
             salvarDadosLocal();
             atualizarListaVoluntarios();
@@ -917,7 +1054,7 @@
             }
 
             salvarDadosLocal();
-            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua turma foi atualizado.`);
+            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua equipe foi atualizado.`);
             document.getElementById('vol-qtd-produto').value = '';
             document.getElementById('vol-quem-doou').value = '';
             atualizarPlacarE1EquipeVoluntario();

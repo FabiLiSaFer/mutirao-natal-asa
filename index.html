@@ -78,14 +78,9 @@
                 Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
             </p>
 
-            <div class="space-y-3">
-                <button onclick="irParaLoginUnidadeExistente()" id="btn-entrar-existente" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
-                    Acessar Unidade Cadastrada
-                </button>
-                <button onclick="irParaNovoCadastroUnidade()" id="btn-cadastrar-nova" class="w-full bg-amber-50 hover:bg-amber-100 text-dourado border border-dourado/40 font-medium py-3 px-4 rounded-xl shadow-xs transition duration-200 text-xs">
-                    + Cadastrar Nova Unidade / Outra Igreja
-                </button>
-            </div>
+            <button onclick="irParaLoginUnidadeExistente()" id="btn-entrar-existente" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
+                Acessar Unidade Licenciada
+            </button>
         </div>
 
         <!-- 1. TELA DE CADASTRO INICIAL -->
@@ -97,24 +92,28 @@
                 <p id="txt-config-sub" class="text-xs text-gray-500 mt-1">Cadastre a unidade e o coordenador responsável</p>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-3">
                 <div>
-                    <label id="txt-label-unidade" class="block text-xs font-semibold text-gray-600 mb-1">Nome da Unidade / Projeto</label>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome da Unidade / Projeto</label>
                     <input type="text" id="reg-igreja" placeholder="Ex: Projeto Solidário Central" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label id="txt-label-coord" class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
                     <input type="text" id="reg-coordenador" placeholder="Ex: Vera Lima" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label id="txt-label-senha" class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
                     <input type="password" id="reg-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label id="txt-label-confsenha" class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
                     <input type="password" id="reg-confirma-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
-                <button onclick="salvarCadastroInicial()" id="btn-salvar-config" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Palavra-Chave de Recuperação (Ex: Nome de infância ou cor favorita)</label>
+                    <input type="text" id="reg-palavra-chave" placeholder="Ex: Esperança" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
+                </div>
+                <button onclick="salvarCadastroInicial()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 mt-2">
                     Acessar Painel do Coordenador
                 </button>
             </div>
@@ -123,10 +122,24 @@
         <!-- TELA DE LOGIN DO COORDENADOR -->
         <div id="tela-login-coord" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full text-center space-y-4">
             <h2 id="titulo-login-igreja" class="text-2xl font-bold text-verde-asa">Área Restrita</h2>
-            <p id="txt-login-sub" class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
+            <p class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
             <input type="password" id="login-senha-coord" placeholder="Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
-            <button onclick="fazerLoginCoordenador()" id="btn-login-entrar" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
-            <button onclick="voltarParaInicio()" class="text-xs text-gray-500 hover:underline">Voltar</button>
+            <button onclick="fazerLoginCoordenador()" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
+            
+            <div class="pt-2 flex justify-between items-center text-xs">
+                <button onclick="voltarParaInicio()" class="text-gray-500 hover:underline">Voltar</button>
+                <button onclick="mostrarTelaEsqueceuSenha()" class="text-dourado hover:underline font-semibold">Esqueceu a senha?</button>
+            </div>
+        </div>
+
+        <!-- TELA DE RECUPERAÇÃO DE SENHA POR PALAVRA-CHAVE -->
+        <div id="tela-esqueceu-senha" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full text-center space-y-4">
+            <h2 class="text-xl font-bold text-verde-asa">Recuperar Acesso</h2>
+            <p class="text-xs text-gray-500">Digite sua Palavra-Chave de Recuperação cadastrada para criar uma nova senha.</p>
+            <input type="text" id="recup-palavra" placeholder="Sua palavra-chave secreta" class="w-full text-xs p-3 rounded-xl border border-gray-300">
+            <input type="password" id="recup-nova-senha" placeholder="Nova Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
+            <button onclick="executarRecuperacaoSenha()" class="w-full bg-dourado text-white font-medium py-3 rounded-xl hover:bg-[#b08d4b]">Redefinir Senha</button>
+            <button onclick="voltarParaLogin()" class="text-xs text-gray-500 hover:underline">Voltar ao Login</button>
         </div>
 
         <!-- 2. PAINEL DE CONTROLE DO COORDENADOR -->
@@ -182,7 +195,7 @@
                     </div>
                 </div>
 
-                <!-- DESTAQUES E CASADINHOS (COM HISTÓRICO E LIMPEZA INDEPENDENTE) -->
+                <!-- DESTAQUES E CASADINHOS -->
                 <div id="conteudo-aba-destaques" class="hidden space-y-6">
                     <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
@@ -211,7 +224,7 @@
                     </div>
                 </div>
 
-                <!-- PLACAR DAS EQUIPES (GINCANA) -->
+                <!-- PLACAR DAS EQUIPES -->
                 <div id="conteudo-aba-gincana" class="hidden space-y-4">
                     <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Equipes</h4>
                     <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada equipe responsável e seus arrecadadores.</p>
@@ -268,7 +281,7 @@
                     </div>
                 </div>
 
-                <!-- COORDENADORES ASSOCIADOS / SECRETÁRIOS -->
+                <!-- COORDENADORES ASSOCIADOS -->
                 <div id="conteudo-aba-associados" class="hidden space-y-4">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                         <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Acesso para Coordenador Associado / Secretário(a)</h4>
@@ -375,8 +388,7 @@
                 restrita: "Área Restrita",
                 bemVindo: "Bem-vindo(a)!",
                 descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
-                entrarExistente: "Acessar Unidade Cadastrada",
-                cadastrarNova: "+ Cadastrar Nova Unidade / Outra Igreja",
+                entrarExistente: "Acessar Unidade Licenciada",
                 configTitulo: "Configuração Inicial",
                 configSub: "Cadastre a unidade e o coordenador responsável",
                 lblUnidade: "Nome da Unidade / Projeto",
@@ -425,8 +437,7 @@
                 restrita: "Restricted Area",
                 bemVindo: "Welcome!",
                 descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families.",
-                entrarExistente: "Access Registered Unit",
-                cadastrarNova: "+ Register New Unit / Other Church",
+                entrarExistente: "Access Licensed Unit",
                 configTitulo: "Initial Configuration",
                 configSub: "Register the unit and the responsible coordinator",
                 lblUnidade: "Unit / Project Name",
@@ -475,8 +486,7 @@
                 restrita: "Área Restringida",
                 bemVindo: "¡Bienvenido/a!",
                 descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
-                entrarExistente: "Acceder a la Unidad Registrada",
-                cadastrarNova: "+ Registrar Nueva Unidad / Otra Iglesia",
+                entrarExistente: "Acceder a la Unidad Licenciada",
                 configTitulo: "Configuración Inicial",
                 configSub: "Registre la unidad y el coordinador responsable",
                 lblUnidade: "Nombre de la Unidad / Proyecto",
@@ -525,8 +535,7 @@
                 restrita: "Zone Restreinte",
                 bemVindo: "Bienvenue !",
                 descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
-                entrarExistente: "Accéder à l'Unité Enregistrée",
-                cadastrarNova: "+ Enregistrer une Nouvelle Unité / Autre Église",
+                entrarExistente: "Accéder à l'Unité Licenciée",
                 configTitulo: "Configuration Initiale",
                 configSub: "Enregistrez l'unité et le coordinateur responsable",
                 lblUnidade: "Nom de l'Unité / Projet",
@@ -581,21 +590,9 @@
             
             let btnExistente = document.getElementById('btn-entrar-existente');
             if(btnExistente) btnExistente.innerText = t.entrarExistente;
-            let btnNova = document.getElementById('btn-cadastrar-nova');
-            if(btnNova) btnNova.innerText = t.cadastrarNova;
 
             document.getElementById('txt-config-titulo').innerText = t.configTitulo;
             document.getElementById('txt-config-sub').innerText = t.configSub;
-            document.getElementById('txt-label-unidade').innerText = t.lblUnidade;
-            document.getElementById('txt-label-coord').innerText = t.lblCoord;
-            document.getElementById('txt-label-senha').innerText = t.lblSenha;
-            document.getElementById('txt-label-confsenha').innerText = t.lblConfSenha;
-            document.getElementById('btn-salvar-config').innerText = t.btnSalvarConfig;
-
-            document.getElementById('titulo-login-igreja').innerText = t.tituloLogin;
-            document.getElementById('txt-login-sub').innerText = t.loginSub;
-            document.getElementById('btn-login-entrar').innerText = t.btnLoginEntrar;
-
             document.getElementById('txt-painel-coord-titulo').innerText = t.painelCoordTitulo;
             document.getElementById('btn-sair-sistema').innerText = t.btnSair;
 
@@ -637,6 +634,7 @@
             igreja: '',
             coordenador: '',
             senha: '',
+            palavraChave: '',
             destaqueSemana: '',
             comboCasadinho: '',
             historicoDestaques: [],
@@ -730,7 +728,12 @@
                 salvarDadosLocal();
                 alert('Licença ativada com sucesso!');
                 document.getElementById('tela-ativacao-chave').classList.add('hidden');
-                document.getElementById('tela-boas-vindas').classList.remove('hidden');
+                
+                if (dadosSistema.igreja) {
+                    document.getElementById('tela-boas-vindas').classList.remove('hidden');
+                } else {
+                    document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
+                }
             } else {
                 alert('Chave de licença inválida ou incorreta!');
             }
@@ -742,20 +745,46 @@
                 document.getElementById('titulo-login-igreja').innerText = `Área Restrita - ${dadosSistema.igreja}`;
                 document.getElementById('tela-login-coord').classList.remove('hidden');
             } else {
-                alert('Nenhuma unidade cadastrada neste navegador. Cadastre uma nova!');
                 document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
             }
-        }
-
-        function irParaNovoCadastroUnidade() {
-            document.getElementById('tela-boas-vindas').classList.add('hidden');
-            document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
         }
 
         function voltarParaInicio() {
             document.getElementById('tela-login-coord').classList.add('hidden');
             document.getElementById('tela-cadastro-igreja').classList.add('hidden');
+            document.getElementById('tela-esqueceu-senha').classList.add('hidden');
             document.getElementById('tela-boas-vindas').classList.remove('hidden');
+        }
+
+        function mostrarTelaEsqueceuSenha() {
+            document.getElementById('tela-login-coord').classList.add('hidden');
+            document.getElementById('tela-esqueceu-senha').classList.remove('hidden');
+        }
+
+        function voltarParaLogin() {
+            document.getElementById('tela-esqueceu-senha').classList.add('hidden');
+            document.getElementById('tela-login-coord').classList.remove('hidden');
+        }
+
+        function executarRecuperacaoSenha() {
+            const palavraDigitada = document.getElementById('recup-palavra').value.trim().toLowerCase();
+            const novaSenha = document.getElementById('recup-nova-senha').value.trim();
+
+            if(!palavraDigitada || !novaSenha) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            if(palavraDigitada === (dadosSistema.palavraChave || '').toLowerCase()) {
+                dadosSistema.senha = novaSenha;
+                salvarDadosLocal();
+                alert('Senha redefinida com sucesso! Faça login com a sua nova senha.');
+                document.getElementById('recup-palavra').value = '';
+                document.getElementById('recup-nova-senha').value = '';
+                voltarParaLogin();
+            } else {
+                alert('Palavra-chave incorreta!');
+            }
         }
 
         function salvarDestaqueSemana() {
@@ -855,9 +884,10 @@
             const coord = document.getElementById('reg-coordenador').value.trim();
             const senha = document.getElementById('reg-senha').value.trim();
             const confirma = document.getElementById('reg-confirma-senha').value.trim();
+            const palavra = document.getElementById('reg-palavra-chave').value.trim();
 
-            if(!igreja || !coord || !senha) {
-                alert('Por favor, preencha todos os campos!');
+            if(!igreja || !coord || !senha || !palavra) {
+                alert('Por favor, preencha todos os campos, incluindo a palavra-chave!');
                 return;
             }
             if(senha !== confirma) {
@@ -868,6 +898,7 @@
             dadosSistema.igreja = igreja;
             dadosSistema.coordenador = coord;
             dadosSistema.senha = senha;
+            dadosSistema.palavraChave = palavra;
             salvarDadosLocal();
 
             abrirPainelCoordenador();
@@ -888,6 +919,7 @@
             document.getElementById('tela-boas-vindas').classList.add('hidden');
             document.getElementById('tela-cadastro-igreja').classList.add('hidden');
             document.getElementById('tela-login-coord').classList.add('hidden');
+            document.getElementById('tela-esqueceu-senha').classList.add('hidden');
             document.getElementById('painel-coordenador').classList.remove('hidden');
             document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;

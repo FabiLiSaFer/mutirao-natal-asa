@@ -44,7 +44,7 @@
     <!-- CONTEÚDO DINÂMICO -->
     <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full flex items-center justify-center">
 
-        <!-- 0. TELA DE ATIVAÇÃO POR CHAVE (TRAVA DE SEGURANÇA DE USO ÚNICO) -->
+        <!-- 0. TELA DE ATIVAÇÃO POR CHAVE (LICENÇA DE USO ÚNICO) -->
         <div id="tela-ativacao-chave" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
@@ -110,7 +110,7 @@
                     <input type="password" id="reg-confirma-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Palavra-Chave de Recuperação (Ex: Nome de infância ou cor favorita)</label>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Palavra-Chave de Recuperação (Para redefinir senha)</label>
                     <input type="text" id="reg-palavra-chave" placeholder="Ex: Esperança" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
                 </div>
                 <button onclick="salvarCadastroInicial()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 mt-2">
@@ -132,10 +132,10 @@
             </div>
         </div>
 
-        <!-- TELA DE RECUPERAÇÃO DE SENHA POR PALAVRA-CHAVE -->
+        <!-- TELA DE RECUPERAÇÃO DE SENHA -->
         <div id="tela-esqueceu-senha" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full text-center space-y-4">
             <h2 class="text-xl font-bold text-verde-asa">Recuperar Acesso</h2>
-            <p class="text-xs text-gray-500">Digite sua Palavra-Chave de Recuperação cadastrada para criar uma nova senha.</p>
+            <p class="text-xs text-gray-500">Digite sua Palavra-Chave de Recuperação para criar uma nova senha.</p>
             <input type="text" id="recup-palavra" placeholder="Sua palavra-chave secreta" class="w-full text-xs p-3 rounded-xl border border-gray-300">
             <input type="password" id="recup-nova-senha" placeholder="Nova Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
             <button onclick="executarRecuperacaoSenha()" class="w-full bg-dourado text-white font-medium py-3 rounded-xl hover:bg-[#b08d4b]">Redefinir Senha</button>
@@ -281,9 +281,9 @@
                     </div>
                 </div>
 
-                <!-- COORDENADORES ASSOCIADOS -->
+                <!-- COORDENADORES ASSOCIADOS (EXCLUSIVO DO COORDENADOR GERAL) -->
                 <div id="conteudo-aba-associados" class="hidden space-y-4">
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <div id="bloco-gerar-associado" class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                         <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Acesso para Coordenador Associado / Secretário(a)</h4>
                         <p class="text-xs text-gray-600 mb-3">Gere um link direto para que outra pessoa da coordenação acesse e ajude a gerenciar esta mesma unidade.</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
@@ -325,14 +325,14 @@
                 </div>
             </div>
 
-            <!-- SENHA DO VOLUNTÁRIO -->
+            <!-- SENHA DO VOLUNTÁRIO / ASSOCIADO -->
             <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4">
                 <p id="txt-vol-senha-msg" class="text-xs font-bold text-verde-asa">Defina sua senha de acesso pessoal para este link:</p>
                 <input type="password" id="vol-senha-cadastro" placeholder="Crie sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
-                <button onclick="ativarSenhaVoluntario()" id="btn-vol-salvar-senha" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
+                <button onclick="ativarSenhaVoluntarioOuAssociado()" id="btn-vol-salvar-senha" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
             </div>
 
-            <!-- FORMULÁRIO -->
+            <!-- FORMULÁRIO DE REGISTRO COM AUDITORIA (QUEM REGISTROU + DATA E HORA) -->
             <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
                 
                 <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
@@ -355,12 +355,12 @@
                     <input type="number" id="vol-qtd-produto" placeholder="Ex: 5" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
                 <div>
-                    <label id="txt-doador-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Quem doou ou entregou a você?</label>
-                    <input type="text" id="vol-quem-doou" placeholder="Nome do doador ou colaborador" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Registrado por (Quem fez o lançamento):</label>
+                    <input type="text" id="vol-quem-registrou" placeholder="Nome da pessoa que registrou" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
                 </div>
 
                 <button onclick="voluntarioRegistrarColeta()" id="btn-registrar-doacao" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
-                    Registrar Doação (Modo Offline Seguro)
+                    Registrar Doação com Comprovante e Auditoria
                 </button>
             </div>
 
@@ -391,14 +391,6 @@
                 entrarExistente: "Acessar Unidade Licenciada",
                 configTitulo: "Configuração Inicial",
                 configSub: "Cadastre a unidade e o coordenador responsável",
-                lblUnidade: "Nome da Unidade / Projeto",
-                lblCoord: "Nome do Coordenador",
-                lblSenha: "Senha de Acesso",
-                lblConfSenha: "Confirmar Senha",
-                btnSalvarConfig: "Acessar Painel do Coordenador",
-                tituloLogin: "Área Restrita",
-                loginSub: "Digite a senha da coordenação para entrar",
-                btnLoginEntrar: "Entrar como Coordenador",
                 painelCoordTitulo: "Painel de Gestão - Coordenador(a)",
                 btnSair: "Sair do Sistema",
                 abaEstoque: "Gestão de Itens & Estoque",
@@ -425,10 +417,8 @@
                 btnAddMembro: "Adicionar",
                 selItemLbl: "Selecione o Item",
                 qtdItemLbl: "Quantidade Arrecadada",
-                doadorItemLbl: "Quem doou ou entregou a você?",
-                btnRegDoacao: "Registrar Doação (Modo Offline Seguro)",
-                btnVolSair: "Sair / Trocar Acesso",
-                logOutBtn: "Sair"
+                btnRegDoacao: "Registrar Doação com Comprovante e Auditoria",
+                btnVolSair: "Sair / Trocar Acesso"
             },
             en: {
                 titulo: "Solidarity Management Platform - Christmas Drive",
@@ -440,14 +430,6 @@
                 entrarExistente: "Access Licensed Unit",
                 configTitulo: "Initial Configuration",
                 configSub: "Register the unit and the responsible coordinator",
-                lblUnidade: "Unit / Project Name",
-                lblCoord: "Coordinator Name",
-                lblSenha: "Password",
-                lblConfSenha: "Confirm Password",
-                btnSalvarConfig: "Access Coordinator Panel",
-                tituloLogin: "Restricted Area",
-                loginSub: "Enter coordination password to login",
-                btnLoginEntrar: "Login as Coordinator",
                 painelCoordTitulo: "Management Panel - Coordinator",
                 btnSair: "Log Out",
                 abaEstoque: "Items & Stock Management",
@@ -474,10 +456,8 @@
                 btnAddMembro: "Add",
                 selItemLbl: "Select Item",
                 qtdItemLbl: "Quantity Raised",
-                doadorItemLbl: "Who donated or delivered to you?",
-                btnRegDoacao: "Register Donation (Secure Offline Mode)",
-                btnVolSair: "Log Out / Change Access",
-                logOutBtn: "Log Out"
+                btnRegDoacao: "Register Donation with Audit & Receipt",
+                btnVolSair: "Log Out / Change Access"
             },
             es: {
                 titulo: "Plataforma de Gestión Solidaria - Mutirón de Navidad",
@@ -489,14 +469,6 @@
                 entrarExistente: "Acceder a la Unidad Licenciada",
                 configTitulo: "Configuración Inicial",
                 configSub: "Registre la unidad y el coordinador responsable",
-                lblUnidade: "Nombre de la Unidad / Proyecto",
-                lblCoord: "Nombre del Coordinador",
-                lblSenha: "Contraseña",
-                lblConfSenha: "Confirmar Contraseña",
-                btnSalvarConfig: "Acceder al Panel del Coordinador",
-                tituloLogin: "Área Restringida",
-                loginSub: "Ingrese la contraseña de coordinación para entrar",
-                btnLoginEntrar: "Entrar como Coordinador",
                 painelCoordTitulo: "Panel de Gestión - Coordinador(a)",
                 btnSair: "Salir del Sistema",
                 abaEstoque: "Gestión de Ítems y Stock",
@@ -523,10 +495,8 @@
                 btnAddMembro: "Añadir",
                 selItemLbl: "Seleccionar Ítem",
                 qtdItemLbl: "Cantidad Recaudada",
-                doadorItemLbl: "¿Quién donó o entregó a usted?",
-                btnRegDoacao: "Registrar Donación (Modo Sin Conexión Seguro)",
-                btnVolSair: "Salir / Cambiar Acceso",
-                logOutBtn: "Salir"
+                btnRegDoacao: "Registrar Donación con Auditoría y Comprobante",
+                btnVolSair: "Salir / Cambiar Acceso"
             },
             fr: {
                 titulo: "Plateforme de Gestion Solidaire - Noël Solidaire",
@@ -538,14 +508,6 @@
                 entrarExistente: "Accéder à l'Unité Licenciée",
                 configTitulo: "Configuration Initiale",
                 configSub: "Enregistrez l'unité et le coordinateur responsable",
-                lblUnidade: "Nom de l'Unité / Projet",
-                lblCoord: "Nom du Coordinateur",
-                lblSenha: "Mot de Passe",
-                lblConfSenha: "Confirmer le Mot de Passe",
-                btnSalvarConfig: "Accéder au Panneau du Coordinateur",
-                tituloLogin: "Zone Restreinte",
-                loginSub: "Entrez le mot de passe de coordination",
-                btnLoginEntrar: "Se connecter en tant que Coordinateur",
                 painelCoordTitulo: "Panneau de Gestion - Coordinateur",
                 btnSair: "Se Déconnecter",
                 abaEstoque: "Gestion des Articles & Stock",
@@ -572,10 +534,8 @@
                 btnAddMembro: "Ajouter",
                 selItemLbl: "Sélectionner l'Article",
                 qtdItemLbl: "Quantité Collectée",
-                doadorItemLbl: "Qui a fait un don ou vous a livré?",
-                btnRegDoacao: "Enregistrer le Don (Mode Hors Ligne Sécurisé)",
-                btnVolSair: "Se Déconnecter / Changer l'Accès",
-                logOutBtn: "Se Déconnecter"
+                btnRegDoacao: "Enregistrer le Don avec Audit & Reçu",
+                btnVolSair: "Se Déconnecter / Changer l'Accès"
             }
         };
 
@@ -622,7 +582,6 @@
             document.getElementById('btn-add-membro').innerText = t.btnAddMembro;
             document.getElementById('txt-sel-item-lbl').innerText = t.selItemLbl;
             document.getElementById('txt-qtd-item-lbl').innerText = t.qtdItemLbl;
-            document.getElementById('txt-doador-item-lbl').innerText = t.doadorItemLbl;
             document.getElementById('btn-registrar-doacao').innerText = t.btnRegDoacao;
             document.getElementById('btn-vol-sair').innerText = t.btnVolSair;
 
@@ -645,7 +604,8 @@
             associados: []
         };
 
-        let voluntarioLogadoNome = '';
+        let sessaoAtualNome = '';
+        let sessaoTipo = ''; // 'voluntario' ou 'associado'
 
         function salvarDadosLocal() {
             localStorage.setItem('sys_campanha_data', JSON.stringify(dadosSistema));
@@ -656,7 +616,6 @@
             document.getElementById('seletor-idioma').value = savedLang;
             mudarIdioma(savedLang);
 
-            // Verificar Trava de Licença
             if (!dadosSistema.ativado) {
                 document.getElementById('tela-ativacao-chave').classList.remove('hidden');
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
@@ -668,14 +627,35 @@
             const associadoParam = urlParams.get('assoc');
 
             if (associadoParam) {
+                sessaoAtualNome = associadoParam;
+                sessaoTipo = 'associado';
                 document.getElementById('tela-ativacao-chave').classList.add('hidden');
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
+                document.getElementById('painel-voluntario').classList.remove('hidden');
+                document.getElementById('voluntario-titulo-nome').innerText = `Coordenador(a) Associado(a): ${associadoParam}`;
+                document.getElementById('txt-badge-vol').innerText = "Área de Co-Coordenação";
                 if(dadosSistema.igreja) {
                     document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
                 }
-                abrirPainelCoordenador();
+
+                let assocObj = dadosSistema.associados.find(a => a.nome === associadoParam);
+                if (assocObj && assocObj.senha) {
+                    let senhaDigitada = prompt(`Digite sua senha de acesso para ${associadoParam}:`);
+                    if (senhaDigitada === assocObj.senha) {
+                        document.getElementById('box-voluntario-senha').classList.add('hidden');
+                        document.getElementById('painel-voluntario').classList.add('hidden');
+                        abrirPainelCoordenador(); // Libera o painel completo de coordenação para o associado
+                    } else {
+                        alert('Senha incorreta!');
+                        window.location.href = window.location.pathname;
+                    }
+                } else {
+                    document.getElementById('box-voluntario-senha').classList.remove('hidden');
+                    document.getElementById('box-voluntario-formulario').classList.add('hidden');
+                }
             } else if (voluntarioParam) {
-                voluntarioLogadoNome = voluntarioParam;
+                sessaoAtualNome = voluntarioParam;
+                sessaoTipo = 'voluntario';
                 document.getElementById('tela-ativacao-chave').classList.add('hidden');
                 document.getElementById('tela-boas-vindas').classList.add('hidden');
                 document.getElementById('painel-voluntario').classList.remove('hidden');
@@ -861,22 +841,34 @@
             }
         }
 
-        function ativarSenhaVoluntario() {
+        function ativarSenhaVoluntarioOuAssociado() {
             const novaSenha = document.getElementById('vol-senha-cadastro').value.trim();
             if(!novaSenha) return alert('Digite uma senha válida.');
 
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(volObj) {
-                volObj.senha = novaSenha;
-                if(!volObj.equipeFixa) volObj.equipeFixa = [];
-                if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
-                salvarDadosLocal();
+            if (sessaoTipo === 'associado') {
+                let assocObj = dadosSistema.associados.find(a => a.nome === sessaoAtualNome);
+                if(assocObj) {
+                    assocObj.senha = novaSenha;
+                    salvarDadosLocal();
+                }
+                alert('Senha de Coordenador Associado cadastrada com sucesso!');
+                document.getElementById('box-voluntario-senha').classList.add('hidden');
+                document.getElementById('painel-voluntario').classList.add('hidden');
+                abrirPainelCoordenador();
+            } else {
+                let volObj = dadosSistema.voluntarios.find(v => v.nome === sessaoAtualNome);
+                if(volObj) {
+                    volObj.senha = novaSenha;
+                    if(!volObj.equipeFixa) volObj.equipeFixa = [];
+                    if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
+                    salvarDadosLocal();
+                }
+                alert('Senha cadastrada com sucesso!');
+                document.getElementById('box-voluntario-senha').classList.add('hidden');
+                document.getElementById('box-voluntario-formulario').classList.remove('hidden');
+                atualizarPlacarE1EquipeVoluntario();
+                popularSelectProdutos();
             }
-            alert('Senha cadastrada com sucesso!');
-            document.getElementById('box-voluntario-senha').classList.add('hidden');
-            document.getElementById('box-voluntario-formulario').classList.remove('hidden');
-            atualizarPlacarE1EquipeVoluntario();
-            popularSelectProdutos();
         }
 
         function salvarCadastroInicial() {
@@ -923,6 +915,13 @@
             document.getElementById('painel-coordenador').classList.remove('hidden');
             document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
             document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;
+
+            // RESTRIÇÃO DE SEGURANÇA: Se for Coordenador Associado, esconde a aba de gerar novos links (só o coordenador geral pode)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('assoc')) {
+                document.getElementById('bloco-gerar-associado').classList.add('hidden');
+            }
+
             atualizarTabelaEstoque();
             atualizarPlacarGincanaCoordenador();
             atualizarListaFamilias();
@@ -1133,7 +1132,7 @@
             const nome = document.getElementById('assoc-nome-input').value.trim();
             if(!nome) return alert('Digite o nome do coordenador associado.');
             if(!dadosSistema.associados) dadosSistema.associados = [];
-            dadosSistema.associados.push({ nome });
+            dadosSistema.associados.push({ nome, senha: '' });
             salvarDadosLocal();
             atualizarListaAssociados();
             document.getElementById('assoc-nome-input').value = '';
@@ -1149,7 +1148,7 @@
                     const linkUnico = `${baseUrl}?assoc=${encodeURIComponent(a.nome)}`;
                     html += `
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p class="font-bold text-verde-asa">Coordenador(a): ${a.nome}</p>
+                            <p class="font-bold text-verde-asa">Coordenador(a): ${a.nome} ${a.senha ? '(Senha Ativa)' : '(Sem senha)'}</p>
                             <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
                         </div>
                     `;
@@ -1171,7 +1170,7 @@
             const input = document.getElementById('input-novo-membro-equipe');
             const nomeMembro = input.value.trim();
             if(!nomeMembro) return alert('Digite o nome do membro.');
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === sessaoAtualNome);
             if(volObj) {
                 if(!volObj.equipeFixa) volObj.equipeFixa = [];
                 volObj.equipeFixa.push(nomeMembro);
@@ -1182,7 +1181,7 @@
         }
 
         function removerMembroEquipeFixo(index) {
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === sessaoAtualNome);
             if(volObj && volObj.equipeFixa) {
                 volObj.equipeFixa.splice(index, 1);
                 salvarDadosLocal();
@@ -1191,7 +1190,7 @@
         }
 
         function atualizarPlacarE1EquipeVoluntario() {
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === sessaoAtualNome);
             if(!volObj) return;
             document.getElementById('placar-total-equipe').innerText = volObj.totalArrecadado || 0;
             let html = '';
@@ -1208,26 +1207,40 @@
         function voluntarioRegistrarColeta() {
             const selectIdx = document.getElementById('vol-select-produto').value;
             const qtd = parseInt(document.getElementById('vol-qtd-produto').value);
-            const quemDoou = document.getElementById('vol-quem-doou').value.trim();
+            const quemRegistrou = document.getElementById('vol-quem-registrou').value.trim();
 
-            if(selectIdx === "" || isNaN(qtd) || qtd <= 0) {
-                alert('Selecione um item e informe uma quantidade válida.');
+            if(selectIdx === "" || isNaN(qtd) || qtd <= 0 || !quemRegistrou) {
+                alert('Selecione o item, informe uma quantidade válida e quem fez o registro.');
                 return;
             }
 
             dadosSistema.produtos[selectIdx].estoque = Number(dadosSistema.produtos[selectIdx].estoque) + qtd;
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
+            let volObj = dadosSistema.voluntarios.find(v => v.nome === sessaoAtualNome);
             if(volObj) {
                 if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
                 volObj.totalArrecadado += qtd;
             }
 
+            const dataHoraAtual = new Date().toLocaleString('pt-BR');
             salvarDadosLocal();
-            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua equipe foi atualizado.`);
+
+            alert(`✅ COMPROVANTE DE REGISTRO\n\nItem: ${dadosSistema.produtos[selectIdx].nome}\nQuantidade: ${qtd}\nEquipe/Líder: ${sessaoAtualNome}\nRegistrado por: ${quemRegistrou}\nData/Hora: ${dataHoraAtual}\n\nO placar e o estoque foram atualizados com sucesso!`);
+            
             document.getElementById('vol-qtd-produto').value = '';
-            document.getElementById('vol-quem-doou').value = '';
+            document.getElementById('vol-quem-registrou').value = '';
             atualizarPlacarE1EquipeVoluntario();
         }
+    </script>
+
+    <!-- Proteção Adicional -->
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) || (event.ctrlKey && event.key === 'U')) {
+                event.preventDefault();
+                alert('Este recurso está protegido.');
+            }
+        });
     </script>
 </body>
 </html>

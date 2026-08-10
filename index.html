@@ -25,79 +25,426 @@
             <span class="bg-dourado text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">ASA</span>
             <div>
                 <h1 class="text-lg font-bold text-verde-asa leading-tight">Mutirão de Natal</h1>
-                <p class="text-xs text-dourado font-medium uppercase tracking-wider">Ação Solidária Adventista</p>
+                <p id="subtitulo-igreja" class="text-xs text-dourado font-medium uppercase tracking-wider">Ação Solidária Adventista</p>
             </div>
         </div>
         <div>
-            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs">Área Restrita</span>
+            <span id="badge-status" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs">Área Restrita</span>
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL (TELA DE BOAS-VINDAS) -->
-    <main id="tela-login" class="flex-grow flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
+    <!-- CONTEÚDO DINÂMICO (TELAS) -->
+    <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full">
+
+        <!-- 1. TELA DE CADASTRO INICIAL DA IGREJA E COORDENADOR -->
+        <div id="tela-cadastro-igreja" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
             
-            <!-- ÍCONE DE CORAÇÃO E MÃOS -->
-            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
-                <svg class="w-9 h-9 text-dourado" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
+            <div class="text-center mb-6">
+                <div class="mx-auto w-14 h-14 bg-amber-50 rounded-full flex items-center justify-center mb-3 border border-dourado/30 shadow-inner">
+                    <svg class="w-8 h-8 text-dourado" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-verde-asa">Configuração Inicial</h2>
+                <p class="text-xs text-gray-500 mt-1">Cadastre a igreja e a coordenação responsável</p>
             </div>
 
-            <h2 class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
-            <p class="text-sm text-gray-600 mb-8 leading-relaxed">
-                Ferramenta de gestão e controle de doações para coordenadores e voluntários.
-            </p>
-
-            <button onclick="entrarSistema()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
-                <span>Entrar no Sistema</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome da Igreja (ex: IASD Mirandela)</label>
+                    <input type="text" id="reg-igreja" placeholder="Digite o nome da igreja" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
+                    <input type="text" id="reg-coordenador" placeholder="Ex: Vera Lima" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
+                    <input type="password" id="reg-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
+                    <input type="password" id="reg-confirma-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
+                </div>
+                <button onclick="salvarCadastroInicial()" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
+                    Acessar Painel do Coordenador
+                </button>
+            </div>
         </div>
+
+        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR (EXCLUSIVO) -->
+        <div id="painel-coordenador" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-100 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-verde-asa">Painel de Gestão - Coordenador(a)</h3>
+                        <p id="info-coordenador-logado" class="text-xs text-dourado font-medium mt-0.5"></p>
+                    </div>
+                    <button onclick="sairDoSistema()" class="text-xs text-red-600 hover:underline font-semibold bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">Sair do Sistema</button>
+                </div>
+
+                <!-- ABAS DE NAVEGAÇÃO DO COORDENADOR -->
+                <div class="flex space-x-2 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
+                    <button onclick="mudarAbaCoordenador('estoque')" id="btn-aba-estoque" class="text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap">Gestão de Alimentos & Estoque</button>
+                    <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
+                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
+                </div>
+
+                <!-- CONTEÚDO DA ABA: ESTOQUE / METAS -->
+                <div id="conteudo-aba-estoque" class="space-y-6">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Cadastrar Alimento para Arrecadação</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <input type="text" id="novo-produto-nome" placeholder="Nome (ex: Arroz 5kg)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="number" id="novo-produto-meta" placeholder="Meta Total (Qtd)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="adicionarProdutoMeta()" class="bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20]">Adicionar à Lista</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Acompanhamento de Estoque e Arrecadação</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse">
+                                <thead class="bg-amber-50 text-dourado border-b border-dourado/30">
+                                    <tr>
+                                        <th class="p-3">Produto</th>
+                                        <th class="p-3">Meta</th>
+                                        <th class="p-3">Em Estoque (Entradas)</th>
+                                        <th class="p-3">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-estoque-coordenador" class="divide-y divide-gray-100 text-gray-700">
+                                    <tr><td colspan="4" class="p-4 text-center text-gray-400">Nenhum produto cadastrado ainda.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTEÚDO DA ABA: FAMÍLIAS (EXCLUSIVO DO COORDENADOR) -->
+                <div id="conteudo-aba-familias" class="hidden space-y-6">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                        <h4 class="text-sm font-bold text-verde-asa">Cadastrar Família Assistida</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input type="text" id="fam-responsavel" placeholder="Nome do Responsável" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="number" id="fam-total-pessoas" placeholder="Total no Grupo Familiar (Ex: 10)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <input type="date" id="fam-inicio-assistencia" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white" title="Início da Assistência">
+                            <input type="text" id="fam-criancas-detalhes" placeholder="Crianças (Qtd, Nomes e Idades)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                        </div>
+                        <button onclick="salvarFamiliaAssistida()" class="w-full bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20]">Salvar Família no Sistema</button>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Famílias Cadastradas</h4>
+                        <div id="lista-familias-container" class="space-y-2 max-h-60 overflow-y-auto">
+                            <p class="text-xs text-gray-400 text-center py-4">Nenhuma família cadastrada.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTEÚDO DA ABA: VOLUNTÁRIOS E LINKS -->
+                <div id="conteudo-aba-voluntarios" class="hidden space-y-4">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="vol-nome-input" placeholder="Nome do Voluntário" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
+                            <button onclick="gerarLinkVoluntario()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link Individual</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-verde-asa mb-3">Voluntários e Links Ativos</h4>
+                        <div id="lista-links-voluntarios" class="space-y-2">
+                            <p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. TELA DO VOLUNTÁRIO (LIMITADA APENAS A REGISTRAR DOAÇÕES - SEM VISÃO DE ESTOQUE/METAS) -->
+        <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto">
+            <div class="text-center mb-6">
+                <span class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
+                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Coleta</h2>
+                <p class="text-xs text-gray-500">Registre abaixo os alimentos arrecadados pela sua equipe</p>
+            </div>
+
+            <div class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Selecione o Alimento</label>
+                    <select id="vol-select-produto" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
+                        <option value="">Carregando alimentos...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Quantidade Arrecadada</label>
+                    <input type="number" id="vol-qtd-produto" placeholder="Ex: 5" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Equipe / Irmãos que ajudaram (Opcional)</label>
+                    <input type="text" id="vol-equipe-nomes" placeholder="Ex: Irmão João, Irmã Maria" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
+                </div>
+                <button onclick="voluntarioRegistrarColeta()" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
+                    Registrar Doação (Modo Offline Seguro)
+                </button>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="sairDoSistema()" class="text-xs text-red-600 hover:underline font-medium">Sair / Trocar Acesso</button>
+            </div>
+        </div>
+
     </main>
 
-    <!-- PAINEL INTERNO DO SISTEMA (FICA OCULTO ATÉ CLICAR EM ENTRAR) -->
-    <div id="painel-sistema" class="hidden flex-grow p-6 max-w-4xl mx-auto w-full">
-        <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
-            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                <h3 class="text-xl font-bold text-verde-asa">Painel de Controle - Doações</h3>
-                <button onclick="voltarLogin()" class="text-xs text-gray-500 hover:text-verde-asa underline">Sair / Voltar</button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-dourado/20">
-                    <p class="text-xs text-gray-500 font-medium">Famílias Cadastradas</p>
-                    <p class="text-2xl font-bold text-verde-asa mt-1">0</p>
-                </div>
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-dourado/20">
-                    <p class="text-xs text-gray-500 font-medium">Kits Arrecadados</p>
-                    <p class="text-2xl font-bold text-dourado mt-1">0</p>
-                </div>
-                <div class="bg-amber-50/50 p-4 rounded-xl border border-dourado/20">
-                    <p class="text-xs text-gray-500 font-medium">Voluntários Ativos</p>
-                    <p class="text-2xl font-bold text-verde-asa mt-1">1</p>
-                </div>
-            </div>
-            <div class="text-center py-10 text-gray-500 text-sm">
-                Nenhuma doação cadastrada no momento. O sistema está pronto para uso!
-            </div>
-        </div>
-    </div>
-
-    <!-- RODAPÉ COM A HOMENAGEM -->
+    <!-- RODAPÉ -->
     <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/20 mt-auto">
         <p>© 2026 Mutirão de Natal - ASA. Todos os direitos reservados.</p>
         <p class="text-dourado font-medium mt-1">Dedicado com carinho a <span class="font-bold underline">Vera Lima</span></p>
     </footer>
 
     <script>
-        function entrarSistema() {
-            document.getElementById('tela-login').classList.add('hidden');
-            document.getElementById('painel-sistema').classList.remove('hidden');
+        // BANCO DE DADOS LOCAL (OFFLINE-FIRST)
+        let dadosSistema = JSON.parse(localStorage.getItem('asa_mutirao_data')) || {
+            igreja: '',
+            coordenador: '',
+            senha: '',
+            produtos: [], 
+            familias: [], 
+            voluntarios: [] 
+        };
+
+        function salvarDadosLocal() {
+            localStorage.setItem('asa_mutirao_data', JSON.stringify(dadosSistema));
         }
-        function voltarLogin() {
-            document.getElementById('painel-sistema').classList.add('hidden');
-            document.getElementById('tela-login').classList.remove('hidden');
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const voluntarioParam = urlParams.get('vol');
+
+            if (voluntarioParam) {
+                // Acesso restrito do voluntário (sem ver metas ou estoque)
+                document.getElementById('tela-cadastro-igreja').classList.add('hidden');
+                document.getElementById('painel-voluntario').classList.remove('hidden');
+                document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a): ${voluntarioParam}`;
+                if(dadosSistema.igreja) {
+                    document.getElementById('subtitulo-igreja').innerText = `IASD - ${dadosSistema.igreja}`;
+                }
+                popularSelectProdutos();
+            } else if (dadosSistema.igreja) {
+                // Tela de login para o coordenador caso já exista igreja cadastrada
+                document.getElementById('tela-cadastro-igreja').innerHTML = `
+                    <div class="text-center space-y-4">
+                        <h2 class="text-2xl font-bold text-verde-asa">Área Restrita - ${dadosSistema.igreja}</h2>
+                        <p class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
+                        <input type="password" id="login-senha-coord" placeholder="Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
+                        <button onclick="fazerLoginCoordenador()" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
+                    </div>
+                `;
+            }
+        };
+
+        function salvarCadastroInicial() {
+            const igreja = document.getElementById('reg-igreja').value.trim();
+            const coord = document.getElementById('reg-coordenador').value.trim();
+            const senha = document.getElementById('reg-senha').value.trim();
+            const confirma = document.getElementById('reg-confirma-senha').value.trim();
+
+            if(!igreja || !coord || !senha) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            if(senha !== confirma) {
+                alert('As senhas não conferem!');
+                return;
+            }
+
+            dadosSistema.igreja = igreja;
+            dadosSistema.coordenador = coord;
+            dadosSistema.senha = senha;
+            salvarDadosLocal();
+
+            abrirPainelCoordenador();
+        }
+
+        function fazerLoginCoordenador() {
+            const digitada = document.getElementById('login-senha-coord').value.trim();
+            if(digitada === dadosSistema.senha) {
+                abrirPainelCoordenador();
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+
+        function abrirPainelCoordenador() {
+            document.getElementById('tela-cadastro-igreja').classList.add('hidden');
+            document.getElementById('painel-coordenador').classList.remove('hidden');
+            document.getElementById('subtitulo-igreja').innerText = `IASD - ${dadosSistema.igreja}`;
+            document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;
+            atualizarTabelaEstoque();
+            atualizarListaFamilias();
+            atualizarListaVoluntarios();
+        }
+
+        function sairDoSistema() {
+            window.location.href = window.location.pathname;
+        }
+
+        function mudarAbaCoordenador(aba) {
+            document.getElementById('conteudo-aba-estoque').classList.add('hidden');
+            document.getElementById('conteudo-aba-familias').classList.add('hidden');
+            document.getElementById('conteudo-aba-voluntarios').classList.add('hidden');
+            document.getElementById('btn-aba-estoque').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+            document.getElementById('btn-aba-familias').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+            document.getElementById('btn-aba-voluntarios').className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
+
+            document.getElementById(`conteudo-aba-${aba}`).classList.remove('hidden');
+            document.getElementById(`btn-aba-${aba}`).className = 'text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap';
+        }
+
+        function adicionarProdutoMeta() {
+            const nome = document.getElementById('novo-produto-nome').value.trim();
+            const meta = parseInt(document.getElementById('novo-produto-meta').value) || 0;
+
+            if(!nome) return alert('Informe o nome do produto.');
+
+            dadosSistema.produtos.push({ nome, meta, estoque: 0 });
+            salvarDadosLocal();
+            atualizarTabelaEstoque();
+            document.getElementById('novo-produto-nome').value = '';
+            document.getElementById('novo-produto-meta').value = '';
+        }
+
+        function atualizarTabelaEstoque() {
+            let html = '';
+            if (dadosSistema.produtos.length === 0) {
+                html = '<tr><td colspan="4" class="p-4 text-center text-gray-400">Nenhum produto cadastrado ainda.</td></tr>';
+            } else {
+                dadosSistema.produtos.forEach((p, idx) => {
+                    html += `
+                        <tr class="border-b border-gray-100">
+                            <td class="p-3 font-semibold">${p.nome}</td>
+                            <td class="p-3">${p.meta}</td>
+                            <td class="p-3 font-bold text-verde-asa">${p.estoque}</td>
+                            <td class="p-3">
+                                <button onclick="darSaidaEstoque(${idx})" class="text-red-600 hover:underline text-xs font-medium">Dar Saída / Baixa</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            document.getElementById('tabela-estoque-coordenador').innerHTML = html;
+        }
+
+        function darSaidaEstoque(idx) {
+            const qtd = parseInt(prompt("Quantidade para retirada (atendimento emergencial):"));
+            if(qtd && qtd > 0) {
+                if(qtd <= dadosSistema.produtos[idx].estoque) {
+                    dadosSistema.produtos[idx].estoque -= qtd;
+                    salvarDadosLocal();
+                    atualizarTabelaEstoque();
+                } else {
+                    alert("Quantidade indisponível em estoque!");
+                }
+            }
+        }
+
+        function salvarFamiliaAssistida() {
+            const responsavel = document.getElementById('fam-responsavel').value.trim();
+            const totalPessoas = document.getElementById('fam-total-pessoas').value.trim();
+            const inicioAssistencia = document.getElementById('fam-inicio-assistencia').value;
+            const criancas = document.getElementById('fam-criancas-detalhes').value.trim();
+
+            if(!responsavel || !totalPessoas) {
+                alert('Preencha pelo menos o responsável e o total de pessoas.');
+                return;
+            }
+
+            dadosSistema.familias.push({ responsavel, totalPessoas, inicioAssistencia, criancas });
+            salvarDadosLocal();
+            atualizarListaFamilias();
+
+            document.getElementById('fam-responsavel').value = '';
+            document.getElementById('fam-total-pessoas').value = '';
+            document.getElementById('fam-inicio-assistencia').value = '';
+            document.getElementById('fam-criancas-detalhes').value = '';
+            alert('Família cadastrada com sucesso!');
+        }
+
+        function atualizarListaFamilias() {
+            let html = '';
+            if(dadosSistema.familias.length === 0) {
+                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma família cadastrada.</p>';
+            } else {
+                dadosSistema.familias.forEach(f => {
+                    html += `
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
+                            <p><strong>Responsável:</strong> ${f.responsavel} (${f.totalPessoas} pessoas no grupo)</p>
+                            <p><strong>Início Assistência:</strong> ${f.inicioAssistencia || 'Não informada'}</p>
+                            <p><strong>Crianças:</strong> ${f.criancas || 'Nenhuma informada'}</p>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('lista-familias-container').innerHTML = html;
+        }
+
+        function gerarLinkVoluntario() {
+            const nome = document.getElementById('vol-nome-input').value.trim();
+            if(!nome) return alert('Digite o nome do voluntário.');
+
+            dadosSistema.voluntarios.push({ nome });
+            salvarDadosLocal();
+            atualizarListaVoluntarios();
+            document.getElementById('vol-nome-input').value = '';
+        }
+
+        function atualizarListaVoluntarios() {
+            let html = '';
+            const baseUrl = window.location.origin + window.location.pathname;
+            if(dadosSistema.voluntarios.length === 0) {
+                html = '<p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>';
+            } else {
+                dadosSistema.voluntarios.forEach(v => {
+                    const linkUnico = `${baseUrl}?vol=${encodeURIComponent(v.nome)}`;
+                    html += `
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
+                            <p class="font-bold text-verde-asa">${v.nome}</p>
+                            <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('lista-links-voluntarios').innerHTML = html;
+        }
+
+        function popularSelectProdutos() {
+            const select = document.getElementById('vol-select-produto');
+            let html = '<option value="">Selecione o alimento arrecadado</option>';
+            dadosSistema.produtos.forEach((p, idx) => {
+                // O voluntário só vê o nome do produto disponível para coleta, sem ver metas ou quanto já entrou no total
+                html += `<option value="${idx}">${p.nome}</option>`;
+            });
+            select.innerHTML = html;
+        }
+
+        function voluntarioRegistrarColeta() {
+            const selectIdx = document.getElementById('vol-select-produto').value;
+            const qtd = parseInt(document.getElementById('vol-qtd-produto').value);
+            const equipe = document.getElementById('vol-equipe-nomes').value.trim();
+
+            if(selectIdx === "" || isNaN(qtd) || qtd <= 0) {
+                alert('Selecione um produto e informe uma quantidade válida.');
+                return;
+            }
+
+            // SOMA AUTOMÁTICA EM SEGREDO NO ESTOQUE LOCAL (OFFLINE FIRST)
+            dadosSistema.produtos[selectIdx].estoque += qtd;
+            salvarDadosLocal();
+
+            alert(`Doação registrada com sucesso! Equipe: ${equipe || 'Individual'}. Os dados foram salvos.`);
+            document.getElementById('vol-qtd-produto').value = '';
+            document.getElementById('vol-equipe-nomes').value = '';
         }
     </script>
 </body>

@@ -44,7 +44,7 @@ button{
 header{
   background:var(--verde);
   color:white;
-  padding:18px 28px;
+  padding:14px 24px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -55,7 +55,7 @@ header{
 }
 
 .logo-text{
-  font-size:21px;
+  font-size:20px;
   font-weight:bold;
   letter-spacing:.3px;
 }
@@ -64,8 +64,14 @@ header{
   background:rgba(255,255,255,.12);
   color:white;
   border:1px solid rgba(255,255,255,.35);
-  padding:8px 12px;
+  padding:6px 10px;
   border-radius:8px;
+  font-size:13px;
+}
+
+.language option{
+  color:var(--texto);
+  background:var(--branco);
 }
 
 main{
@@ -184,12 +190,6 @@ input:focus,select:focus{
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
 
@@ -365,23 +365,19 @@ footer{
 }
 
 @media(max-width:800px){
-  .grid,.grid3,.dashboard,.stats{
+  .grid,.dashboard,.stats{
     grid-template-columns:1fr;
   }
-
   header{
     padding:15px;
   }
-
   main{
     width:94%;
     margin-top:20px;
   }
-
   .card{
     padding:20px;
   }
-
   .child-row,.elder-row{
     grid-template-columns:1fr;
   }
@@ -456,7 +452,7 @@ function ensureDB(){
 ensureDB();
 
 /* ============================================================
-   IDIOMAS
+   IDIOMAS (APENAS PORTUGUÊS, INGLÊS E ESPANHOL)
    ============================================================ */
 
 const translations = {
@@ -498,7 +494,6 @@ pt:{
   leader:"Líder",
   teamName:"Nome da equipe",
   members:"Membros da equipe",
-  foodWeek:"Item da semana",
   deliveries:"Entregas",
   quantity:"Quantidade",
   needed:"Quantidade necessária",
@@ -532,6 +527,9 @@ pt:{
   leaderAccess:"Acesso dos mantenedores",
   enterTeam:"Entrar na equipe",
   currentCampaign:"Campanha atual",
+  details:"Ver detalhes",
+  setPass:"Criar sua senha de acesso",
+  newPassTitle:"Defina sua senha",
   dedication:"Dedicado com carinho a Vera Lima"
 },
 
@@ -572,7 +570,6 @@ en:{
   leader:"Leader",
   teamName:"Team name",
   members:"Team members",
-  foodWeek:"Item of the week",
   deliveries:"Deliveries",
   quantity:"Quantity",
   needed:"Quantity needed",
@@ -606,6 +603,9 @@ en:{
   leaderAccess:"Team access",
   enterTeam:"Enter team",
   currentCampaign:"Current campaign",
+  details:"View details",
+  setPass:"Create your access password",
+  newPassTitle:"Set your password",
   dedication:"Dedicated with affection to Vera Lima"
 },
 
@@ -646,7 +646,6 @@ es:{
   leader:"Líder",
   teamName:"Nombre del equipo",
   members:"Miembros del equipo",
-  foodWeek:"Artículo de la semana",
   deliveries:"Entregas",
   quantity:"Cantidad",
   needed:"Cantidad necesaria",
@@ -680,6 +679,9 @@ es:{
   leaderAccess:"Acceso de los equipos",
   enterTeam:"Entrar al equipo",
   currentCampaign:"Campaña actual",
+  details:"Ver detalles",
+  setPass:"Cree su contraseña de acceso",
+  newPassTitle:"Defina su contraseña",
   dedication:"Dedicado con cariño a Vera Lima"
 }
 
@@ -703,6 +705,7 @@ function changeLanguage(value){
 
 let page="access";
 let currentUser=null;
+let tokenToRegister=null;
 
 function go(p){
   page=p;
@@ -724,6 +727,7 @@ function render(){
     welcome:pageWelcome,
     register:pageRegister,
     login:pageLogin,
+    setpassword:pageSetPassword,
     director:pageDirector,
     items:pageItems,
     families:pageFamilies,
@@ -1008,6 +1012,63 @@ function forgotPassword(){
 }
 
 /* ============================================================
+   PRIMEIRO ACESSO POR LINK (CRIAÇÃO DE SENHA PELO PRÓPRIO USUÁRIO)
+   ============================================================ */
+
+function pageSetPassword(){
+
+const user=db.unit.users.find(u=>u.token===tokenToRegister);
+
+return `
+<div class="card center" style="max-width:500px">
+  <h2>${t("newPassTitle")}</h2>
+  <p class="subtitle"><strong>${escapeHTML(user?.name || "")}</strong>, ${t("setPass").toLowerCase()}:</p>
+
+  <div class="field">
+    <label>${t("password")}</label>
+    <input id="newLinkPass" type="password">
+  </div>
+
+  <div class="field">
+    <label>${t("confirmPassword")}</label>
+    <input id="newLinkPass2" type="password">
+  </div>
+
+  <button class="btn btn-primary" onclick="saveNewUserPassword()">
+    ${t("save")}
+  </button>
+</div>`;
+}
+
+function saveNewUserPassword(){
+  const p1=document.getElementById("newLinkPass").value;
+  const p2=document.getElementById("newLinkPass2").value;
+
+  if(!p1){
+    alert("Digite uma senha.");
+    return;
+  }
+  if(p1!==p2){
+    alert("As senhas não conferem.");
+    return;
+  }
+
+  const user=db.unit.users.find(u=>u.token===tokenToRegister);
+  if(user){
+    user.password=p1;
+    user.token=""; // Limpa o token para exigir login normal nas próximas vezes
+    saveDB();
+    currentUser=user;
+    tokenToRegister=null;
+    if(user.role==="leader"){
+      go("leader");
+    }else{
+      go("director");
+    }
+  }
+}
+
+/* ============================================================
    ÁREA DO DIRETOR / GESTOR
    ============================================================ */
 
@@ -1102,7 +1163,7 @@ return `
   <div class="menu-card" onclick="go('scoreboard')">
     <div class="menu-icon">🏆</div>
     <h3>${t("scoreboard")}</h3>
-    <p>${lang==="pt"?"Acompanhe a classificação das equipes.":"Track team ranking."}</p>
+    <p>${lang==="pt"?"Acompanhe a classificação das equipes e emita comprovantes.":"Track team ranking and receipts."}</p>
   </div>
 
 </div>`;
@@ -1249,7 +1310,7 @@ function clearItemForm(){
 }
 
 /* ============================================================
-   FAMÍLIAS
+   FAMÍLIAS (COM VISUALIZAÇÃO DETALHADA)
    ============================================================ */
 
 function pageFamilies(){
@@ -1381,20 +1442,14 @@ if(!responsible||people<1){
 }
 
 const children=[];
-document.querySelectorAll(".childRow");
-
-document.querySelectorAll(".child-sex");
-
 const sexes=document.querySelectorAll(".childSex");
 const ages=document.querySelectorAll(".childAge");
 
 for(let i=0;i<sexes.length;i++){
-
   children.push({
     sex:sexes[i].value,
     age:Number(ages[i].value)||0
   });
-
 }
 
 const elderly=[];
@@ -1402,12 +1457,10 @@ const elderSex=document.querySelectorAll(".elderSex");
 const elderAge=document.querySelectorAll(".elderAge");
 
 for(let i=0;i<elderSex.length;i++){
-
   elderly.push({
     sex:elderSex[i].value,
     age:Number(elderAge[i].value)||0
   });
-
 }
 
 db.unit.families.push({
@@ -1418,7 +1471,6 @@ db.unit.families.push({
 });
 
 saveDB();
-
 go("families");
 }
 
@@ -1449,10 +1501,16 @@ ${db.unit.families.map((f,i)=>`
 <td>${f.children.length}</td>
 <td>${f.elderly.length}</td>
 <td>
+<div style="display:flex;gap:6px">
+<button class="btn btn-gold btn-small"
+onclick="viewFamilyDetails(${i})">
+${t("details")}
+</button>
 <button class="btn btn-danger btn-small"
 onclick="deleteFamily(${i})">
 ${t("delete")}
 </button>
+</div>
 </td>
 </tr>
 
@@ -1461,6 +1519,30 @@ ${t("delete")}
 </tbody>
 </table>
 </div>`;
+}
+
+function viewFamilyDetails(i){
+  const f=db.unit.families[i];
+  let text=`Responsável: ${f.responsible}\nPessoas: ${f.people}\n\n`;
+  text+=`--- Crianças (${f.children.length}) ---\n`;
+  if(f.children.length){
+    f.children.forEach((c,idx)=>{
+      text+=`${idx+1}. Gênero: ${c.sex}, Idade: ${c.age} anos\n`;
+    });
+  }else{
+    text+=`Nenhuma\n`;
+  }
+
+  text+=`\n--- Idosos > 65 (${f.elderly.length}) ---\n`;
+  if(f.elderly.length){
+    f.elderly.forEach((e,idx)=>{
+      text+=`${idx+1}. Gênero: ${e.sex}, Idade: ${e.age} anos\n`;
+    });
+  }else{
+    text+=`Nenhum\n`;
+  }
+
+  alert(text);
 }
 
 function deleteFamily(i){
@@ -1586,8 +1668,8 @@ db.unit.users.push({
 name,
 function:func,
 role:"manager",
-password:"123456",
-recovery:"123456",
+password:"", // SEM SENHA PROVISÓRIA: O usuário define ao abrir o link
+recovery:"",
 token,
 link
 });
@@ -1597,8 +1679,8 @@ render();
 
 alert(
 lang==="pt"
-?"Acesso criado. A senha inicial de teste é 123456."
-:"Access created. Test password is 123456."
+?"Link gerado com sucesso. O usuário definirá a senha no primeiro acesso."
+:"Link generated successfully. The user will set the password on first access."
 );
 }
 
@@ -1709,8 +1791,8 @@ db.unit.users.push({
 name,
 role:"leader",
 function:"Líder mantenedor",
-password:"123456",
-recovery:"123456",
+password:"", // SEM SENHA PROVISÓRIA
+recovery:"",
 token,
 link,
 teamName:"",
@@ -1723,18 +1805,19 @@ render();
 
 alert(
 lang==="pt"
-?"Acesso criado. A senha inicial de teste é 123456."
-:"Access created. Test password is 123456."
+?"Link gerado com sucesso. O líder definirá a senha no primeiro acesso."
+:"Link generated successfully. The leader will set the password on first access."
 );
 }
 
 /* ============================================================
-   ÁREA DA EQUIPE MANTENEDORA
+   ÁREA DA EQUIPE MANTENEDORA (COM AVISO DE ARRECADAÇÃO CONJUNTA)
    ============================================================ */
 
 function pageLeader(){
 
 const u=currentUser;
+const c=db.unit.collection;
 
 return `
 <div class="card">
@@ -1756,6 +1839,15 @@ ${t("logout")}
 <strong>${t("currentCampaign")}:</strong>
 ${escapeHTML(db.unit.campaign || "—")}
 </div>
+
+${c.date || c.place ? `
+<div class="notice" style="background:#e3eee4;border-left-color:var(--verde)">
+  <strong>📅 Arrecadação Conjunta:</strong><br>
+  Data: ${c.date || "—"} às ${c.time || "—"}<br>
+  Local: ${escapeHTML(c.place || "—")} (${escapeHTML(c.address || "—")})<br>
+  Ponto de encontro: ${escapeHTML(c.meeting || "—")}
+</div>
+` : ""}
 
 <div class="field">
 <label>${t("teamName")}</label>
@@ -1895,6 +1987,7 @@ const item=db.unit.items[itemIndex];
 
 if(!item)return;
 
+// Sincronização matemática com o estoque do gestor
 item.entered+=quantity;
 
 const delivery={
@@ -1916,6 +2009,7 @@ db.unit.users[idx].deliveries=currentUser.deliveries;
 
 saveDB();
 render();
+alert(lang==="pt"?"Entrega registrada e somada ao estoque geral com sucesso!":"Delivery registered and added to general stock successfully!");
 }
 
 function renderDeliveries(){
@@ -1935,13 +2029,12 @@ return `
 <th>${t("deliveryBy")}</th>
 <th>${t("receivedBy")}</th>
 <th>${t("date")}</th>
-<th></th>
 </tr>
 </thead>
 
 <tbody>
 
-${list.map((d,i)=>`
+${list.map((d)=>`
 
 <tr>
 <td>${escapeHTML(d.item)}</td>
@@ -1949,14 +2042,6 @@ ${list.map((d,i)=>`
 <td>${escapeHTML(d.deliveryBy)}</td>
 <td>${escapeHTML(d.receivedBy)}</td>
 <td>${escapeHTML(d.date)}</td>
-
-<td>
-<button class="btn btn-gold btn-small"
-onclick="receipt(${i})">
-${t("receipt")}
-</button>
-</td>
-
 </tr>
 
 `).join("")}
@@ -1964,44 +2049,6 @@ ${t("receipt")}
 </tbody>
 </table>
 </div>`;
-}
-
-function receipt(i){
-
-const d=currentUser.deliveries[i];
-
-const text=`
-COMPROVANTE DE ENTREGA
-
-Unidade: ${db.unit.name}
-
-Equipe: ${currentUser.teamName || "—"}
-
-Líder: ${currentUser.name}
-
-Item: ${d.item}
-
-Quantidade: ${d.quantity}
-
-Quem entregou: ${d.deliveryBy}
-
-Quem recebeu: ${d.receivedBy}
-
-Data: ${d.date}
-`;
-
-const win=window.open("","_blank");
-
-win.document.write(`
-<pre style="
-font-family:Arial;
-padding:40px;
-font-size:16px;
-white-space:pre-wrap;
-">${escapeHTML(text)}</pre>
-`);
-
-win.print();
 }
 
 /* ============================================================
@@ -2085,7 +2132,7 @@ go("director");
 }
 
 /* ============================================================
-   CLASSIFICAÇÃO
+   CLASSIFICAÇÃO E COMPROVANTES (CONTROLADO PELO GESTOR)
    ============================================================ */
 
 function pageScoreboard(){
@@ -2101,7 +2148,8 @@ const total=(u.deliveries||[]).reduce(
 return {
 name:u.name,
 team:u.teamName||"—",
-total
+total,
+deliveries:u.deliveries||[]
 };
 
 }).sort((a,b)=>b.total-a.total);
@@ -2113,7 +2161,7 @@ return `
 ← ${t("directorArea")}
 </button>
 
-<h2>${t("scoreboard")}</h2>
+<h2>${t("scoreboard")} & ${t("deliveries")}</h2>
 
 <div class="table-wrap">
 
@@ -2125,6 +2173,7 @@ return `
 <th>${t("teamName")}</th>
 <th>${t("leader")}</th>
 <th>${t("quantity")}</th>
+<th></th>
 </tr>
 </thead>
 
@@ -2137,10 +2186,25 @@ ${scores.length ? scores.map((s,i)=>`
 <td>${escapeHTML(s.team)}</td>
 <td>${escapeHTML(s.name)}</td>
 <td><strong>${s.total}</strong></td>
+<td>
+  ${s.deliveries.length ? `
+    <details>
+      <summary style="cursor:pointer;color:var(--verde);font-weight:bold;">Ver entregas e emitir recibo</summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+        ${s.deliveries.map((d,dIdx)=>`
+          <div style="background:#f5eee2;padding:8px;border-radius:6px;display:flex;justify-content:space-between;align-items:center">
+            <span>${d.item} (${d.quantity} un) - De: ${d.deliveryBy} / Para: ${d.receivedBy}</span>
+            <button class="btn btn-gold btn-small" onclick="directorReceipt('${s.name}', '${s.team}', ${dIdx})">${t("receipt")}</button>
+          </div>
+        `).join("")}
+      </div>
+    </details>
+  ` : "Nenhuma entrega"}
+</td>
 </tr>
 
 `).join("") :
-`<tr><td colspan="4">${t("noData")}</td></tr>`}
+`<tr><td colspan="5">${t("noData")}</td></tr>`}
 
 </tbody>
 
@@ -2149,6 +2213,43 @@ ${scores.length ? scores.map((s,i)=>`
 </div>
 
 </div>`;
+}
+
+function directorReceipt(leaderName, teamName, deliveryIndex){
+  const leaderUser=db.unit.users.find(u=>u.name===leaderName);
+  if(!leaderUser) return;
+  const d=leaderUser.deliveries[deliveryIndex];
+
+  const text=`
+COMPROVANTE DE ENTREGA
+
+Unidade: ${db.unit.name}
+
+Equipe: ${teamName || "—"}
+
+Líder: ${leaderName}
+
+Item: ${d.item}
+
+Quantidade: ${d.quantity}
+
+Quem entregou: ${d.deliveryBy}
+
+Quem recebeu: ${d.receivedBy}
+
+Data: ${d.date}
+`;
+
+  const win=window.open("","_blank");
+  win.document.write(`
+  <pre style="
+  font-family:Arial;
+  padding:40px;
+  font-size:16px;
+  white-space:pre-wrap;
+  ">${escapeHTML(text)}</pre>
+  `);
+  win.print();
 }
 
 /* ============================================================
@@ -2224,7 +2325,7 @@ go("access");
 }
 
 /* ============================================================
-   ACESSO POR LINK GERADO
+   ACESSO POR LINK GERADO (DIRECIONA PARA CRIAR SENHA SE FOR PRIMEIRO ACESSO)
    ============================================================ */
 
 function checkInvitation(){
@@ -2237,19 +2338,18 @@ if(!token)return;
 const user=db.unit.users.find(u=>u.token===token);
 
 if(user){
-
-page="login";
-
-setTimeout(()=>{
-
-const input=document.getElementById("loginName");
-
-if(input){
-input.value=user.name;
-}
-
-},50);
-
+  if(!user.password){
+    tokenToRegister=token;
+    page="setpassword";
+  }else{
+    page="login";
+    setTimeout(()=>{
+      const input=document.getElementById("loginName");
+      if(input){
+        input.value=user.name;
+      }
+    },50);
+  }
 }
 
 }

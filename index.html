@@ -35,7 +35,6 @@
                 <option value="pt">🇧🇷 Português</option>
                 <option value="en">🇺🇸 English</option>
                 <option value="es">🇪🇸 Español</option>
-                <option value="fr">🇫🇷 Français</option>
             </select>
             <span id="txt-badge-restrita" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs hidden md:inline-block">Área Restrita</span>
         </div>
@@ -145,7 +144,7 @@
                                         <th id="th-item" class="p-3">Item</th>
                                         <th id="th-meta" class="p-3">Meta Fixa Necessária</th>
                                         <th id="th-arrecadado" class="p-3">Total Arrecadado (Entradas)</th>
-                                        <th id="th-falta" class="p-3">Falta para la Meta</th>
+                                        <th id="th-falta" class="p-3">Falta para a Meta</th>
                                         <th id="th-acoes" class="p-3">Ações</th>
                                     </tr>
                                 </thead>
@@ -157,7 +156,7 @@
                     </div>
                 </div>
 
-                <!-- DESTAQUES E CASADINHOS (COM HISTÓRICO E BOTÃO DE APAGAR) -->
+                <!-- DESTAQUES E CASADINHOS -->
                 <div id="conteudo-aba-destaques" class="hidden space-y-6">
                     <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
                         <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
@@ -222,7 +221,7 @@
                     </div>
                 </div>
 
-                <!-- VOLUNTÁRIOS E LINKS -->
+                <!-- VOLUNTÁRIOS E LINKS (SEM SENHA GERADA AUTOMATICAMENTE) -->
                 <div id="conteudo-aba-voluntarios" class="hidden space-y-4">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                         <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
@@ -243,7 +242,7 @@
             </div>
         </div>
 
-        <!-- 3. TELA DO VOLUNTÁRIO -->
+        <!-- 3. TELA DO VOLUNTÁRIO / LÍDER -->
         <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
             <div class="text-center mb-6">
                 <span id="txt-badge-vol" class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
@@ -265,14 +264,14 @@
                 </div>
             </div>
 
-            <!-- SENHA DO VOLUNTÁRIO -->
-            <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4">
-                <p id="txt-vol-senha-msg" class="text-xs font-bold text-verde-asa">Defina sua senha de acesso pessoal para este link:</p>
-                <input type="password" id="vol-senha-cadastro" placeholder="Crie sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
+            <!-- CADASTRAR OU INSERIR SENHA PESSOAL DO VOLUNTÁRIO -->
+            <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4 hidden">
+                <p id="txt-vol-senha-msg" class="text-xs font-bold text-verde-asa">Crie ou digite sua senha de acesso pessoal para este link:</p>
+                <input type="password" id="vol-senha-cadastro" placeholder="Digite sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
                 <button onclick="ativarSenhaVoluntario()" id="btn-vol-salvar-senha" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
             </div>
 
-            <!-- FORMULÁRIO -->
+            <!-- FORMULÁRIO DE REGISTRO DE DOAÇÕES -->
             <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
                 
                 <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
@@ -356,7 +355,7 @@
                 lblDestaqueSem: "⭐ ALIMENTO EM DESTAQUE DA SEMANA:",
                 lblComboCas: "🎁 COMBO CASADINHO DA SEMANA:",
                 placarEquipe: "Total Arrecadado pela sua Equipe: ",
-                volSenhaMsg: "Defina sua senha de acesso pessoal para este link:",
+                volSenhaMsg: "Crie ou digite sua senha de acesso pessoal para este link:",
                 btnVolSenha: "Salvar Senha e Entrar",
                 membrosFixosLbl: "Membros Fixos da sua Equipe:",
                 btnAddMembro: "Adicionar",
@@ -404,7 +403,7 @@
                 lblDestaqueSem: "⭐ WEEKLY HIGHLIGHT FOOD:",
                 lblComboCas: "🎁 WEEKLY COMBO CASADINHO:",
                 placarEquipe: "Total Raised by your Team: ",
-                volSenhaMsg: "Set your personal access password for this link:",
+                volSenhaMsg: "Create or enter your personal access password for this link:",
                 btnVolSenha: "Save Password & Enter",
                 membrosFixosLbl: "Fixed Members of your Team:",
                 btnAddMembro: "Add",
@@ -452,7 +451,7 @@
                 lblDestaqueSem: "⭐ ALIMENTO DESTACADO DE LA SEMANA:",
                 lblComboCas: "🎁 COMBO CASADINHO DE LA SEMANA:",
                 placarEquipe: "Total Recaudado por su Equipo: ",
-                volSenhaMsg: "Defina su contraseña de acceso personal para este enlace:",
+                volSenhaMsg: "Cree o ingrese su contraseña de acceso personal para este enlace:",
                 btnVolSenha: "Guardar Contraseña y Entrar",
                 membrosFixosLbl: "Miembros Fijos de su Equipo:",
                 btnAddMembro: "Añadir",
@@ -462,54 +461,6 @@
                 btnRegDoacao: "Registrar Donación (Modo Sin Conexión Seguro)",
                 btnVolSair: "Salir / Cambiar Acceso",
                 logOutBtn: "Salir"
-            },
-            fr: {
-                titulo: "Plateforme de Gestion Solidaire - Noël Solidaire",
-                logoTitulo: "Noël Solidaire",
-                subTopo: "Gestion Solidaire",
-                restrita: "Zone Restreinte",
-                bemVindo: "Bienvenue !",
-                descBoasVindas: "Plateforme de Gestion Solidaire pour le contrôle des collectes, des équipes et des familles aidées.",
-                entrar: "Entrer dans le Système",
-                configTitulo: "Configuration Initiale",
-                configSub: "Enregistrez l'unité et le coordinateur responsable",
-                lblUnidade: "Nom de l'Unité / Projet",
-                lblCoord: "Nom du Coordinateur",
-                lblSenha: "Mot de Passe",
-                lblConfSenha: "Confirmer le Mot de Passe",
-                btnSalvarConfig: "Accéder au Panneau du Coordinateur",
-                tituloLogin: "Zone Restreinte",
-                loginSub: "Entrez le mot de passe de coordination",
-                btnLoginEntrar: "Se connecter en tant que Coordinateur",
-                painelCoordTitulo: "Panneau de Gestion - Coordinateur",
-                btnSair: "Se Déconnecter",
-                abaEstoque: "Gestion des Articles & Stock",
-                abaDestaques: "⭐ Points Forts & Combos",
-                abaGincana: "🏆 Tableau des Équipes",
-                abaFamilias: "Registre des Familles",
-                abaVoluntarios: "Bénévoles & Liens",
-                cadItemTitulo: "Enregistrer un Article",
-                btnAddItem: "Ajouter à la Liste",
-                acompanhamentoTitulo: "Suivi des Stocks (Objectif vs Entrées)",
-                thItem: "Article",
-                thMeta: "Objectif Fixe Requis",
-                thArrecadado: "Total Collecté (Entrées)",
-                thFalta: "Reste pour l'Objectif",
-                thAcoes: "Actions",
-                badgeVol: "Zone Bénévole",
-                lblDestaqueSem: "⭐ ALIMENT PHARES DE LA SEMAINE:",
-                lblComboCas: "🎁 COMBO CASADINHO DE LA SEMAINE:",
-                placarEquipe: "Total Collecté par votre Équipe: ",
-                volSenhaMsg: "Définissez votre mot de passe d'accès personnel pour ce lien:",
-                btnVolSenha: "Enregistrer le Mot de Passe & Entrer",
-                membrosFixosLbl: "Membres Fixes de votre Équipe:",
-                btnAddMembro: "Ajouter",
-                selItemLbl: "Sélectionner l'Article",
-                qtdItemLbl: "Quantité Collectée",
-                doadorItemLbl: "Qui a fait un don ou vous a livré?",
-                btnRegDoacao: "Enregistrer le Don (Mode Hors Ligne Sécurisé)",
-                btnVolSair: "Se Déconnecter / Changer l'Accès",
-                logOutBtn: "Se Déconnecter"
             }
         };
 
@@ -553,7 +504,6 @@
             document.getElementById('th-falta').innerText = t.thFalta;
             document.getElementById('th-acoes').innerText = t.thAcoes;
 
-            // Área do Voluntário
             document.getElementById('txt-badge-vol').innerText = t.badgeVol;
             document.getElementById('txt-lbl-destaque-semana').innerText = t.lblDestaqueSem;
             document.getElementById('txt-lbl-combo-casadinho').innerText = t.lblComboCas;
@@ -566,9 +516,6 @@
             document.getElementById('txt-doador-item-lbl').innerText = t.doadorItemLbl;
             document.getElementById('btn-registrar-doacao').innerText = t.btnRegDoacao;
             document.getElementById('btn-vol-sair').innerText = t.btnVolSair;
-
-            let logOutBtnEl = document.getElementById('btn-logout-coord');
-            if(logOutBtnEl) logOutBtnEl.innerText = t.logOutBtn;
 
             localStorage.setItem('sys_idioma', lang);
         }
@@ -941,6 +888,7 @@
         function gerarLinkVoluntario() {
             const nome = document.getElementById('vol-nome-input').value.trim();
             if(!nome) return alert('Digite o nome do voluntário / líder.');
+            // Garante que o voluntário é criado limpo, sem senha gerada automática
             dadosSistema.voluntarios.push({ nome, senha: '', equipeFixa: [], totalArrecadado: 0 });
             salvarDadosLocal();
             atualizarListaVoluntarios();
@@ -957,7 +905,7 @@
                     const linkUnico = `${baseUrl}?vol=${encodeURIComponent(v.nome)}`;
                     html += `
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Sem senha)'} - Arrecadado: ${v.totalArrecadado || 0} kg</p>
+                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Aguardando cadastro de senha)'} - Arrecadado: ${v.totalArrecadado || 0} kg</p>
                             <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
                         </div>
                     `;

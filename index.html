@@ -3,33 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#315c45">
+<meta name="theme-color" content="#d8c7a3">
+<meta name="description" content="Plataforma de gestão de dados Offline-First">
 <title>Plataforma de Gestão</title>
 
 <style>
 :root{
-  --sand:#f2ead9;
-  --sand2:#e8dcc4;
-  --cream:#faf6ed;
-  --white:#fffdf8;
-  --green:#315c45;
-  --green2:#244936;
-  --gold:#b99852;
-  --gold2:#d1b76f;
-  --text:#294235;
-  --muted:#776f61;
-  --border:#ddcfb5;
-  --danger:#a64c45;
-  --shadow:0 8px 25px rgba(70,55,30,.08);
+  --areia:#eee5d2;
+  --areia2:#e4d6b8;
+  --creme:#f8f3e8;
+  --verde:#405b46;
+  --verde2:#5d765f;
+  --dourado:#b28a43;
+  --dourado2:#d0ae67;
+  --texto:#3d3a32;
+  --muted:#777263;
+  --branco:#fffdf8;
+  --borda:#d7c9ac;
+  --erro:#a94b42;
+  --sucesso:#527355;
+  --sombra:0 8px 28px rgba(74,62,40,.10);
+  --raio:16px;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:Georgia,"Times New Roman",serif;
-  background:var(--sand);
-  color:var(--text);
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--areia);
+  color:var(--texto);
 }
 
 button,input,select,textarea{
@@ -44,261 +48,309 @@ button{
   min-height:100vh;
 }
 
-/* LOGIN / ACESSO */
+/* ---------- TELA DE ACESSO ---------- */
 
-.auth{
+.screen{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:30px;
-  background:
-    radial-gradient(circle at top right,rgba(185,152,82,.16),transparent 35%),
-    var(--sand);
+  padding:24px;
 }
 
-.auth-card{
-  width:min(520px,100%);
-  background:var(--cream);
-  border:1px solid var(--border);
+.access-card{
+  width:min(470px,100%);
+  background:var(--creme);
+  border:1px solid var(--borda);
   border-radius:24px;
-  padding:42px;
-  box-shadow:var(--shadow);
+  box-shadow:var(--sombra);
+  padding:38px;
+  text-align:center;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:30px;
-}
-
-.brand-mark{
-  width:54px;
-  height:54px;
-  border-radius:16px;
-  background:var(--green);
-  color:#fff;
+.brand-symbol{
+  width:74px;
+  height:74px;
+  margin:0 auto 18px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:25px;
+  background:var(--verde);
+  color:#fff;
+  font-size:30px;
+  font-weight:bold;
+  box-shadow:0 5px 18px rgba(64,91,70,.20);
 }
 
-.brand-title{
-  font-size:24px;
-  color:var(--green);
+.access-card h1{
+  margin:0 0 8px;
+  color:var(--verde);
+  font-size:27px;
 }
 
-.brand-sub{
-  color:var(--gold);
-  font-size:11px;
-  letter-spacing:4px;
-  text-transform:uppercase;
-}
-
-h1,h2,h3{
-  font-weight:normal;
-}
-
-.auth h1{
-  font-size:36px;
-  margin:0 0 12px;
-  color:var(--green);
-}
-
-.auth p{
+.access-card p{
   color:var(--muted);
-  line-height:1.6;
+  line-height:1.5;
 }
 
 .field{
-  margin:16px 0;
+  margin:15px 0;
+  text-align:left;
 }
 
-label{
+.field label{
   display:block;
+  font-weight:bold;
   margin-bottom:7px;
-  font-size:14px;
-  color:var(--text);
+  color:var(--verde);
 }
 
 input,select,textarea{
   width:100%;
-  padding:13px 14px;
-  border:1px solid var(--border);
+  min-height:48px;
+  border:1px solid var(--borda);
   border-radius:11px;
-  background:var(--white);
-  color:var(--text);
+  padding:11px 13px;
+  background:#fffdf8;
+  color:var(--texto);
   outline:none;
 }
 
-input:focus,select:focus,textarea:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(185,152,82,.12);
+textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
-textarea{
-  min-height:100px;
-  resize:vertical;
+input:focus,select:focus,textarea:focus{
+  border-color:var(--dourado);
+  box-shadow:0 0 0 3px rgba(178,138,67,.12);
 }
 
 .btn{
   border:0;
   border-radius:11px;
-  padding:13px 18px;
-  background:var(--green);
-  color:#fff;
+  min-height:46px;
+  padding:10px 18px;
+  font-weight:bold;
   transition:.2s;
 }
 
 .btn:hover{
-  background:var(--green2);
+  transform:translateY(-1px);
 }
 
-.btn.gold{
-  background:var(--gold);
+.btn-primary{
+  background:var(--verde);
+  color:white;
 }
 
-.btn.light{
-  background:var(--sand2);
-  color:var(--text);
+.btn-gold{
+  background:var(--dourado);
+  color:white;
 }
 
-.btn.danger{
-  background:var(--danger);
+.btn-light{
+  background:var(--areia2);
+  color:var(--verde);
 }
 
-.btn.full{
-  width:100%;
+.btn-danger{
+  background:#a94b42;
+  color:white;
 }
 
-.btn.small{
-  padding:8px 12px;
+.btn-small{
+  min-height:38px;
+  padding:7px 12px;
   font-size:13px;
 }
 
-.auth-actions{
-  display:flex;
-  gap:10px;
-  margin-top:22px;
-}
-
-.link-btn{
-  border:0;
-  background:none;
-  color:var(--green);
-  text-decoration:underline;
-  cursor:pointer;
-  padding:8px 0;
+.full{
+  width:100%;
 }
 
 .hidden{
   display:none!important;
 }
 
-/* ESTRUTURA */
-
-.shell{
-  display:flex;
-  min-height:100vh;
+.notice{
+  padding:12px 14px;
+  border-radius:10px;
+  background:#e8ddc6;
+  margin:14px 0;
+  font-size:14px;
+  line-height:1.45;
 }
 
-.sidebar{
-  width:245px;
-  background:#eee3cf;
-  border-right:1px solid var(--border);
-  padding:25px 15px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  overflow-y:auto;
+.message{
+  margin-top:12px;
+  padding:10px;
+  border-radius:9px;
+  display:none;
 }
 
-.sidebar-brand{
-  padding:5px 10px 28px;
-  font-size:21px;
-  color:var(--green);
+.message.show{
+  display:block;
 }
 
-.nav{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
+.message.error{
+  background:#f3d8d4;
+  color:#7c3029;
 }
 
-.nav button{
-  text-align:left;
-  border:0;
-  background:transparent;
-  color:var(--text);
-  padding:12px 13px;
-  border-radius:11px;
+.message.success{
+  background:#dce9dc;
+  color:#385a3b;
 }
 
-.nav button:hover,
-.nav button.active{
-  background:#dfd2b9;
-  color:var(--green);
-}
+/* ---------- APP ---------- */
 
-.nav-section{
-  margin:22px 10px 7px;
-  font-size:10px;
-  letter-spacing:2px;
-  color:var(--gold);
-  text-transform:uppercase;
-}
-
-.main{
-  margin-left:245px;
-  width:calc(100% - 245px);
+#mainApp{
+  display:none;
 }
 
 .topbar{
-  height:82px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(248,243,232,.97);
+  border-bottom:1px solid var(--borda);
+  backdrop-filter:blur(8px);
+}
+
+.topbar-inner{
+  max-width:1400px;
+  margin:auto;
+  min-height:74px;
+  padding:12px 22px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:center;
-  padding:0 35px;
-  background:#f7f0e3;
-  border-bottom:1px solid var(--border);
+  gap:16px;
 }
 
-.topbar-right{
+.logo-area{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
-.lang{
-  padding:8px;
+.logo-mini{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--verde);
+  color:#fff;
+  font-weight:bold;
+}
+
+.logo-area strong{
+  color:var(--verde);
+}
+
+.logo-area small{
+  display:block;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.lang-select{
+  width:auto;
+  min-height:38px;
+  padding:6px 10px;
+}
+
+.main-layout{
+  max-width:1400px;
+  margin:auto;
+  padding:22px;
+  display:grid;
+  grid-template-columns:235px 1fr;
+  gap:22px;
+}
+
+.sidebar{
+  background:var(--creme);
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:12px;
+  height:max-content;
+  position:sticky;
+  top:96px;
+}
+
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--texto);
+  text-align:left;
+  padding:13px 12px;
   border-radius:10px;
-  border:1px solid var(--border);
-  background:var(--white);
+  margin-bottom:4px;
+  font-weight:bold;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:var(--verde);
+  color:white;
 }
 
 .content{
-  padding:40px;
-  max-width:1400px;
-  margin:auto;
+  min-width:0;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
 }
 
 .page-title{
-  font-size:39px;
-  color:var(--green);
-  margin:0 0 8px;
+  margin:0 0 5px;
+  color:var(--verde);
+  font-size:28px;
 }
 
 .page-subtitle{
+  margin:0 0 22px;
   color:var(--muted);
-  margin-bottom:30px;
+}
+
+.card{
+  background:var(--creme);
+  border:1px solid var(--borda);
+  border-radius:var(--raio);
+  box-shadow:var(--sombra);
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.card h2{
+  color:var(--verde);
+  margin-top:0;
+}
+
+.card h3{
+  color:var(--verde);
 }
 
 .grid{
   display:grid;
-  gap:18px;
+  gap:15px;
 }
 
 .grid-2{
@@ -313,52 +365,31 @@ textarea{
   grid-template-columns:repeat(4,minmax(0,1fr));
 }
 
-.card{
-  background:var(--cream);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:var(--shadow);
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:15px;
 }
 
-.card h3{
-  margin-top:0;
-  color:var(--green);
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
 }
 
 .stat{
-  min-height:125px;
+  background:#f5eddd;
+  border:1px solid var(--borda);
+  border-radius:14px;
+  padding:17px;
 }
 
-.stat-number{
-  font-size:34px;
-  color:var(--green);
-  margin:12px 0 4px;
-}
-
-.stat-label{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.quick{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:18px;
-  background:var(--cream);
-  border:1px solid var(--border);
-  border-radius:16px;
-  cursor:pointer;
-}
-
-.quick:hover{
-  border-color:var(--gold);
-}
-
-.quick strong{
-  color:var(--green);
+.stat strong{
+  display:block;
+  color:var(--verde);
+  font-size:26px;
+  margin-top:5px;
 }
 
 .table-wrap{
@@ -368,144 +399,242 @@ textarea{
 table{
   width:100%;
   border-collapse:collapse;
+  min-width:650px;
 }
 
 th,td{
+  border-bottom:1px solid var(--borda);
   padding:12px 10px;
-  border-bottom:1px solid var(--border);
   text-align:left;
-  font-size:14px;
 }
 
 th{
-  color:var(--green);
-  background:#f0e7d6;
+  background:#e9ddc5;
+  color:var(--verde);
+}
+
+tr:last-child td{
+  border-bottom:0;
 }
 
 .badge{
   display:inline-block;
   padding:5px 9px;
   border-radius:20px;
-  background:#e7dcc7;
-  color:var(--green);
+  background:#dfebde;
+  color:#385a3b;
   font-size:12px;
-}
-
-.toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+  font-weight:bold;
 }
 
 .empty{
-  padding:35px;
+  padding:22px;
   text-align:center;
   color:var(--muted);
-  border:1px dashed var(--border);
+  border:1px dashed var(--borda);
+  border-radius:12px;
+}
+
+.item-form{
+  background:#f3ebda;
+  padding:17px;
   border-radius:14px;
+  border:1px solid var(--borda);
+}
+
+.dynamic-list{
+  margin-top:14px;
+}
+
+.dynamic-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  margin-bottom:9px;
+}
+
+.inline-form{
+  display:flex;
+  gap:9px;
+  align-items:end;
+  flex-wrap:wrap;
+}
+
+.inline-form .field{
+  flex:1;
+  min-width:180px;
+  margin:0;
+}
+
+.team-members{
+  list-style:none;
+  padding:0;
+  margin:12px 0;
+}
+
+.team-members li{
+  background:#f5eddd;
+  padding:11px 13px;
+  border-bottom:1px solid var(--borda);
+}
+
+.team-members li:first-child{
+  border-radius:10px 10px 0 0;
+}
+
+.team-members li:last-child{
+  border-radius:0 0 10px 10px;
+  border-bottom:0;
+}
+
+.shoes{
+  position:relative;
+  height:65px;
+  overflow:hidden;
+  background:#f4ecda;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+.shoe{
+  position:absolute;
+  bottom:12px;
+  font-size:27px;
+  animation:walk 9s linear infinite;
+}
+
+.shoe:nth-child(2){animation-delay:2.5s}
+.shoe:nth-child(3){animation-delay:5s}
+.shoe:nth-child(4){animation-delay:7s}
+
+@keyframes walk{
+  from{left:-60px}
+  to{left:105%}
+}
+
+.progress{
+  height:12px;
+  background:#dfd4bd;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:var(--dourado);
+  width:0;
+}
+
+.success-text{
+  color:var(--sucesso);
+  font-weight:bold;
+}
+
+.warning-text{
+  color:#9a712d;
+  font-weight:bold;
+}
+
+.footer-note{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:25px 0 10px;
 }
 
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(40,50,40,.45);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
   z-index:100;
+  background:rgba(40,35,27,.48);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
 }
 
 .modal-box{
-  width:min(700px,100%);
+  width:min(600px,100%);
   max-height:90vh;
   overflow:auto;
-  background:var(--cream);
+  background:var(--creme);
   border-radius:20px;
-  padding:28px;
-  border:1px solid var(--border);
+  border:1px solid var(--borda);
+  padding:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.20);
 }
 
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:var(--green);
-  color:#fff;
-  padding:14px 18px;
-  border-radius:12px;
-  z-index:300;
-  box-shadow:var(--shadow);
+.modal-box h2{
+  color:var(--verde);
+  margin-top:0;
 }
 
-.footer-note{
-  margin-top:35px;
-  text-align:center;
+.close-modal{
+  float:right;
+  border:0;
+  background:transparent;
+  font-size:25px;
   color:var(--muted);
-  font-size:12px;
 }
-
-/* RESPONSIVO */
 
 @media(max-width:900px){
-  .sidebar{
-    width:210px;
-  }
-  .main{
-    margin-left:210px;
-    width:calc(100% - 210px);
-  }
-  .grid-4{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:700px){
-  .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
-  }
-
-  .shell{
-    display:block;
-  }
-
-  .main{
-    margin-left:0;
-    width:100%;
-  }
-
-  .nav{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .topbar{
-    padding:0 15px;
-  }
-
-  .content{
-    padding:20px 15px;
-  }
-
-  .grid-2,
-  .grid-3,
-  .grid-4{
+  .main-layout{
     grid-template-columns:1fr;
   }
 
-  .auth-card{
-    padding:25px;
+  .sidebar{
+    position:static;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:5px;
+  }
+
+  .stat-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid-3,.grid-4{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .screen{
+    padding:12px;
+  }
+
+  .access-card{
+    padding:25px 18px;
+  }
+
+  .topbar-inner{
+    padding:10px 13px;
+  }
+
+  .main-layout{
+    padding:12px;
+  }
+
+  .grid-2,.grid-3,.grid-4{
+    grid-template-columns:1fr;
+  }
+
+  .stat-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .sidebar{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .nav-btn{
+    font-size:13px;
   }
 }
 </style>
@@ -513,1471 +642,2615 @@ th{
 
 <body>
 
-<div id="root"></div>
+<div class="app">
+
+<!-- ================= INÍCIO ================= -->
+
+<section id="accessScreen" class="screen">
+  <div class="access-card">
+    <div class="brand-symbol">GD</div>
+    <h1 data-i18n="appName">Plataforma de Gestão</h1>
+    <p data-i18n="accessText">
+      Informe sua chave de acesso para começar.
+    </p>
+
+    <div class="field">
+      <label data-i18n="accessKey">Chave de acesso</label>
+      <input id="accessKeyInput" type="text" placeholder="Digite sua chave">
+    </div>
+
+    <button class="btn btn-primary full" onclick="checkAccess()" data-i18n="continue">
+      Continuar
+    </button>
+
+    <div id="accessMessage" class="message"></div>
+
+    <div class="footer-note">
+      <span data-i18n="dedication">Dedicado com carinho a Vera Lima.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOAS-VINDAS ================= -->
+
+<section id="welcomeScreen" class="screen hidden">
+  <div class="access-card">
+    <div class="brand-symbol">GD</div>
+    <h1 data-i18n="welcome">Bem-vindo</h1>
+    <p data-i18n="welcomeText">
+      Cadastre sua unidade para começar a utilizar a plataforma.
+    </p>
+
+    <button class="btn btn-primary full" onclick="showScreen('registerScreen')" data-i18n="register">
+      Cadastrar
+    </button>
+
+    <button class="btn btn-light full" style="margin-top:10px" onclick="showScreen('loginScreen')" data-i18n="login">
+      Entrar
+    </button>
+
+    <div class="footer-note">
+      <span data-i18n="dedication">Dedicado com carinho a Vera Lima.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CADASTRO ================= -->
+
+<section id="registerScreen" class="screen hidden">
+  <div class="access-card">
+    <h1 data-i18n="registerTitle">Cadastro</h1>
+
+    <div class="field">
+      <label data-i18n="unitName">Nome da unidade</label>
+      <input id="regUnit" type="text">
+    </div>
+
+    <div class="field">
+      <label data-i18n="directorName">Nome do diretor(a)</label>
+      <input id="regDirector" type="text">
+    </div>
+
+    <div class="field">
+      <label data-i18n="password">Senha</label>
+      <input id="regPassword" type="password">
+    </div>
+
+    <div class="field">
+      <label data-i18n="confirmPassword">Confirmar senha</label>
+      <input id="regPassword2" type="password">
+    </div>
+
+    <div class="field">
+      <label data-i18n="keyword">Palavra-chave para recuperar senha</label>
+      <input id="regKeyword" type="text">
+      <small data-i18n="keywordHelp">
+        Guarde essa palavra pois ela será usada se você precisar mudar sua senha.
+      </small>
+    </div>
+
+    <button class="btn btn-primary full" onclick="registerUnit()" data-i18n="register">
+      Cadastrar
+    </button>
+
+    <button class="btn btn-light full" style="margin-top:10px" onclick="showScreen('welcomeScreen')" data-i18n="back">
+      Voltar
+    </button>
+
+    <div id="registerMessage" class="message"></div>
+  </div>
+</section>
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginScreen" class="screen hidden">
+  <div class="access-card">
+    <h1 data-i18n="loginTitle">Login</h1>
+
+    <div class="notice">
+      <strong data-i18n="unit">Unidade:</strong>
+      <span id="loginUnit">—</span>
+    </div>
+
+    <div class="field">
+      <label data-i18n="registeredName">Nome cadastrado</label>
+      <input id="loginName" type="text">
+    </div>
+
+    <div class="field">
+      <label data-i18n="password">Senha</label>
+      <input id="loginPassword" type="password">
+    </div>
+
+    <label style="display:flex;gap:8px;align-items:center;margin:12px 0">
+      <input id="rememberLogin" type="checkbox" style="width:auto;min-height:auto">
+      <span data-i18n="remember">Lembrar dados de login</span>
+    </label>
+
+    <button class="btn btn-primary full" onclick="loginUser()" data-i18n="enter">
+      Entrar
+    </button>
+
+    <button class="btn btn-light full" style="margin-top:10px" onclick="openRecovery()" data-i18n="forgot">
+      Esqueci minha senha
+    </button>
+
+    <div id="loginMessage" class="message"></div>
+  </div>
+</section>
+
+<!-- ================= APLICATIVO ================= -->
+
+<div id="mainApp">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo-area">
+      <div class="logo-mini">GD</div>
+      <div>
+        <strong data-i18n="appName">Plataforma de Gestão</strong>
+        <small id="currentUnit">—</small>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <select id="languageSelect" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+
+      <button class="btn btn-light btn-small" onclick="logout()" data-i18n="logout">
+        Sair
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="main-layout">
+
+<aside class="sidebar" id="sidebar">
+  <button class="nav-btn active" onclick="showPage('dashboardPage',this)" data-i18n="dashboard">Início</button>
+  <button class="nav-btn" onclick="showPage('campaignPage',this)" data-i18n="campaign">Campanha</button>
+  <button class="nav-btn" onclick="showPage('itemsPage',this)" data-i18n="items">Itens</button>
+  <button class="nav-btn" onclick="showPage('familiesPage',this)" data-i18n="families">Famílias</button>
+  <button class="nav-btn" onclick="showPage('teamsPage',this)" data-i18n="teams">Equipes</button>
+  <button class="nav-btn" onclick="showPage('eventsPage',this)" data-i18n="jointCollection">Arrecadação conjunta</button>
+  <button class="nav-btn" onclick="showPage('accessPage',this)" data-i18n="accesses">Acessos</button>
+  <button class="nav-btn" onclick="showPage('teamAccessPage',this)" data-i18n="teamArea">Área mantenedora</button>
+</aside>
+
+<main class="content">
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboardPage" class="page active">
+
+  <h1 class="page-title" data-i18n="dashboardTitle">Painel</h1>
+  <p class="page-subtitle" data-i18n="dashboardSubtitle">
+    Visão geral da campanha atual.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <span data-i18n="families">Famílias</span>
+      <strong id="statFamilies">0</strong>
+    </div>
+
+    <div class="stat">
+      <span data-i18n="items">Itens</span>
+      <strong id="statItems">0</strong>
+    </div>
+
+    <div class="stat">
+      <span data-i18n="teams">Equipes</span>
+      <strong id="statTeams">0</strong>
+    </div>
+
+    <div class="stat">
+      <span data-i18n="deliveries">Entregas</span>
+      <strong id="statDeliveries">0</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="currentCampaign">Campanha atual</h2>
+    <div id="dashboardCampaign" class="notice">Nenhuma campanha cadastrada.</div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="teamRanking">Classificação das equipes</h2>
+    <div id="dashboardRanking"></div>
+  </div>
+
+</section>
+
+<!-- ================= CAMPANHA ================= -->
+
+<section id="campaignPage" class="page">
+
+  <h1 class="page-title" data-i18n="campaignTitle">Campanha atual</h1>
+  <p class="page-subtitle" data-i18n="campaignSubtitle">
+    O gestor define aqui a campanha que aparecerá para as equipes.
+  </p>
+
+  <div class="card">
+    <h2 data-i18n="campaignName">Campanha de arrecadação</h2>
+
+    <div class="field">
+      <label data-i18n="campaignLabel">Nome da campanha</label>
+      <input id="campaignInput" type="text">
+    </div>
+
+    <button class="btn btn-primary" onclick="saveCampaign()" data-i18n="save">
+      Salvar
+    </button>
+
+    <div id="campaignMessage" class="message"></div>
+  </div>
+
+</section>
+
+<!-- ================= ITENS ================= -->
+
+<section id="itemsPage" class="page">
+
+  <h1 class="page-title" data-i18n="itemsTitle">Itens</h1>
+  <p class="page-subtitle" data-i18n="itemsSubtitle">
+    Cadastre os itens necessários. As entradas das equipes serão somadas automaticamente.
+  </p>
+
+  <div class="card">
+
+    <div class="item-form">
+
+      <h2 data-i18n="newItem">Cadastrar item</h2>
+
+      <div class="grid grid-3">
+
+        <div class="field">
+          <label data-i18n="itemName">Alimento / item</label>
+          <input id="itemNameInput" type="text">
+        </div>
+
+        <div class="field">
+          <label data-i18n="needed">Quantidade necessária</label>
+          <input id="itemNeededInput" type="number" min="0" step="0.01">
+        </div>
+
+        <div class="field">
+          <label data-i18n="unitMeasure">Unidade de medida</label>
+          <select id="itemUnitInput">
+            <option value="kg">kg</option>
+            <option value="un">un.</option>
+            <option value="l">L</option>
+            <option value="cx">cx.</option>
+            <option value="pct">%</option>
+            <option value="outro">Outra</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="grid grid-2">
+
+        <div class="field">
+          <label data-i18n="alreadyHave">Quantidade que já possui</label>
+          <input id="itemHaveInput" type="number" min="0" step="0.01">
+        </div>
+
+        <div class="field">
+          <label data-i18n="entered">Quantidade que entrou</label>
+          <input value="0" disabled>
+          <small data-i18n="automatic">
+            Preenchida automaticamente pelas entregas das equipes.
+          </small>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="addItem()" data-i18n="addItem">
+          Adicionar item
+        </button>
+
+        <button class="btn btn-light" onclick="clearItemForm()" data-i18n="clear">
+          Limpar
+        </button>
+      </div>
+
+      <div id="itemMessage" class="message"></div>
+
+    </div>
+
+    <div style="margin-top:20px" id="itemsList"></div>
+
+  </div>
+
+</section>
+
+<!-- ================= FAMÍLIAS ================= -->
+
+<section id="familiesPage" class="page">
+
+  <h1 class="page-title" data-i18n="familiesTitle">Famílias beneficiadas</h1>
+  <p class="page-subtitle" data-i18n="familiesSubtitle">
+    Cadastre as informações necessárias sem identificar crianças e idosos.
+  </p>
+
+  <div class="card">
+
+    <h2 data-i18n="familyRegister">Cadastro da família</h2>
+
+    <div class="grid grid-2">
+
+      <div class="field">
+        <label data-i18n="responsible">Nome do responsável</label>
+        <input id="familyResponsible" type="text">
+      </div>
+
+      <div class="field">
+        <label data-i18n="people">Número de pessoas no grupo familiar</label>
+        <input id="familyPeople" type="number" min="1" value="1" onchange="buildFamilyFields()">
+      </div>
+
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label data-i18n="children">Número de crianças</label>
+        <input id="familyChildren" type="number" min="0" value="0" onchange="buildFamilyFields()">
+      </div>
+
+      <div class="field">
+        <label data-i18n="boys">Meninos</label>
+        <input id="familyBoys" type="number" min="0" value="0" onchange="buildFamilyFields()">
+      </div>
+
+      <div class="field">
+        <label data-i18n="girls">Meninas</label>
+        <input id="familyGirls" type="number" min="0" value="0" onchange="buildFamilyFields()">
+      </div>
+
+    </div>
+
+    <div id="childrenFields"></div>
+
+    <div class="grid grid-2">
+
+      <div class="field">
+        <label data-i18n="elderly">Idosos com mais de 65 anos</label>
+        <input id="familyElderly" type="number" min="0" value="0" onchange="buildFamilyFields()">
+      </div>
+
+    </div>
+
+    <div id="elderlyFields"></div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="addFamily()" data-i18n="saveFamily">
+        Salvar família
+      </button>
+
+      <button class="btn btn-light" onclick="clearFamilyForm()" data-i18n="cancel">
+        Cancelar
+      </button>
+    </div>
+
+    <div id="familyMessage" class="message"></div>
+
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="registeredFamilies">Famílias cadastradas</h2>
+    <div id="familiesList"></div>
+  </div>
+
+</section>
+
+<!-- ================= EQUIPES ================= -->
+
+<section id="teamsPage" class="page">
+
+  <h1 class="page-title" data-i18n="teamsTitle">Equipes mantenedoras</h1>
+  <p class="page-subtitle" data-i18n="teamsSubtitle">
+    Acompanhe a arrecadação e a classificação das equipes.
+  </p>
+
+  <div class="card">
+    <h2 data-i18n="teamRanking">Classificação das equipes</h2>
+    <div id="fullRanking"></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="teamDeliveries">Entregas das equipes</h2>
+    <div id="teamDeliveriesList"></div>
+  </div>
+
+</section>
+
+<!-- ================= ARRECADAÇÃO CONJUNTA ================= -->
+
+<section id="eventsPage" class="page">
+
+  <h1 class="page-title" data-i18n="jointTitle">Arrecadação conjunta</h1>
+  <p class="page-subtitle" data-i18n="jointSubtitle">
+    Cadastre as informações da arrecadação conjunta.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-2">
+
+      <div class="field">
+        <label data-i18n="date">Data</label>
+        <input id="eventDate" type="date">
+      </div>
+
+      <div class="field">
+        <label data-i18n="time">Hora</label>
+        <input id="eventTime" type="time">
+      </div>
+
+      <div class="field">
+        <label data-i18n="location">Local</label>
+        <input id="eventLocation" type="text">
+      </div>
+
+      <div class="field">
+        <label data-i18n="meetingPoint">Ponto de encontro</label>
+        <input id="eventMeeting" type="text">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label data-i18n="address">Endereço</label>
+      <textarea id="eventAddress"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="saveEvent()" data-i18n="saveEvent">
+        Salvar arrecadação
+      </button>
+
+      <button class="btn btn-danger" onclick="deleteEvent()" data-i18n="delete">
+        Excluir
+      </button>
+    </div>
+
+    <div id="eventMessage" class="message"></div>
+
+  </div>
+
+  <div id="eventPreview"></div>
+
+</section>
+
+<!-- ================= ACESSOS ================= -->
+
+<section id="accessPage" class="page">
+
+  <h1 class="page-title" data-i18n="accessTitle">Acessos à área do gestor</h1>
+  <p class="page-subtitle" data-i18n="accessSubtitle">
+    Gere acessos individuais para diretor associado e secretário.
+  </p>
+
+  <div class="card">
+
+    <h2 data-i18n="generateAccess">Gerar acesso</h2>
+
+    <div class="grid grid-2">
+
+      <div class="field">
+        <label data-i18n="personName">Nome da pessoa</label>
+        <input id="managerAccessName" type="text">
+      </div>
+
+      <div class="field">
+        <label data-i18n="function">Função</label>
+        <select id="managerAccessRole">
+          <option value="Diretor associado">Diretor associado</option>
+          <option value="Secretário">Secretário</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="generateManagerAccess()" data-i18n="generate">
+      Gerar acesso
+    </button>
+
+    <div id="managerAccessMessage" class="message"></div>
+
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="storedAccesses">Acessos armazenados</h2>
+    <div id="managerAccessList"></div>
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="maintainerAccess">Acessos — equipes mantenedoras</h2>
+
+    <div class="field">
+      <label data-i18n="leaderName">Nome do líder</label>
+      <input id="leaderAccessName" type="text">
+    </div>
+
+    <button class="btn btn-primary" onclick="generateLeaderAccess()" data-i18n="generate">
+      Gerar acesso
+    </button>
+
+    <div id="leaderAccessMessage" class="message"></div>
+
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="leaderAccesses">Acessos dos líderes</h2>
+    <div id="leaderAccessList"></div>
+  </div>
+
+</section>
+
+<!-- ================= ÁREA MANTENEDORA ================= -->
+
+<section id="teamAccessPage" class="page">
+
+  <h1 class="page-title" data-i18n="maintainerTitle">Área da equipe mantenedora</h1>
+  <p class="page-subtitle" data-i18n="maintainerSubtitle">
+    Área destinada ao trabalho das equipes.
+  </p>
+
+  <div class="card">
+
+    <h2 data-i18n="teamIdentity">Identificação da equipe</h2>
+
+    <div class="field">
+      <label data-i18n="teamName">Nome da equipe</label>
+      <input id="teamNameInput" type="text">
+    </div>
+
+    <button class="btn btn-primary" onclick="saveTeamName()" data-i18n="save">
+      Salvar
+    </button>
+
+    <div id="teamMessage" class="message"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="weeklyItem">Item da semana</h2>
+
+    <div id="weeklyItem" class="notice">
+      Nenhum item definido.
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="jointCollection">Arrecadação conjunta</h2>
+
+    <div id="teamEvent"></div>
+
+    <div class="shoes">
+      <span class="shoe">👞</span>
+      <span class="shoe">👟</span>
+      <span class="shoe">👞</span>
+      <span class="shoe">👟</span>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="members">Membros da equipe</h2>
+
+    <div class="inline-form">
+
+      <div class="field">
+        <label data-i18n="memberName">Nome do membro</label>
+        <input id="memberInput" type="text">
+      </div>
+
+      <button class="btn btn-primary" onclick="addMember()" data-i18n="add">
+        Adicionar
+      </button>
+
+    </div>
+
+    <ul id="membersList" class="team-members"></ul>
+
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="registerDelivery">Registrar entrega</h2>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label data-i18n="selectItem">Item</label>
+        <select id="deliveryItem"></select>
+      </div>
+
+      <div class="field">
+        <label data-i18n="quantity">Quantidade</label>
+        <input id="deliveryQuantity" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label data-i18n="deliveredBy">Quem fez a entrega</label>
+        <input id="deliveryBy" type="text">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label data-i18n="receivedBy">Quem recebeu</label>
+      <input id="receivedBy" type="text">
+    </div>
+
+    <button class="btn btn-primary" onclick="registerDelivery()" data-i18n="registerDeliveryButton">
+      Registrar entrega
+    </button>
+
+    <div id="deliveryMessage" class="message"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 data-i18n="myDeliveries">Minhas entregas</h2>
+
+    <div id="myDeliveriesList"></div>
+
+  </div>
+
+</section>
+
+<div class="footer-note">
+  <span data-i18n="dedication">Dedicado com carinho a Vera Lima.</span>
+</div>
+
+</main>
+</div>
+</div>
+
+<!-- ================= MODAL RECUPERAÇÃO ================= -->
+
+<div id="recoveryModal" class="modal">
+  <div class="modal-box">
+
+    <button class="close-modal" onclick="closeRecovery()">×</button>
+
+    <h2 data-i18n="recoverPassword">Recuperar senha</h2>
+
+    <div class="field">
+      <label data-i18n="keyword">Palavra-chave</label>
+      <input id="recoveryKeyword" type="text">
+    </div>
+
+    <div class="field">
+      <label data-i18n="newPassword">Nova senha</label>
+      <input id="recoveryPassword" type="password">
+    </div>
+
+    <div class="field">
+      <label data-i18n="confirmPassword">Confirmar senha</label>
+      <input id="recoveryPassword2" type="password">
+    </div>
+
+    <button class="btn btn-primary" onclick="recoverPassword()" data-i18n="changePassword">
+      Alterar senha
+    </button>
+
+    <div id="recoveryMessage" class="message"></div>
+
+  </div>
+</div>
 
 <script>
-/* ==========================================================
-   PLATAFORMA DE GESTÃO
-   Versão de teste
-   Chave de acesso: TESTE2026
-   ========================================================== */
 
-const ACCESS_KEY = "TESTE2026";
+/* ============================================================
+   CONFIGURAÇÃO
+============================================================ */
+
+const ACCESS_KEY = "TESTE-2026";
+const STORAGE_KEY = "GESTAO_PLATFORM_DATA_V1";
+
+let currentData = null;
+let currentRole = "director";
+
+/* ============================================================
+   IDIOMAS
+============================================================ */
 
 const translations = {
-  pt:{
-    access:"Chave de acesso",
-    accessText:"Digite a chave de acesso para iniciar.",
-    enter:"Entrar",
-    welcome:"Bem-vindo",
-    welcomeText:"Cadastre sua unidade para começar a utilizar a plataforma.",
-    register:"Cadastrar unidade",
-    login:"Entrar",
-    unitName:"Nome da unidade",
-    director:"Nome do responsável",
-    password:"Senha",
-    confirmPassword:"Confirmar senha",
-    keyword:"Palavra-chave para recuperação",
-    keywordHelp:"Guarde essa palavra. Ela será usada se você precisar mudar sua senha.",
-    save:"Salvar",
-    dashboard:"Visão geral",
-    families:"Famílias beneficiadas",
-    items:"Itens",
-    teams:"Equipes",
-    collection:"Arrecadação conjunta",
-    access:"Acessos",
-    settings:"Configurações",
-    campaign:"Campanha / evento atual",
-    overview:"Visão geral",
-    members:"Membros",
-    ranking:"Classificação",
-    deliveries:"Entregas",
-    logout:"Sair"
-  },
-  en:{
-    access:"Access key",
-    accessText:"Enter the access key to start.",
-    enter:"Enter",
-    welcome:"Welcome",
-    welcomeText:"Register your unit to start using the platform.",
-    register:"Register unit",
-    login:"Login",
-    unitName:"Unit name",
-    director:"Responsible person",
-    password:"Password",
-    confirmPassword:"Confirm password",
-    keyword:"Recovery keyword",
-    keywordHelp:"Keep this word. It will be used if you need to change your password.",
-    save:"Save",
-    dashboard:"Overview",
-    families:"Beneficiary families",
-    items:"Items",
-    teams:"Teams",
-    collection:"Joint collection",
-    access:"Access",
-    settings:"Settings",
-    campaign:"Current campaign / event",
-    overview:"Overview",
-    members:"Members",
-    ranking:"Ranking",
-    deliveries:"Deliveries",
-    logout:"Logout"
-  },
-  es:{
-    access:"Clave de acceso",
-    accessText:"Introduzca la clave de acceso para comenzar.",
-    enter:"Entrar",
-    welcome:"Bienvenido",
-    welcomeText:"Registre su unidad para comenzar a utilizar la plataforma.",
-    register:"Registrar unidad",
-    login:"Iniciar sesión",
-    unitName:"Nombre de la unidad",
-    director:"Responsable",
-    password:"Contraseña",
-    confirmPassword:"Confirmar contraseña",
-    keyword:"Palabra clave de recuperación",
-    keywordHelp:"Guarde esta palabra. Se utilizará si necesita cambiar su contraseña.",
-    save:"Guardar",
-    dashboard:"Vista general",
-    families:"Familias beneficiarias",
-    items:"Artículos",
-    teams:"Equipos",
-    collection:"Recaudación conjunta",
-    access:"Accesos",
-    settings:"Configuración",
-    campaign:"Campaña / evento actual",
-    overview:"Vista general",
-    members:"Miembros",
-    ranking:"Clasificación",
-    deliveries:"Entregas",
-    logout:"Salir"
-  }
+
+pt:{
+  appName:"Plataforma de Gestão",
+  accessText:"Informe sua chave de acesso para começar.",
+  accessKey:"Chave de acesso",
+  continue:"Continuar",
+  dedication:"Dedicado com carinho a Vera Lima.",
+  welcome:"Bem-vindo",
+  welcomeText:"Cadastre sua unidade para começar a utilizar a plataforma.",
+  register:"Cadastrar",
+  login:"Entrar",
+  registerTitle:"Cadastro",
+  unitName:"Nome da unidade",
+  directorName:"Nome do diretor(a)",
+  password:"Senha",
+  confirmPassword:"Confirmar senha",
+  keyword:"Palavra-chave para recuperar senha",
+  keywordHelp:"Guarde essa palavra pois ela será usada se você precisar mudar sua senha.",
+  back:"Voltar",
+  loginTitle:"Login",
+  unit:"Unidade:",
+  registeredName:"Nome cadastrado",
+  remember:"Lembrar dados de login",
+  enter:"Entrar",
+  forgot:"Esqueci minha senha",
+  logout:"Sair",
+  dashboard:"Início",
+  campaign:"Campanha",
+  items:"Itens",
+  families:"Famílias",
+  teams:"Equipes",
+  jointCollection:"Arrecadação conjunta",
+  accesses:"Acessos",
+  teamArea:"Área mantenedora",
+  dashboardTitle:"Painel",
+  dashboardSubtitle:"Visão geral da campanha atual.",
+  currentCampaign:"Campanha atual",
+  teamRanking:"Classificação das equipes",
+  campaignTitle:"Campanha atual",
+  campaignSubtitle:"O gestor define aqui a campanha que aparecerá para as equipes.",
+  campaignName:"Campanha de arrecadação",
+  campaignLabel:"Nome da campanha",
+  save:"Salvar",
+  itemsTitle:"Itens",
+  itemsSubtitle:"Cadastre os itens necessários. As entradas das equipes serão somadas automaticamente.",
+  newItem:"Cadastrar item",
+  itemName:"Alimento / item",
+  needed:"Quantidade necessária",
+  unitMeasure:"Unidade de medida",
+  alreadyHave:"Quantidade que já possui",
+  entered:"Quantidade que entrou",
+  automatic:"Preenchida automaticamente pelas entregas das equipes.",
+  addItem:"Adicionar item",
+  clear:"Limpar",
+  familiesTitle:"Famílias beneficiadas",
+  familiesSubtitle:"Cadastre as informações necessárias sem identificar crianças e idosos.",
+  familyRegister:"Cadastro da família",
+  responsible:"Nome do responsável",
+  people:"Número de pessoas no grupo familiar",
+  children:"Número de crianças",
+  boys:"Meninos",
+  girls:"Meninas",
+  elderly:"Idosos com mais de 65 anos",
+  saveFamily:"Salvar família",
+  cancel:"Cancelar",
+  registeredFamilies:"Famílias cadastradas",
+  teamsTitle:"Equipes mantenedoras",
+  teamsSubtitle:"Acompanhe a arrecadação e a classificação das equipes.",
+  teamDeliveries:"Entregas das equipes",
+  jointTitle:"Arrecadação conjunta",
+  jointSubtitle:"Cadastre as informações da arrecadação conjunta.",
+  date:"Data",
+  time:"Hora",
+  location:"Local",
+  meetingPoint:"Ponto de encontro",
+  address:"Endereço",
+  saveEvent:"Salvar arrecadação",
+  delete:"Excluir",
+  accessTitle:"Acessos à área do gestor",
+  accessSubtitle:"Gere acessos individuais para diretor associado e secretário.",
+  generateAccess:"Gerar acesso",
+  personName:"Nome da pessoa",
+  function:"Função",
+  generate:"Gerar acesso",
+  storedAccesses:"Acessos armazenados",
+  maintainerAccess:"Acessos — equipes mantenedoras",
+  leaderName:"Nome do líder",
+  leaderAccesses:"Acessos dos líderes",
+  maintainerTitle:"Área da equipe mantenedora",
+  maintainerSubtitle:"Área destinada ao trabalho das equipes.",
+  teamIdentity:"Identificação da equipe",
+  teamName:"Nome da equipe",
+  weeklyItem:"Item da semana",
+  members:"Membros da equipe",
+  memberName:"Nome do membro",
+  add:"Adicionar",
+  registerDelivery:"Registrar entrega",
+  selectItem:"Item",
+  quantity:"Quantidade",
+  deliveredBy:"Quem fez a entrega",
+  receivedBy:"Quem recebeu",
+  registerDeliveryButton:"Registrar entrega",
+  myDeliveries:"Minhas entregas",
+  recoverPassword:"Recuperar senha",
+  newPassword:"Nova senha",
+  changePassword:"Alterar senha"
+},
+
+en:{
+  appName:"Management Platform",
+  accessText:"Enter your access key to begin.",
+  accessKey:"Access key",
+  continue:"Continue",
+  dedication:"Dedicated with affection to Vera Lima.",
+  welcome:"Welcome",
+  welcomeText:"Register your unit to start using the platform.",
+  register:"Register",
+  login:"Log in",
+  registerTitle:"Registration",
+  unitName:"Unit name",
+  directorName:"Director name",
+  password:"Password",
+  confirmPassword:"Confirm password",
+  keyword:"Password recovery keyword",
+  keywordHelp:"Keep this word safe. It will be used if you need to change your password.",
+  back:"Back",
+  loginTitle:"Login",
+  unit:"Unit:",
+  registeredName:"Registered name",
+  remember:"Remember login data",
+  enter:"Enter",
+  forgot:"I forgot my password",
+  logout:"Log out",
+  dashboard:"Home",
+  campaign:"Campaign",
+  items:"Items",
+  families:"Families",
+  teams:"Teams",
+  jointCollection:"Joint collection",
+  accesses:"Access",
+  teamArea:"Team area",
+  dashboardTitle:"Dashboard",
+  dashboardSubtitle:"Overview of the current campaign.",
+  currentCampaign:"Current campaign",
+  teamRanking:"Team ranking",
+  campaignTitle:"Current campaign",
+  campaignSubtitle:"The manager defines the campaign shown to teams.",
+  campaignName:"Collection campaign",
+  campaignLabel:"Campaign name",
+  save:"Save",
+  itemsTitle:"Items",
+  itemsSubtitle:"Register the required items. Team entries are added automatically.",
+  newItem:"Register item",
+  itemName:"Food / item",
+  needed:"Required quantity",
+  unitMeasure:"Measurement unit",
+  alreadyHave:"Quantity already available",
+  entered:"Quantity received",
+  automatic:"Automatically filled by team deliveries.",
+  addItem:"Add item",
+  clear:"Clear",
+  familiesTitle:"Beneficiary families",
+  familiesSubtitle:"Register necessary information without identifying children and elderly people.",
+  familyRegister:"Family registration",
+  responsible:"Responsible person",
+  people:"Number of people in the family",
+  children:"Number of children",
+  boys:"Boys",
+  girls:"Girls",
+  elderly:"People over 65",
+  saveFamily:"Save family",
+  cancel:"Cancel",
+  registeredFamilies:"Registered families",
+  teamsTitle:"Maintainer teams",
+  teamsSubtitle:"Follow team collections and ranking.",
+  teamDeliveries:"Team deliveries",
+  jointTitle:"Joint collection",
+  jointSubtitle:"Register joint collection information.",
+  date:"Date",
+  time:"Time",
+  location:"Location",
+  meetingPoint:"Meeting point",
+  address:"Address",
+  saveEvent:"Save collection",
+  delete:"Delete",
+  accessTitle:"Manager access",
+  accessSubtitle:"Generate individual access for associate director and secretary.",
+  generateAccess:"Generate access",
+  personName:"Person's name",
+  function:"Function",
+  generate:"Generate access",
+  storedAccesses:"Stored accesses",
+  maintainerAccess:"Access — maintainer teams",
+  leaderName:"Leader's name",
+  leaderAccesses:"Leader accesses",
+  maintainerTitle:"Maintainer team area",
+  maintainerSubtitle:"Area for team activities.",
+  teamIdentity:"Team identification",
+  teamName:"Team name",
+  weeklyItem:"Weekly item",
+  members:"Team members",
+  memberName:"Member name",
+  add:"Add",
+  registerDelivery:"Register delivery",
+  selectItem:"Item",
+  quantity:"Quantity",
+  deliveredBy:"Delivered by",
+  receivedBy:"Received by",
+  registerDeliveryButton:"Register delivery",
+  myDeliveries:"My deliveries",
+  recoverPassword:"Recover password",
+  newPassword:"New password",
+  changePassword:"Change password"
+},
+
+es:{
+  appName:"Plataforma de Gestión",
+  accessText:"Ingrese su clave de acceso para comenzar.",
+  accessKey:"Clave de acceso",
+  continue:"Continuar",
+  dedication:"Dedicado con cariño a Vera Lima.",
+  welcome:"Bienvenido",
+  welcomeText:"Registre su unidad para comenzar a utilizar la plataforma.",
+  register:"Registrarse",
+  login:"Ingresar",
+  registerTitle:"Registro",
+  unitName:"Nombre de la unidad",
+  directorName:"Nombre del director(a)",
+  password:"Contraseña",
+  confirmPassword:"Confirmar contraseña",
+  keyword:"Palabra clave para recuperar la contraseña",
+  keywordHelp:"Guarde esta palabra, ya que será utilizada si necesita cambiar su contraseña.",
+  back:"Volver",
+  loginTitle:"Inicio de sesión",
+  unit:"Unidad:",
+  registeredName:"Nombre registrado",
+  remember:"Recordar datos de acceso",
+  enter:"Entrar",
+  forgot:"Olvidé mi contraseña",
+  logout:"Salir",
+  dashboard:"Inicio",
+  campaign:"Campaña",
+  items:"Artículos",
+  families:"Familias",
+  teams:"Equipos",
+  jointCollection:"Recolección conjunta",
+  accesses:"Accesos",
+  teamArea:"Área del equipo",
+  dashboardTitle:"Panel",
+  dashboardSubtitle:"Resumen de la campaña actual.",
+  currentCampaign:"Campaña actual",
+  teamRanking:"Clasificación de equipos",
+  campaignTitle:"Campaña actual",
+  campaignSubtitle:"El gestor define aquí la campaña que aparecerá para los equipos.",
+  campaignName:"Campaña de recolección",
+  campaignLabel:"Nombre de la campaña",
+  save:"Guardar",
+  itemsTitle:"Artículos",
+  itemsSubtitle:"Registre los artículos necesarios. Las entradas de los equipos se sumarán automáticamente.",
+  newItem:"Registrar artículo",
+  itemName:"Alimento / artículo",
+  needed:"Cantidad necesaria",
+  unitMeasure:"Unidad de medida",
+  alreadyHave:"Cantidad disponible",
+  entered:"Cantidad recibida",
+  automatic:"Completada automáticamente por las entregas de los equipos.",
+  addItem:"Agregar artículo",
+  clear:"Limpiar",
+  familiesTitle:"Familias beneficiarias",
+  familiesSubtitle:"Registre la información necesaria sin identificar a niños y personas mayores.",
+  familyRegister:"Registro de familia",
+  responsible:"Responsable",
+  people:"Número de personas en la familia",
+  children:"Número de niños",
+  boys:"Niños",
+  girls:"Niñas",
+  elderly:"Personas mayores de 65 años",
+  saveFamily:"Guardar familia",
+  cancel:"Cancelar",
+  registeredFamilies:"Familias registradas",
+  teamsTitle:"Equipos mantenedores",
+  teamsSubtitle:"Acompañe la recolección y clasificación de los equipos.",
+  teamDeliveries:"Entregas de los equipos",
+  jointTitle:"Recolección conjunta",
+  jointSubtitle:"Registre la información de la recolección conjunta.",
+  date:"Fecha",
+  time:"Hora",
+  location:"Lugar",
+  meetingPoint:"Punto de encuentro",
+  address:"Dirección",
+  saveEvent:"Guardar recolección",
+  delete:"Eliminar",
+  accessTitle:"Accesos al área del gestor",
+  accessSubtitle:"Genere accesos individuales para director asociado y secretario.",
+  generateAccess:"Generar acceso",
+  personName:"Nombre de la persona",
+  function:"Función",
+  generate:"Generar acceso",
+  storedAccesses:"Accesos almacenados",
+  maintainerAccess:"Accesos — equipos mantenedores",
+  leaderName:"Nombre del líder",
+  leaderAccesses:"Accesos de líderes",
+  maintainerTitle:"Área del equipo mantenedor",
+  maintainerSubtitle:"Área destinada al trabajo de los equipos.",
+  teamIdentity:"Identificación del equipo",
+  teamName:"Nombre del equipo",
+  weeklyItem:"Artículo de la semana",
+  members:"Miembros del equipo",
+  memberName:"Nombre del miembro",
+  add:"Agregar",
+  registerDelivery:"Registrar entrega",
+  selectItem:"Artículo",
+  quantity:"Cantidad",
+  deliveredBy:"Quién realizó la entrega",
+  receivedBy:"Quién recibió",
+  registerDeliveryButton:"Registrar entrega",
+  myDeliveries:"Mis entregas",
+  recoverPassword:"Recuperar contraseña",
+  newPassword:"Nueva contraseña",
+  changePassword:"Cambiar contraseña"
+}
+
 };
 
-let lang = localStorage.getItem("app_lang") || "pt";
-let currentPage = "dashboard";
+let lang = localStorage.getItem("APP_LANG") || "pt";
 
-function t(key){
-  return translations[lang][key] || translations.pt[key] || key;
+function changeLanguage(value){
+  lang=value;
+  localStorage.setItem("APP_LANG",value);
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.dataset.i18n;
+    if(translations[value][key]){
+      el.textContent=translations[value][key];
+    }
+  });
+
+  renderAll();
 }
 
-function getUnits(){
-  return JSON.parse(localStorage.getItem("gestao_units") || "{}");
-}
+/* ============================================================
+   DADOS
+============================================================ */
 
-function saveUnits(data){
-  localStorage.setItem("gestao_units",JSON.stringify(data));
-}
-
-function currentUnit(){
-  const id = localStorage.getItem("current_unit");
-  if(!id) return null;
-  return getUnits()[id] || null;
-}
-
-function saveCurrentUnit(unit){
-  const units=getUnits();
-  units[unit.id]=unit;
-  saveUnits(units);
-}
-
-function newUnit(name,director,password,keyword){
-  const id="U"+Date.now()+Math.random().toString(36).slice(2,7);
-
+function defaultData(){
   return {
-    id,
-    name,
-    director,
-    password,
-    keyword,
+    unit:"",
+    director:"",
+    password:"",
+    keyword:"",
     campaign:"",
-    families:[],
     items:[],
+    families:[],
     teams:[],
-    accesses:[],
-    collection:{
-      date:"",
-      time:"",
-      place:"",
-      meeting:"",
-      address:""
-    },
-    deliveries:[]
+    event:null,
+    managerAccesses:[],
+    leaderAccesses:[],
+    deliveries:[],
+    currentTeam:null
   };
 }
 
-function toast(message){
-  const el=document.createElement("div");
-  el.className="toast";
-  el.textContent=message;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),2600);
-}
-
-/* =========================
-   TELAS DE ACESSO
-   ========================= */
-
-function renderAccess(){
-  document.getElementById("root").innerHTML=`
-  <div class="auth">
-    <div class="auth-card">
-      <div class="brand">
-        <div class="brand-mark">✦</div>
-        <div>
-          <div class="brand-title">Plataforma de Gestão</div>
-          <div class="brand-sub">gestão • organização • cuidado</div>
-        </div>
-      </div>
-
-      <h1>${t("access")}</h1>
-      <p>${t("accessText")}</p>
-
-      <div class="field">
-        <label>${t("access")}</label>
-        <input id="accessKey" type="password" placeholder="${t("access")}">
-      </div>
-
-      <button class="btn full" onclick="checkAccess()">${t("enter")}</button>
-
-      <div style="text-align:center;margin-top:20px">
-        <select class="lang" onchange="changeLang(this.value)">
-          <option value="pt" ${lang==="pt"?"selected":""}>Português</option>
-          <option value="en" ${lang==="en"?"selected":""}>English</option>
-          <option value="es" ${lang==="es"?"selected":""}>Español</option>
-        </select>
-      </div>
-    </div>
-  </div>`;
-}
-
-function checkAccess(){
-  const key=document.getElementById("accessKey").value.trim();
-
-  if(key===ACCESS_KEY){
-    localStorage.setItem("access_unlocked","1");
-
-    if(currentUnit()){
-      renderLogin();
-    }else{
-      renderWelcome();
+function loadData(){
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{
+      currentData=JSON.parse(raw);
+    }catch(e){
+      currentData=defaultData();
     }
   }else{
-    toast("Chave de acesso não encontrada.");
+    currentData=defaultData();
   }
 }
 
-function renderWelcome(){
-  document.getElementById("root").innerHTML=`
-  <div class="auth">
-    <div class="auth-card">
-
-      <div class="brand">
-        <div class="brand-mark">✦</div>
-        <div>
-          <div class="brand-title">Plataforma de Gestão</div>
-          <div class="brand-sub">gestão • organização • cuidado</div>
-        </div>
-      </div>
-
-      <h1>${t("welcome")}</h1>
-      <p>${t("welcomeText")}</p>
-
-      <button class="btn full" onclick="renderRegister()">
-        ${t("register")}
-      </button>
-
-      <div style="text-align:center;margin-top:20px">
-        <select class="lang" onchange="changeLang(this.value)">
-          <option value="pt" ${lang==="pt"?"selected":""}>Português</option>
-          <option value="en" ${lang==="en"?"selected":""}>English</option>
-          <option value="es" ${lang==="es"?"selected":""}>Español</option>
-        </select>
-      </div>
-
-    </div>
-  </div>`;
+function saveData(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(currentData));
 }
 
-function renderRegister(){
-  document.getElementById("root").innerHTML=`
-  <div class="auth">
-    <div class="auth-card">
+function showMessage(id,text,type="success"){
+  const el=document.getElementById(id);
+  if(!el)return;
 
-      <div class="brand">
-        <div class="brand-mark">✦</div>
-        <div class="brand-title">Plataforma de Gestão</div>
-      </div>
+  el.textContent=text;
+  el.className="message show "+type;
 
-      <h1>${t("register")}</h1>
+  setTimeout(()=>{
+    el.className="message";
+  },3500);
+}
 
-      <div class="field">
-        <label>${t("unitName")}</label>
-        <input id="unitName">
-      </div>
+/* ============================================================
+   TELAS INICIAIS
+============================================================ */
 
-      <div class="field">
-        <label>${t("director")}</label>
-        <input id="director">
-      </div>
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
 
-      <div class="field">
-        <label>${t("password")}</label>
-        <input id="password" type="password">
-      </div>
+  if(id==="loginScreen"){
+    document.getElementById("loginUnit").textContent=currentData?.unit || "—";
+  }
+}
 
-      <div class="field">
-        <label>${t("confirmPassword")}</label>
-        <input id="password2" type="password">
-      </div>
+function checkAccess(){
 
-      <div class="field">
-        <label>${t("keyword")}</label>
-        <input id="keyword">
-        <small style="color:var(--muted)">
-          ${t("keywordHelp")}
-        </small>
-      </div>
+  const value=document.getElementById("accessKeyInput").value.trim();
 
-      <button class="btn full" onclick="registerUnit()">${t("save")}</button>
+  if(value!==ACCESS_KEY){
+    showMessage(
+      "accessMessage",
+      lang==="pt" ? "Chave não encontrada." :
+      lang==="en" ? "Access key not found." :
+      "Clave de acceso no encontrada.",
+      "error"
+    );
+    return;
+  }
 
-      <div style="text-align:center;margin-top:18px">
-        <button class="link-btn" onclick="renderAccess()">← Voltar</button>
-      </div>
+  loadData();
 
-    </div>
-  </div>`;
+  if(currentData.unit){
+    showScreen("loginScreen");
+  }else{
+    showScreen("welcomeScreen");
+  }
 }
 
 function registerUnit(){
 
-  const name=document.getElementById("unitName").value.trim();
-  const director=document.getElementById("director").value.trim();
-  const password=document.getElementById("password").value;
-  const password2=document.getElementById("password2").value;
-  const keyword=document.getElementById("keyword").value.trim();
+  const unit=document.getElementById("regUnit").value.trim();
+  const director=document.getElementById("regDirector").value.trim();
+  const password=document.getElementById("regPassword").value;
+  const password2=document.getElementById("regPassword2").value;
+  const keyword=document.getElementById("regKeyword").value.trim();
 
-  if(!name || !director || !password || !keyword){
-    toast("Preencha todos os campos.");
+  if(!unit||!director||!password||!password2||!keyword){
+    showMessage(
+      "registerMessage",
+      lang==="pt"?"Preencha todos os campos.":lang==="en"?"Fill in all fields.":"Complete todos los campos.",
+      "error"
+    );
     return;
   }
 
   if(password!==password2){
-    toast("As senhas não conferem.");
+    showMessage(
+      "registerMessage",
+      lang==="pt"?"As senhas não coincidem.":lang==="en"?"Passwords do not match.":"Las contraseñas no coinciden.",
+      "error"
+    );
     return;
   }
 
-  const unit=newUnit(name,director,password,keyword);
+  currentData=defaultData();
+  currentData.unit=unit;
+  currentData.director=director;
+  currentData.password=password;
+  currentData.keyword=keyword;
 
-  saveCurrentUnit(unit);
-  localStorage.setItem("current_unit",unit.id);
+  saveData();
 
-  toast("Unidade cadastrada.");
-  renderLogin();
+  document.getElementById("loginUnit").textContent=unit;
+  document.getElementById("loginName").value=director;
+
+  showMessage(
+    "registerMessage",
+    lang==="pt"?"Cadastro realizado com sucesso.":lang==="en"?"Registration completed successfully.":"Registro realizado con éxito.",
+    "success"
+  );
+
+  setTimeout(()=>showScreen("loginScreen"),900);
 }
 
-function renderLogin(){
-  const unit=currentUnit();
+function loginUser(){
 
-  if(!unit){
-    renderWelcome();
-    return;
-  }
-
-  document.getElementById("root").innerHTML=`
-  <div class="auth">
-    <div class="auth-card">
-
-      <div class="brand">
-        <div class="brand-mark">✦</div>
-        <div>
-          <div class="brand-title">${escapeHtml(unit.name)}</div>
-          <div class="brand-sub">Plataforma de Gestão</div>
-        </div>
-      </div>
-
-      <h1>${t("login")}</h1>
-
-      <div class="field">
-        <label>${t("director")}</label>
-        <input id="loginDirector" value="${escapeHtml(unit.director)}">
-      </div>
-
-      <div class="field">
-        <label>${t("password")}</label>
-        <input id="loginPassword" type="password">
-      </div>
-
-      <div class="field">
-        <label>
-          <input id="remember" type="checkbox" style="width:auto">
-          Lembrar dados de login
-        </label>
-      </div>
-
-      <button class="btn full" onclick="doLogin()">${t("enter")}</button>
-
-      <div style="text-align:center;margin-top:15px">
-        <button class="link-btn" onclick="forgotPassword()">Esqueci a senha</button>
-      </div>
-
-      <div style="text-align:center;margin-top:10px">
-        <select class="lang" onchange="changeLang(this.value)">
-          <option value="pt" ${lang==="pt"?"selected":""}>Português</option>
-          <option value="en" ${lang==="en"?"selected":""}>English</option>
-          <option value="es" ${lang==="es"?"selected":""}>Español</option>
-        </select>
-      </div>
-
-    </div>
-  </div>`;
-}
-
-function doLogin(){
-
-  const unit=currentUnit();
+  const name=document.getElementById("loginName").value.trim();
   const password=document.getElementById("loginPassword").value;
 
-  if(password!==unit.password){
-    toast("Senha incorreta.");
-    return;
-  }
+  if(name===currentData.director && password===currentData.password){
 
-  localStorage.setItem("logged_in","1");
-  renderApp();
-}
+    localStorage.setItem("APP_LOGGED","1");
 
-function forgotPassword(){
-
-  const unit=currentUnit();
-
-  const word=prompt("Digite sua palavra-chave de recuperação:");
-
-  if(word===null)return;
-
-  if(word.trim().toLowerCase()===unit.keyword.toLowerCase()){
-
-    const newPassword=prompt("Digite sua nova senha:");
-
-    if(newPassword){
-      unit.password=newPassword;
-      saveCurrentUnit(unit);
-      toast("Senha alterada.");
+    if(document.getElementById("rememberLogin").checked){
+      localStorage.setItem("APP_LOGIN_NAME",name);
     }
 
-  }else{
-    toast("Palavra-chave incorreta.");
-  }
-}
-
-function escapeHtml(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;");
-}
-
-/* =========================
-   APLICAÇÃO
-   ========================= */
-
-function renderApp(){
-
-  const unit=currentUnit();
-
-  if(!unit){
-    renderWelcome();
+    openApp("director");
     return;
   }
 
-  document.getElementById("root").innerHTML=`
+  /* acesso de diretor associado / secretário */
+  const manager=currentData.managerAccesses.find(
+    a=>a.name.toLowerCase()===name.toLowerCase() && a.password===password
+  );
 
-  <div class="shell">
+  if(manager){
+    openApp("manager");
+    return;
+  }
 
-    <aside class="sidebar">
+  /* acesso de líder */
+  const leader=currentData.leaderAccesses.find(
+    a=>a.name.toLowerCase()===name.toLowerCase() && a.password===password
+  );
 
-      <div class="sidebar-brand">
-        <strong>✦ ${escapeHtml(unit.name)}</strong>
-      </div>
+  if(leader){
+    currentData.currentTeam=leader.id;
+    saveData();
+    openApp("team");
+    return;
+  }
 
-      <div class="nav">
+  showMessage(
+    "loginMessage",
+    lang==="pt"?"Nome ou senha incorretos.":lang==="en"?"Incorrect name or password.":"Nombre o contraseña incorrectos.",
+    "error"
+  );
+}
 
-        <button onclick="go('dashboard')" class="${currentPage==='dashboard'?'active':''}">
-          ◇ ${t("dashboard")}
-        </button>
+function openApp(role){
 
-        <button onclick="go('families')" class="${currentPage==='families'?'active':''}">
-          ♧ ${t("families")}
-        </button>
+  currentRole=role;
 
-        <button onclick="go('items')" class="${currentPage==='items'?'active':''}">
-          ▣ ${t("items")}
-        </button>
+  document.getElementById("accessScreen").classList.add("hidden");
+  document.getElementById("welcomeScreen").classList.add("hidden");
+  document.getElementById("registerScreen").classList.add("hidden");
+  document.getElementById("loginScreen").classList.add("hidden");
 
-        <button onclick="go('teams')" class="${currentPage==='teams'?'active':''}">
-          ♧ ${t("teams")}
-        </button>
+  document.getElementById("mainApp").style.display="block";
 
-        <button onclick="go('collection')" class="${currentPage==='collection'?'active':''}">
-          ◷ ${t("collection")}
-        </button>
+  document.getElementById("currentUnit").textContent=currentData.unit;
 
-        <button onclick="go('access')" class="${currentPage==='access'?'active':''}">
-          ◇ ${t("access")}
-        </button>
+  configureRole(role);
+  renderAll();
+}
 
-        <button onclick="go('settings')" class="${currentPage==='settings'?'active':''}">
-          ⚙ ${t("settings")}
-        </button>
+function configureRole(role){
 
-      </div>
+  const buttons=document.querySelectorAll(".sidebar .nav-btn");
 
-      <div style="position:absolute;bottom:20px;left:15px;right:15px">
-        <button class="btn light full" onclick="logout()">Sair</button>
-      </div>
+  buttons.forEach(b=>b.classList.remove("hidden"));
 
-    </aside>
+  if(role==="team"){
 
-    <main class="main">
+    buttons.forEach(b=>b.classList.add("hidden"));
 
-      <header class="topbar">
+    const teamButton=[...buttons].find(
+      b=>b.dataset.i18n==="teamArea"
+    );
 
-        <div>
-          <strong>${escapeHtml(unit.name)}</strong>
+    if(teamButton)teamButton.classList.remove("hidden");
+
+    showPage("teamAccessPage",teamButton);
+
+  }else{
+
+    buttons.forEach(b=>b.classList.remove("hidden"));
+
+    showPage("dashboardPage",buttons[0]);
+  }
+}
+
+function logout(){
+
+  localStorage.removeItem("APP_LOGGED");
+
+  document.getElementById("mainApp").style.display="none";
+  document.getElementById("accessKeyInput").value="";
+
+  showScreen("accessScreen");
+}
+
+/* ============================================================
+   NAVEGAÇÃO
+============================================================ */
+
+function showPage(id,button){
+
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  if(button)button.classList.add("active");
+
+  renderAll();
+}
+
+/* ============================================================
+   CAMPANHA
+============================================================ */
+
+function saveCampaign(){
+
+  currentData.campaign=document.getElementById("campaignInput").value.trim();
+  saveData();
+
+  showMessage(
+    "campaignMessage",
+    lang==="pt"?"Campanha salva.":lang==="en"?"Campaign saved.":"Campaña guardada.",
+    "success"
+  );
+
+  renderAll();
+}
+
+/* ============================================================
+   ITENS
+============================================================ */
+
+function addItem(){
+
+  const name=document.getElementById("itemNameInput").value.trim();
+  const needed=Number(document.getElementById("itemNeededInput").value);
+  const have=Number(document.getElementById("itemHaveInput").value);
+  const unit=document.getElementById("itemUnitInput").value;
+
+  if(!name||needed<0||have<0){
+    showMessage(
+      "itemMessage",
+      lang==="pt"?"Preencha corretamente os campos do item.":
+      lang==="en"?"Fill in the item fields correctly.":
+      "Complete correctamente los campos del artículo.",
+      "error"
+    );
+    return;
+  }
+
+  currentData.items.push({
+    id:Date.now(),
+    name,
+    needed,
+    have,
+    unit
+  });
+
+  saveData();
+  clearItemForm();
+  renderItems();
+
+  showMessage(
+    "itemMessage",
+    lang==="pt"?"Item adicionado.":lang==="en"?"Item added.":"Artículo agregado.",
+    "success"
+  );
+}
+
+function clearItemForm(){
+
+  document.getElementById("itemNameInput").value="";
+  document.getElementById("itemNeededInput").value="";
+  document.getElementById("itemHaveInput").value="";
+  document.getElementById("itemUnitInput").value="kg";
+}
+
+function itemEntered(item){
+
+  return currentData.deliveries
+    .filter(d=>Number(d.itemId)===Number(item.id))
+    .reduce((sum,d)=>sum+Number(d.quantity),0);
+}
+
+function itemMissing(item){
+
+  const total=item.have+itemEntered(item);
+  return Math.max(0,item.needed-total);
+}
+
+function deleteItem(id){
+
+  if(!confirm(
+    lang==="pt"?"Excluir este item?":
+    lang==="en"?"Delete this item?":
+    "¿Eliminar este artículo?"
+  ))return;
+
+  currentData.items=currentData.items.filter(i=>i.id!==id);
+  saveData();
+  renderItems();
+}
+
+function renderItems(){
+
+  const box=document.getElementById("itemsList");
+
+  if(!currentData.items.length){
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhum item cadastrado.":lang==="en"?"No items registered.":"No hay artículos registrados."}
+    </div>`;
+    return;
+  }
+
+  box.innerHTML=`
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>${translations[lang].itemName}</th>
+            <th>${translations[lang].needed}</th>
+            <th>${translations[lang].alreadyHave}</th>
+            <th>${translations[lang].entered}</th>
+            <th>${lang==="pt"?"Falta":lang==="en"?"Missing":"Falta"}</th>
+            <th>${translations[lang].delete}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${currentData.items.map(item=>{
+
+            const entered=itemEntered(item);
+            const missing=itemMissing(item);
+            const total=item.have+entered;
+            const percent=item.needed>0
+              ?Math.min(100,(total/item.needed)*100)
+              :100;
+
+            return `
+              <tr>
+                <td><strong>${escapeHtml(item.name)}</strong></td>
+                <td>${item.needed} ${item.unit}</td>
+                <td>${item.have} ${item.unit}</td>
+                <td>${entered} ${item.unit}</td>
+                <td>
+                  <strong class="${missing===0?'success-text':'warning-text'}">
+                    ${missing} ${item.unit}
+                  </strong>
+                  <div class="progress" style="margin-top:6px">
+                    <span style="width:${percent}%"></span>
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-small" onclick="deleteItem(${item.id})">
+                    ${translations[lang].delete}
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* ============================================================
+   FAMÍLIAS
+============================================================ */
+
+function buildFamilyFields(){
+
+  const children=Number(document.getElementById("familyChildren").value)||0;
+  const elderly=Number(document.getElementById("familyElderly").value)||0;
+
+  let childrenHtml="";
+
+  if(children>0){
+    childrenHtml+=`
+      <div class="card" style="background:#f5eddd">
+        <h3>${lang==="pt"?"Crianças — somente sexo e idade":
+        lang==="en"?"Children — sex and age only":
+        "Niños — solamente sexo y edad"}</h3>
+    `;
+
+    for(let i=0;i<children;i++){
+
+      childrenHtml+=`
+        <div class="grid grid-2">
+          <div class="field">
+            <label>${lang==="pt"?"Criança":"Child"} ${i+1} — ${lang==="pt"?"sexo":lang==="en"?"sex":"sexo"}</label>
+            <select class="child-sex">
+              <option value="M">${lang==="pt"?"Menino":lang==="en"?"Boy":"Niño"}</option>
+              <option value="F">${lang==="pt"?"Menina":lang==="en"?"Girl":"Niña"}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>${lang==="pt"?"Idade":lang==="en"?"Age":"Edad"}</label>
+            <input class="child-age" type="number" min="0" max="17">
+          </div>
         </div>
+      `;
+    }
 
-        <div class="topbar-right">
+    childrenHtml+="</div>";
+  }
 
-          <select class="lang" onchange="changeLang(this.value)">
-            <option value="pt" ${lang==="pt"?"selected":""}>PT</option>
-            <option value="en" ${lang==="en"?"selected":""}>EN</option>
-            <option value="es" ${lang==="es"?"selected":""}>ES</option>
-          </select>
+  let elderlyHtml="";
 
-          <div style="
-            width:38px;
-            height:38px;
-            border-radius:50%;
-            background:var(--green);
-            color:#fff;
-            display:flex;
-            align-items:center;
-            justify-content:center;">
-            ${escapeHtml(unit.director.charAt(0).toUpperCase())}
+  if(elderly>0){
+
+    elderlyHtml+=`
+      <div class="card" style="background:#f5eddd">
+        <h3>${lang==="pt"?"Idosos — somente sexo e idade":
+        lang==="en"?"Elderly — sex and age only":
+        "Personas mayores — solamente sexo y edad"}</h3>
+    `;
+
+    for(let i=0;i<elderly;i++){
+
+      elderlyHtml+=`
+        <div class="grid grid-2">
+
+          <div class="field">
+            <label>${lang==="pt"?"Idoso":lang==="en"?"Elderly person":"Persona mayor"} ${i+1} — ${lang==="pt"?"sexo":lang==="en"?"sex":"sexo"}</label>
+            <select class="elderly-sex">
+              <option value="M">${lang==="pt"?"Homem":lang==="en"?"Man":"Hombre"}</option>
+              <option value="F">${lang==="pt"?"Mulher":lang==="en"?"Woman":"Mujer"}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>${lang==="pt"?"Idade":lang==="en"?"Age":"Edad"}</label>
+            <input class="elderly-age" type="number" min="65">
           </div>
 
         </div>
+      `;
+    }
 
-      </header>
-
-      <section class="content" id="page"></section>
-
-    </main>
-
-  </div>`;
-
-  renderPage();
-}
-
-function go(page){
-  currentPage=page;
-  renderApp();
-}
-
-function renderPage(){
-
-  const pages={
-    dashboard:pageDashboard,
-    families:pageFamilies,
-    items:pageItems,
-    teams:pageTeams,
-    collection:pageCollection,
-    access:pageAccess,
-    settings:pageSettings
-  };
-
-  pages[currentPage]();
-}
-
-/* =========================
-   DASHBOARD
-   ========================= */
-
-function pageDashboard(){
-
-  const unit=currentUnit();
-
-  const familyCount=unit.families.length;
-  const itemCount=unit.items.length;
-  const teamCount=unit.teams.length;
-
-  let totalNeeded=0;
-  let totalReceived=0;
-
-  unit.items.forEach(i=>{
-    totalNeeded+=Number(i.needed)||0;
-    totalReceived+=Number(i.have)||0;
-  });
-
-  const percent=totalNeeded?
-    Math.min(100,Math.round(totalReceived/totalNeeded*100)):0;
-
-  document.getElementById("page").innerHTML=`
-
-    <h1 class="page-title">${t("dashboard")}</h1>
-
-    <div class="page-subtitle">
-      ${unit.campaign?
-        escapeHtml(unit.campaign):
-        "Nenhuma campanha ou evento cadastrado ainda."}
-    </div>
-
-    <div class="grid grid-4">
-
-      <div class="card stat">
-        <div>♧</div>
-        <div class="stat-number">${familyCount}</div>
-        <div class="stat-label">${t("families")}</div>
-      </div>
-
-      <div class="card stat">
-        <div>▣</div>
-        <div class="stat-number">${percent}%</div>
-        <div class="stat-label">${t("items")}</div>
-      </div>
-
-      <div class="card stat">
-        <div>♡</div>
-        <div class="stat-number">${teamCount}</div>
-        <div class="stat-label">${t("teams")}</div>
-      </div>
-
-      <div class="card stat">
-        <div>◇</div>
-        <div class="stat-number">${unit.deliveries.length}</div>
-        <div class="stat-label">${t("deliveries")}</div>
-      </div>
-
-    </div>
-
-    <h2 style="margin-top:38px">${t("overview")}</h2>
-
-    <div class="grid grid-2">
-
-      <div class="quick" onclick="go('families')">
-        <div>
-          <strong>${t("families")}</strong>
-          <div>${familyCount} cadastradas</div>
-        </div>
-        <div>→</div>
-      </div>
-
-      <div class="quick" onclick="go('items')">
-        <div>
-          <strong>${t("items")}</strong>
-          <div>${itemCount} cadastrados</div>
-        </div>
-        <div>→</div>
-      </div>
-
-      <div class="quick" onclick="go('teams')">
-        <div>
-          <strong>${t("teams")}</strong>
-          <div>${teamCount} equipes</div>
-        </div>
-        <div>→</div>
-      </div>
-
-      <div class="quick" onclick="go('collection')">
-        <div>
-          <strong>${t("collection")}</strong>
-          <div>${unit.collection.date || "Nenhuma data definida"}</div>
-        </div>
-        <div>→</div>
-      </div>
-
-    </div>
-
-    <div class="card" style="margin-top:20px">
-
-      <div class="toolbar">
-        <strong>Campanha / evento atual</strong>
-        <button class="btn small" onclick="editCampaign()">Editar</button>
-      </div>
-
-      <div style="font-size:25px;color:var(--green)">
-        ${unit.campaign?
-          escapeHtml(unit.campaign):
-          "Defina aqui a campanha ou evento que será utilizado."}
-      </div>
-
-    </div>
-
-    <div class="footer-note">
-      Dedicado com carinho a Vera Lima.
-    </div>
-  `;
-}
-
-function editCampaign(){
-
-  const unit=currentUnit();
-
-  const value=prompt(
-    "Digite o nome da campanha ou evento:",
-    unit.campaign || ""
-  );
-
-  if(value!==null){
-    unit.campaign=value.trim();
-    saveCurrentUnit(unit);
-    renderApp();
+    elderlyHtml+="</div>";
   }
-}
 
-/* =========================
-   FAMÍLIAS
-   ========================= */
-
-function pageFamilies(){
-
-  const unit=currentUnit();
-
-  let rows="";
-
-  unit.families.forEach((f,i)=>{
-
-    rows+=`
-    <tr>
-      <td>${escapeHtml(f.responsible)}</td>
-      <td>${f.people}</td>
-      <td>${f.children}</td>
-      <td>${f.elderly}</td>
-      <td>
-        <button class="btn small danger" onclick="deleteFamily(${i})">
-          Excluir
-        </button>
-      </td>
-    </tr>`;
-  });
-
-  document.getElementById("page").innerHTML=`
-
-    <div class="toolbar">
-      <div>
-        <h1 class="page-title">${t("families")}</h1>
-        <div class="page-subtitle">
-          Cadastre as famílias que serão beneficiadas.
-        </div>
-      </div>
-
-      <button class="btn" onclick="addFamily()">+ Cadastrar família</button>
-    </div>
-
-    <div class="card">
-
-      ${unit.families.length===0?
-
-        `<div class="empty">
-          Nenhuma família cadastrada.
-        </div>`
-
-        :
-
-        `<div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Responsável</th>
-                <th>Pessoas</th>
-                <th>Crianças</th>
-                <th>Idosos</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>`
-      }
-
-    </div>
-  `;
+  document.getElementById("childrenFields").innerHTML=childrenHtml;
+  document.getElementById("elderlyFields").innerHTML=elderlyHtml;
 }
 
 function addFamily(){
 
-  const responsible=prompt("Nome do responsável:");
+  const responsible=document.getElementById("familyResponsible").value.trim();
+  const people=Number(document.getElementById("familyPeople").value);
+  const children=Number(document.getElementById("familyChildren").value);
+  const boys=Number(document.getElementById("familyBoys").value);
+  const girls=Number(document.getElementById("familyGirls").value);
+  const elderly=Number(document.getElementById("familyElderly").value);
 
-  if(!responsible)return;
-
-  const people=Number(prompt("Número de pessoas no grupo familiar:")||0);
-  const children=Number(prompt("Número de crianças:")||0);
-
-  let boys=0;
-  let girls=0;
-
-  if(children){
-    boys=Number(prompt("Quantos são meninos?")||0);
-    girls=Number(prompt("Quantas são meninas?")||0);
+  if(!responsible||people<1){
+    showMessage(
+      "familyMessage",
+      lang==="pt"?"Informe o responsável e a quantidade de pessoas.":
+      lang==="en"?"Enter the responsible person's name and number of people.":
+      "Informe el responsable y la cantidad de personas.",
+      "error"
+    );
+    return;
   }
 
-  const elderly=Number(prompt("Quantos idosos com mais de 65 anos?")||0);
-
-  const ages=[];
-
-  for(let i=0;i<elderly;i++){
-    ages.push(prompt("Idade do idoso "+(i+1)+":")||"");
+  if(boys+girls!==children){
+    showMessage(
+      "familyMessage",
+      lang==="pt"?"A quantidade de meninos e meninas precisa corresponder ao total de crianças.":
+      lang==="en"?"Boys plus girls must match the total number of children.":
+      "La cantidad de niños y niñas debe corresponder al total de niños.",
+      "error"
+    );
+    return;
   }
 
-  const unit=currentUnit();
+  const childEls=[...document.querySelectorAll(".child-sex")];
+  const childAgeEls=[...document.querySelectorAll(".child-age")];
 
-  unit.families.push({
+  const childrenData=childEls.map((el,i)=>({
+    sex:el.value,
+    age:Number(childAgeEls[i].value)
+  }));
+
+  const elderlySexEls=[...document.querySelectorAll(".elderly-sex")];
+  const elderlyAgeEls=[...document.querySelectorAll(".elderly-age")];
+
+  const elderlyData=elderlySexEls.map((el,i)=>({
+    sex:el.value,
+    age:Number(elderlyAgeEls[i].value)
+  }));
+
+  currentData.families.push({
+    id:Date.now(),
     responsible,
     people,
     children,
     boys,
     girls,
+    childrenData,
     elderly,
-    elderlyAges:ages
+    elderlyData
   });
 
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-function deleteFamily(i){
-
-  if(!confirm("Excluir esta família?"))return;
-
-  const unit=currentUnit();
-
-  unit.families.splice(i,1);
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-/* =========================
-   ITENS
-   ========================= */
-
-function pageItems(){
-
-  const unit=currentUnit();
-
-  let rows="";
-
-  unit.items.forEach((item,i)=>{
-
-    const missing=Math.max(0,(Number(item.needed)||0)-(Number(item.have)||0));
-
-    rows+=`
-    <tr>
-      <td>${escapeHtml(item.name)}</td>
-      <td>${item.needed}</td>
-      <td>${item.have}</td>
-      <td>${missing}</td>
-      <td>${item.incoming||0}</td>
-      <td>
-        <button class="btn small" onclick="addIncoming(${i})">+ Entrada</button>
-        <button class="btn small danger" onclick="deleteItem(${i})">Excluir</button>
-      </td>
-    </tr>`;
-  });
-
-  document.getElementById("page").innerHTML=`
-
-    <div class="toolbar">
-
-      <div>
-        <h1 class="page-title">${t("items")}</h1>
-        <div class="page-subtitle">
-          Cadastre os itens necessários para a campanha ou evento.
-        </div>
-      </div>
-
-      <button class="btn" onclick="addItem()">+ Cadastrar item</button>
-
-    </div>
-
-    <div class="card">
-
-      ${unit.items.length===0?
-
-      `<div class="empty">
-        Nenhum item cadastrado.
-      </div>`
-
-      :
-
-      `<div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Necessário</th>
-              <th>Já possui</th>
-              <th>Falta</th>
-              <th>Entrando</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-
-          <tbody>${rows}</tbody>
-
-        </table>
-      </div>`
-      }
-
-    </div>
-  `;
-}
-
-function addItem(){
-
-  const name=prompt("Nome do item:");
-
-  if(!name)return;
-
-  const needed=Number(prompt("Quantidade necessária:")||0);
-  const have=Number(prompt("Quantidade que já possui:")||0);
-
-  const unit=currentUnit();
-
-  unit.items.push({
-    name,
-    needed,
-    have,
-    incoming:0
-  });
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-function addIncoming(i){
-
-  const amount=Number(prompt("Quantidade que entrou através dos mantenedores:")||0);
-
-  if(!amount)return;
-
-  const unit=currentUnit();
-
-  unit.items[i].incoming=(Number(unit.items[i].incoming)||0)+amount;
-  unit.items[i].have=(Number(unit.items[i].have)||0)+amount;
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-function deleteItem(i){
-
-  if(!confirm("Excluir este item?"))return;
-
-  const unit=currentUnit();
-
-  unit.items.splice(i,1);
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-/* =========================
-   EQUIPES
-   ========================= */
-
-function pageTeams(){
-
-  const unit=currentUnit();
-
-  let rows="";
-
-  unit.teams.forEach((team,i)=>{
-
-    rows+=`
-    <tr>
-      <td>${escapeHtml(team.name)}</td>
-      <td>${team.members.length}</td>
-      <td>${team.total}</td>
-      <td>
-        <button class="btn small" onclick="manageTeam(${i})">Abrir</button>
-        <button class="btn small danger" onclick="deleteTeam(${i})">Excluir</button>
-      </td>
-    </tr>`;
-  });
-
-  document.getElementById("page").innerHTML=`
-
-    <div class="toolbar">
-
-      <div>
-        <h1 class="page-title">${t("teams")}</h1>
-        <div class="page-subtitle">
-          Equipes mantenedoras e seus registros.
-        </div>
-      </div>
-
-      <button class="btn" onclick="addTeam()">+ Nova equipe</button>
-
-    </div>
-
-    <div class="card">
-
-      ${unit.teams.length===0?
-
-      `<div class="empty">
-        Nenhuma equipe cadastrada.
-      </div>`
-
-      :
-
-      `<div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Equipe</th>
-              <th>Membros</th>
-              <th>Quantidade arrecadada</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-
-          <tbody>${rows}</tbody>
-        </table>
-      </div>`
-      }
-
-    </div>
-  `;
-}
-
-function addTeam(){
-
-  const name=prompt("Nome da equipe:");
-
-  if(!name)return;
-
-  const unit=currentUnit();
-
-  unit.teams.push({
-    name,
-    members:[],
-    collections:[],
-    total:0
-  });
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-function deleteTeam(i){
-
-  if(!confirm("Excluir esta equipe?"))return;
-
-  const unit=currentUnit();
-
-  unit.teams.splice(i,1);
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-function manageTeam(i){
-
-  const unit=currentUnit();
-  const team=unit.teams[i];
-
-  const action=prompt(
-`Equipe: ${team.name}
-
-Digite:
-1 - Adicionar membro
-2 - Registrar item arrecadado
-3 - Ver membros
-4 - Voltar`
+  saveData();
+  clearFamilyForm();
+  renderFamilies();
+
+  showMessage(
+    "familyMessage",
+    lang==="pt"?"Família cadastrada com sucesso.":
+    lang==="en"?"Family registered successfully.":
+    "Familia registrada correctamente.",
+    "success"
   );
+}
 
-  if(action==="1"){
+function clearFamilyForm(){
 
-    const name=prompt("Nome do membro:");
+  document.getElementById("familyResponsible").value="";
+  document.getElementById("familyPeople").value=1;
+  document.getElementById("familyChildren").value=0;
+  document.getElementById("familyBoys").value=0;
+  document.getElementById("familyGirls").value=0;
+  document.getElementById("familyElderly").value=0;
 
-    if(name){
-      team.members.push(name);
-      team.members.sort((a,b)=>a.localeCompare(b));
-      saveCurrentUnit(unit);
-    }
+  document.getElementById("childrenFields").innerHTML="";
+  document.getElementById("elderlyFields").innerHTML="";
+}
 
-    manageTeam(i);
+function deleteFamily(id){
 
-  }else if(action==="2"){
+  if(!confirm(
+    lang==="pt"?"Excluir esta família?":
+    lang==="en"?"Delete this family?":
+    "¿Eliminar esta familia?"
+  ))return;
 
-    if(unit.items.length===0){
-      alert("Cadastre primeiro os itens.");
-      return;
-    }
+  currentData.families=currentData.families.filter(f=>f.id!==id);
+  saveData();
+  renderFamilies();
+}
 
-    const list=unit.items.map((x,n)=>`${n+1} - ${x.name}`).join("\n");
+function renderFamilies(){
 
-    const selected=Number(prompt("Escolha o item:\n\n"+list));
+  const box=document.getElementById("familiesList");
 
-    if(!selected || !unit.items[selected-1])return;
-
-    const amount=Number(prompt("Quantidade entregue:")||0);
-
-    if(!amount)return;
-
-    const deliveredBy=prompt("Nome de quem fez a entrega:");
-    const receivedBy=prompt("Nome de quem recebeu:");
-
-    const item=unit.items[selected-1];
-
-    item.have=(Number(item.have)||0)+amount;
-
-    team.collections.push({
-      item:item.name,
-      amount,
-      deliveredBy,
-      receivedBy,
-      date:new Date().toLocaleString("pt-BR")
-    });
-
-    team.total=(Number(team.total)||0)+amount;
-
-    unit.deliveries.push({
-      team:team.name,
-      item:item.name,
-      amount,
-      deliveredBy,
-      receivedBy,
-      date:new Date().toLocaleString("pt-BR")
-    });
-
-    saveCurrentUnit(unit);
-
-    alert("Entrega registrada.");
-    manageTeam(i);
-
-  }else if(action==="3"){
-
-    alert(
-      team.members.length?
-      team.members.join("\n"):
-      "Nenhum membro cadastrado."
-    );
-
-    manageTeam(i);
+  if(!currentData.families.length){
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhuma família cadastrada.":
+      lang==="en"?"No families registered.":
+      "No hay familias registradas."}
+    </div>`;
+    return;
   }
-}
 
-/* =========================
-   ARRECADAÇÃO CONJUNTA
-   ========================= */
-
-function pageCollection(){
-
-  const unit=currentUnit();
-  const c=unit.collection;
-
-  document.getElementById("page").innerHTML=`
-
-    <div class="toolbar">
-
-      <div>
-        <h1 class="page-title">${t("collection")}</h1>
-        <div class="page-subtitle">
-          Configure a arrecadação conjunta.
-        </div>
-      </div>
-
-      <button class="btn" onclick="editCollection()">Editar</button>
-
-    </div>
-
-    <div class="grid grid-2">
-
-      <div class="card">
-        <h3>Data</h3>
-        <p>${c.date || "Não definida"}</p>
-      </div>
-
-      <div class="card">
-        <h3>Hora</h3>
-        <p>${c.time || "Não definida"}</p>
-      </div>
-
-      <div class="card">
-        <h3>Local</h3>
-        <p>${c.place || "Não definido"}</p>
-      </div>
-
-      <div class="card">
-        <h3>Ponto de encontro</h3>
-        <p>${c.meeting || "Não definido"}</p>
-      </div>
-
-    </div>
-
-    <div class="card" style="margin-top:18px">
-      <h3>Endereço</h3>
-      <p>${c.address || "Não definido"}</p>
-    </div>
-  `;
-}
-
-function editCollection(){
-
-  const unit=currentUnit();
-
-  unit.collection.date=prompt("Data:",unit.collection.date)||"";
-  unit.collection.time=prompt("Hora:",unit.collection.time)||"";
-  unit.collection.place=prompt("Local:",unit.collection.place)||"";
-  unit.collection.meeting=prompt("Ponto de encontro:",unit.collection.meeting)||"";
-  unit.collection.address=prompt("Endereço:",unit.collection.address)||"";
-
-  saveCurrentUnit(unit);
-  renderApp();
-}
-
-/* =========================
-   ACESSOS
-   ========================= */
-
-function pageAccess(){
-
-  const unit=currentUnit();
-
-  let rows="";
-
-  unit.accesses.forEach((a,i)=>{
-
-    rows+=`
-    <tr>
-      <td>${escapeHtml(a.name)}</td>
-      <td>${a.role}</td>
-      <td>
-        <input
-          readonly
-          value="${escapeHtml(a.link)}"
-          onclick="this.select()"
-          style="max-width:330px">
-      </td>
-      <td>
-        <button class="btn small" onclick="copyText('${escapeHtml(a.link)}')">
-          Copiar
-        </button>
-      </td>
-    </tr>`;
-  });
-
-  document.getElementById("page").innerHTML=`
-
-    <div class="toolbar">
-
-      <div>
-        <h1 class="page-title">${t("access")}</h1>
-        <div class="page-subtitle">
-          Gere acessos para pessoas autorizadas.
-        </div>
-      </div>
-
-      <button class="btn" onclick="createAccess()">
-        + Gerar acesso
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h3>Acessos armazenados</h3>
-
-      ${unit.accesses.length===0?
-
-      `<div class="empty">
-        Nenhum acesso gerado.
-      </div>`
-
-      :
-
-      `<div class="table-wrap">
-        <table>
-          <thead>
+  box.innerHTML=`
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>${translations[lang].responsible}</th>
+            <th>${translations[lang].people}</th>
+            <th>${translations[lang].children}</th>
+            <th>${translations[lang].elderly}</th>
+            <th>${translations[lang].delete}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${currentData.families.map(f=>`
             <tr>
-              <th>Nome</th>
-              <th>Função</th>
-              <th>Link / código</th>
-              <th></th>
+              <td>${escapeHtml(f.responsible)}</td>
+              <td>${f.people}</td>
+              <td>${f.children} (${f.boys} ${translations[lang].boys.toLowerCase()}, ${f.girls} ${translations[lang].girls.toLowerCase()})</td>
+              <td>${f.elderly}</td>
+              <td>
+                <button class="btn btn-danger btn-small" onclick="deleteFamily(${f.id})">
+                  ${translations[lang].delete}
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>`
-      }
-
+          `).join("")}
+        </tbody>
+      </table>
     </div>
   `;
 }
 
-function createAccess(){
+/* ============================================================
+   EVENTO
+============================================================ */
 
-  const name=prompt("Nome da pessoa:");
+function saveEvent(){
 
-  if(!name)return;
-
-  const role=prompt(
-    "Função:\n\n1 - Diretor associado\n2 - Secretário\n3 - Líder mantenedor"
-  );
-
-  const roles={
-    "1":"Diretor associado",
-    "2":"Secretário",
-    "3":"Líder mantenedor"
+  currentData.event={
+    date:document.getElementById("eventDate").value,
+    time:document.getElementById("eventTime").value,
+    location:document.getElementById("eventLocation").value.trim(),
+    meeting:document.getElementById("eventMeeting").value.trim(),
+    address:document.getElementById("eventAddress").value.trim()
   };
 
-  const roleName=roles[role] || "Líder mantenedor";
+  saveData();
+  renderEvent();
 
-  const code="AC-"+Math.random().toString(36).slice(2,9).toUpperCase();
+  showMessage(
+    "eventMessage",
+    lang==="pt"?"Arrecadação conjunta salva.":
+    lang==="en"?"Joint collection saved.":
+    "Recolección conjunta guardada.",
+    "success"
+  );
+}
 
-  const link=location.origin+location.pathname+"?access="+code;
+function deleteEvent(){
 
-  const unit=currentUnit();
+  currentData.event=null;
+  saveData();
+  renderEvent();
 
-  unit.accesses.push({
+  showMessage(
+    "eventMessage",
+    lang==="pt"?"Arrecadação removida.":
+    lang==="en"?"Collection removed.":
+    "Recolección eliminada.",
+    "success"
+  );
+}
+
+function renderEvent(){
+
+  const box=document.getElementById("eventPreview");
+
+  if(!currentData.event){
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhuma arrecadação conjunta cadastrada.":
+      lang==="en"?"No joint collection registered.":
+      "No hay recolección conjunta registrada."}
+    </div>`;
+
+    document.getElementById("teamEvent").innerHTML=box.innerHTML;
+    return;
+  }
+
+  const e=currentData.event;
+
+  const html=`
+    <div class="card">
+      <h2>${translations[lang].jointCollection}</h2>
+      <p><strong>${translations[lang].date}:</strong> ${formatDate(e.date)}</p>
+      <p><strong>${translations[lang].time}:</strong> ${e.time}</p>
+      <p><strong>${translations[lang].location}:</strong> ${escapeHtml(e.location)}</p>
+      <p><strong>${translations[lang].meetingPoint}:</strong> ${escapeHtml(e.meeting)}</p>
+      <p><strong>${translations[lang].address}:</strong> ${escapeHtml(e.address)}</p>
+    </div>
+  `;
+
+  box.innerHTML=html;
+  document.getElementById("teamEvent").innerHTML=html;
+}
+
+/* ============================================================
+   ACESSOS
+============================================================ */
+
+function generateToken(prefix){
+
+  return prefix+"-"+Math.random().toString(36).substring(2,8).toUpperCase()+"-"+Date.now().toString(36).toUpperCase();
+}
+
+function generateManagerAccess(){
+
+  const name=document.getElementById("managerAccessName").value.trim();
+  const role=document.getElementById("managerAccessRole").value;
+
+  if(!name){
+    showMessage(
+      "managerAccessMessage",
+      lang==="pt"?"Informe o nome.":lang==="en"?"Enter the name.":"Ingrese el nombre.",
+      "error"
+    );
+    return;
+  }
+
+  const accessCode=generateToken("GESTOR");
+
+  currentData.managerAccesses.push({
+    id:Date.now(),
     name,
-    role:roleName,
-    code,
-    link,
-    created:new Date().toISOString()
+    role,
+    link:location.href.split("#")[0]+"#acesso="+accessCode,
+    code:accessCode,
+    password:"",
+    keyword:""
   });
 
-  saveCurrentUnit(unit);
+  saveData();
 
-  alert("Acesso criado:\n\n"+link);
+  document.getElementById("managerAccessName").value="";
+  renderAccesses();
 
-  renderApp();
+  showMessage(
+    "managerAccessMessage",
+    lang==="pt"?"Acesso gerado. A pessoa deverá criar sua senha ao entrar pelo link.":
+    lang==="en"?"Access generated. The person must create a password when entering through the link.":
+    "Acceso generado. La persona deberá crear su contraseña al entrar por el enlace.",
+    "success"
+  );
+}
+
+function generateLeaderAccess(){
+
+  const name=document.getElementById("leaderAccessName").value.trim();
+
+  if(!name){
+    showMessage(
+      "leaderAccessMessage",
+      lang==="pt"?"Informe o nome do líder.":lang==="en"?"Enter the leader's name.":"Ingrese el nombre del líder.",
+      "error"
+    );
+    return;
+  }
+
+  const id=Date.now();
+  const code=generateToken("EQUIPE");
+
+  currentData.leaderAccesses.push({
+    id,
+    name,
+    code,
+    link:location.href.split("#")[0]+"#acesso="+code,
+    password:"",
+    keyword:""
+  });
+
+  saveData();
+
+  document.getElementById("leaderAccessName").value="";
+  renderAccesses();
+
+  showMessage(
+    "leaderAccessMessage",
+    lang==="pt"?"Acesso do líder gerado.":
+    lang==="en"?"Leader access generated.":
+    "Acceso del líder generado.",
+    "success"
+  );
 }
 
 function copyText(text){
 
-  navigator.clipboard?.writeText(text);
-
-  toast("Copiado.");
+  navigator.clipboard.writeText(text).then(()=>{
+    alert(
+      lang==="pt"?"Link copiado.":
+      lang==="en"?"Link copied.":
+      "Enlace copiado."
+    );
+  });
 }
 
-/* =========================
-   CONFIGURAÇÕES
-   ========================= */
+function renderAccesses(){
 
-function pageSettings(){
+  const managerBox=document.getElementById("managerAccessList");
+  const leaderBox=document.getElementById("leaderAccessList");
 
-  const unit=currentUnit();
+  if(!currentData.managerAccesses.length){
+    managerBox.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhum acesso gerado.":
+      lang==="en"?"No access generated.":
+      "No hay accesos generados."}
+    </div>`;
+  }else{
 
-  document.getElementById("page").innerHTML=`
-
-    <h1 class="page-title">${t("settings")}</h1>
-
-    <div class="grid grid-2">
-
-      <div class="card">
-
-        <h3>Dados da unidade</h3>
-
-        <div class="field">
-          <label>Nome da unidade</label>
-          <input id="setName" value="${escapeHtml(unit.name)}">
-        </div>
-
-        <div class="field">
-          <label>Responsável</label>
-          <input id="setDirector" value="${escapeHtml(unit.director)}">
-        </div>
-
-        <button class="btn" onclick="saveSettings()">
-          ${t("save")}
-        </button>
-
+    managerBox.innerHTML=`
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>${translations[lang].personName}</th>
+            <th>${translations[lang].function}</th>
+            <th>Link</th>
+            <th>${translations[lang].generate}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${currentData.managerAccesses.map(a=>`
+            <tr>
+              <td>${escapeHtml(a.name)}</td>
+              <td>${escapeHtml(a.role)}</td>
+              <td>
+                <input value="${escapeAttr(a.link)}" readonly>
+              </td>
+              <td>
+                <button class="btn btn-light btn-small"
+                  onclick="copyText('${escapeAttr(a.link)}')">
+                  ${lang==="pt"?"COPIAR":lang==="en"?"COPY":"COPIAR"}
+                </button>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
       </div>
+    `;
+  }
 
-      <div class="card">
+  if(!currentData.leaderAccesses.length){
 
-        <h3>Idioma</h3>
+    leaderBox.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhum acesso de líder gerado.":
+      lang==="en"?"No leader access generated.":
+      "No hay acceso de líder generado."}
+    </div>`;
 
-        <select onchange="changeLang(this.value)">
-          <option value="pt" ${lang==="pt"?"selected":""}>Português</option>
-          <option value="en" ${lang==="en"?"selected":""}>English</option>
-          <option value="es" ${lang==="es"?"selected":""}>Español</option>
-        </select>
+  }else{
 
-        <p style="color:var(--muted);margin-top:20px">
-          O idioma selecionado será utilizado na interface da plataforma.
-        </p>
-
+    leaderBox.innerHTML=`
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>${translations[lang].leaderName}</th>
+            <th>Link</th>
+            <th>${lang==="pt"?"Ação":lang==="en"?"Action":"Acción"}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${currentData.leaderAccesses.map(a=>`
+            <tr>
+              <td>${escapeHtml(a.name)}</td>
+              <td>
+                <input value="${escapeAttr(a.link)}" readonly>
+              </td>
+              <td>
+                <button class="btn btn-light btn-small"
+                  onclick="copyText('${escapeAttr(a.link)}')">
+                  ${lang==="pt"?"COPIAR":lang==="en"?"COPY":"COPIAR"}
+                </button>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
       </div>
+    `;
+  }
+}
 
+/* ============================================================
+   EQUIPE
+============================================================ */
+
+function saveTeamName(){
+
+  if(!currentData.currentTeam){
+
+    /* para o protótipo, cria uma equipe local caso o diretor esteja testando */
+    const first=currentData.leaderAccesses[0];
+
+    if(first){
+      currentData.currentTeam=first.id;
+    }else{
+      currentData.currentTeam="LOCAL-TEAM";
+    }
+  }
+
+  let team=currentData.teams.find(t=>t.id===currentData.currentTeam);
+
+  const name=document.getElementById("teamNameInput").value.trim();
+
+  if(!name){
+    showMessage(
+      "teamMessage",
+      lang==="pt"?"Informe o nome da equipe.":
+      lang==="en"?"Enter the team name.":
+      "Ingrese el nombre del equipo.",
+      "error"
+    );
+    return;
+  }
+
+  if(!team){
+
+    team={
+      id:currentData.currentTeam,
+      name,
+      members:[]
+    };
+
+    currentData.teams.push(team);
+
+  }else{
+
+    team.name=name;
+  }
+
+  saveData();
+  renderTeams();
+
+  showMessage(
+    "teamMessage",
+    lang==="pt"?"Nome da equipe salvo.":
+    lang==="en"?"Team name saved.":
+    "Nombre del equipo guardado.",
+    "success"
+  );
+}
+
+function getCurrentTeam(){
+
+  if(!currentData.currentTeam)return null;
+
+  return currentData.teams.find(
+    t=>String(t.id)===String(currentData.currentTeam)
+  )||null;
+}
+
+function addMember(){
+
+  const input=document.getElementById("memberInput");
+  const name=input.value.trim();
+
+  if(!name)return;
+
+  let team=getCurrentTeam();
+
+  if(!team){
+
+    currentData.currentTeam="LOCAL-TEAM";
+
+    team={
+      id:"LOCAL-TEAM",
+      name:"",
+      members:[]
+    };
+
+    currentData.teams.push(team);
+  }
+
+  if(!team.members.includes(name)){
+    team.members.push(name);
+    team.members.sort((a,b)=>a.localeCompare(b,"pt-BR"));
+  }
+
+  saveData();
+
+  input.value="";
+  renderTeams();
+}
+
+function removeMember(name){
+
+  const team=getCurrentTeam();
+  if(!team)return;
+
+  team.members=team.members.filter(m=>m!==name);
+
+  saveData();
+  renderTeams();
+}
+
+function renderTeams(){
+
+  const team=getCurrentTeam();
+
+  if(team){
+    document.getElementById("teamNameInput").value=team.name||"";
+
+    document.getElementById("membersList").innerHTML=
+      team.members.length
+      ?team.members.map((m,i)=>`
+        <li>
+          <strong>${i+1}.</strong> ${escapeHtml(m)}
+          <button class="btn btn-danger btn-small" style="float:right"
+            onclick="removeMember('${escapeAttr(m)}')">
+            ${translations[lang].delete}
+          </button>
+        </li>
+      `).join("")
+      :`<div class="empty">
+        ${lang==="pt"?"Nenhum membro cadastrado.":
+        lang==="en"?"No members registered.":
+        "No hay miembros registrados."}
+      </div>`;
+
+  }else{
+
+    document.getElementById("teamNameInput").value="";
+    document.getElementById("membersList").innerHTML="";
+  }
+
+  const weekly=currentData.items.find(
+    i=>itemMissing(i)>0
+  );
+
+  document.getElementById("weeklyItem").innerHTML=
+    weekly
+    ?`<strong>${escapeHtml(weekly.name)}</strong><br>
+      ${lang==="pt"?"Meta":lang==="en"?"Target":"Meta"}:
+      ${weekly.needed} ${weekly.unit}`
+    :(
+      lang==="pt"?"Nenhum item definido para arrecadação.":
+      lang==="en"?"No collection item defined.":
+      "No hay artículo definido para la recolección."
+    );
+
+  renderDeliverySelect();
+  renderMyDeliveries();
+}
+
+function renderDeliverySelect(){
+
+  const select=document.getElementById("deliveryItem");
+
+  if(!currentData.items.length){
+
+    select.innerHTML=`<option value="">
+      ${lang==="pt"?"Nenhum item cadastrado":
+      lang==="en"?"No items registered":
+      "No hay artículos registrados"}
+    </option>`;
+
+    return;
+  }
+
+  select.innerHTML=currentData.items.map(i=>`
+    <option value="${i.id}">
+      ${escapeHtml(i.name)} — ${itemMissing(i)} ${i.unit} ${lang==="pt"?"faltando":lang==="en"?"missing":"faltantes"}
+    </option>
+  `).join("");
+}
+
+function registerDelivery(){
+
+  const itemId=document.getElementById("deliveryItem").value;
+  const quantity=Number(document.getElementById("deliveryQuantity").value);
+  const deliveredBy=document.getElementById("deliveryBy").value.trim();
+  const receivedBy=document.getElementById("receivedBy").value.trim();
+
+  if(!itemId||quantity<=0||!deliveredBy||!receivedBy){
+
+    showMessage(
+      "deliveryMessage",
+      lang==="pt"?"Preencha todos os campos da entrega.":
+      lang==="en"?"Fill in all delivery fields.":
+      "Complete todos los campos de la entrega.",
+      "error"
+    );
+
+    return;
+  }
+
+  let team=getCurrentTeam();
+
+  if(!team){
+
+    currentData.currentTeam="LOCAL-TEAM";
+
+    team={
+      id:"LOCAL-TEAM",
+      name:"Equipe",
+      members:[]
+    };
+
+    currentData.teams.push(team);
+  }
+
+  currentData.deliveries.push({
+    id:Date.now(),
+    teamId:team.id,
+    teamName:team.name||"Equipe",
+    itemId:Number(itemId),
+    quantity,
+    deliveredBy,
+    receivedBy,
+    date:new Date().toISOString()
+  });
+
+  saveData();
+
+  document.getElementById("deliveryQuantity").value="";
+  document.getElementById("deliveryBy").value="";
+  document.getElementById("receivedBy").value="";
+
+  renderAll();
+
+  showMessage(
+    "deliveryMessage",
+    lang==="pt"?"Entrega registrada e enviada ao controle do gestor.":
+    lang==="en"?"Delivery registered and sent to the manager's control.":
+    "Entrega registrada y enviada al control del gestor.",
+    "success"
+  );
+}
+
+function renderMyDeliveries(){
+
+  const box=document.getElementById("myDeliveriesList");
+
+  let team=getCurrentTeam();
+
+  if(!team){
+
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhuma equipe selecionada.":
+      lang==="en"?"No team selected.":
+      "Ningún equipo seleccionado."}
+    </div>`;
+
+    return;
+  }
+
+  const deliveries=currentData.deliveries.filter(
+    d=>String(d.teamId)===String(team.id)
+  );
+
+  if(!deliveries.length){
+
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhuma entrega registrada.":
+      lang==="en"?"No deliveries registered.":
+      "No hay entregas registradas."}
+    </div>`;
+
+    return;
+  }
+
+  box.innerHTML=`
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>${translations[lang].itemName}</th>
+          <th>${translations[lang].quantity}</th>
+          <th>${translations[lang].deliveredBy}</th>
+          <th>${translations[lang].receivedBy}</th>
+          <th>${lang==="pt"?"Comprovante":lang==="en"?"Receipt":"Comprobante"}</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${deliveries.map(d=>{
+
+          const item=currentData.items.find(i=>i.id===d.itemId);
+
+          return `
+            <tr>
+              <td>${item?escapeHtml(item.name):"—"}</td>
+              <td>${d.quantity} ${item?item.unit:""}</td>
+              <td>${escapeHtml(d.deliveredBy)}</td>
+              <td>${escapeHtml(d.receivedBy)}</td>
+              <td>
+                <button class="btn btn-light btn-small"
+                  onclick="generateReceipt(${d.id})">
+                  ${lang==="pt"?"GERAR":lang==="en"?"GENERATE":"GENERAR"}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join("")}
+      </tbody>
+    </table>
     </div>
-
-    <div class="card" style="margin-top:18px">
-      <h3>Dados locais</h3>
-      <p>
-        Os dados desta unidade são armazenados neste dispositivo,
-        separados pelo identificador exclusivo da unidade.
-      </p>
-
-      <button class="btn danger" onclick="clearLocalData()">
-        Apagar dados desta unidade
-      </button>
-    </div>
-
   `;
 }
 
-function saveSettings(){
+/* ============================================================
+   PLACAR
+============================================================ */
 
-  const unit=currentUnit();
+function teamTotal(teamId){
 
-  unit.name=document.getElementById("setName").value.trim();
-  unit.director=document.getElementById("setDirector").value.trim();
-
-  saveCurrentUnit(unit);
-
-  toast("Dados atualizados.");
-  renderApp();
+  return currentData.deliveries
+    .filter(d=>String(d.teamId)===String(teamId))
+    .reduce((sum,d)=>sum+Number(d.quantity),0);
 }
 
-function clearLocalData(){
+function renderRanking(){
 
-  if(!confirm(
-    "Isso apagará todos os dados desta unidade neste dispositivo. Continuar?"
-  ))return;
+  const ranking=currentData.teams
+    .map(t=>({
+      ...t,
+      total:teamTotal(t.id)
+    }))
+    .sort((a,b)=>b.total-a.total);
 
-  const id=localStorage.getItem("current_unit");
+  const html=ranking.length
+    ?`
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>${lang==="pt"?"Equipe":lang==="en"?"Team":"Equipo"}</th>
+            <th>${lang==="pt"?"Arrecadado":lang==="en"?"Collected":"Recolectado"}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${ranking.map((t,i)=>`
+            <tr>
+              <td><strong>${i+1}º</strong></td>
+              <td>${escapeHtml(t.name||"Equipe")}</td>
+              <td><strong>${t.total}</strong></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+      </div>
+    `
+    :`<div class="empty">
+      ${lang==="pt"?"Nenhuma equipe cadastrada.":
+      lang==="en"?"No teams registered.":
+      "No hay equipos registrados."}
+    </div>`;
 
-  const units=getUnits();
-
-  delete units[id];
-
-  saveUnits(units);
-
-  localStorage.removeItem("current_unit");
-  localStorage.removeItem("logged_in");
-
-  renderWelcome();
+  document.getElementById("dashboardRanking").innerHTML=html;
+  document.getElementById("fullRanking").innerHTML=html;
 }
 
-/* =========================
-   IDIOMA
-   ========================= */
+function renderTeamDeliveries(){
 
-function changeLang(value){
+  const box=document.getElementById("teamDeliveriesList");
 
-  lang=value;
+  if(!currentData.deliveries.length){
 
-  localStorage.setItem("app_lang",lang);
+    box.innerHTML=`<div class="empty">
+      ${lang==="pt"?"Nenhuma entrega registrada.":
+      lang==="en"?"No deliveries registered.":
+      "No hay entregas registradas."}
+    </div>`;
 
-  if(localStorage.getItem("logged_in")==="1"){
-    renderApp();
-  }else if(currentUnit()){
-    renderLogin();
-  }else if(localStorage.getItem("access_unlocked")){
-    renderWelcome();
-  }else{
-    renderAccess();
+    return;
+  }
+
+  box.innerHTML=`
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>${lang==="pt"?"Equipe":lang==="en"?"Team":"Equipo"}</th>
+          <th>${translations[lang].itemName}</th>
+          <th>${translations[lang].quantity}</th>
+          <th>${translations[lang].deliveredBy}</th>
+          <th>${translations[lang].receivedBy}</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${currentData.deliveries.map(d=>{
+
+          const item=currentData.items.find(i=>i.id===d.itemId);
+
+          return `
+            <tr>
+              <td>${escapeHtml(d.teamName||"Equipe")}</td>
+              <td>${item?escapeHtml(item.name):"—"}</td>
+              <td>${d.quantity} ${item?item.unit:""}</td>
+              <td>${escapeHtml(d.deliveredBy)}</td>
+              <td>${escapeHtml(d.receivedBy)}</td>
+            </tr>
+          `;
+        }).join("")}
+      </tbody>
+    </table>
+    </div>
+  `;
+}
+
+/* ============================================================
+   COMPROVANTE
+============================================================ */
+
+function generateReceipt(id){
+
+  const d=currentData.deliveries.find(x=>x.id===id);
+  if(!d)return;
+
+  const item=currentData.items.find(i=>i.id===d.itemId);
+
+  const receipt=`
+    <html>
+    <head>
+      <title>Comprovante de entrega</title>
+      <style>
+        body{
+          font-family:Arial;
+          background:#eee5d2;
+          padding:40px;
+          color:#3d3a32;
+        }
+        .box{
+          max-width:600px;
+          margin:auto;
+          background:#fffdf8;
+          padding:35px;
+          border-radius:20px;
+          border:1px solid #d7c9ac;
+        }
+        h1{color:#405b46}
+        .line{
+          border-bottom:1px solid #d7c9ac;
+          padding:12px 0;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <h1>Comprovante de entrega</h1>
+        <div class="line"><strong>Unidade:</strong> ${escapeHtml(currentData.unit)}</div>
+        <div class="line"><strong>Equipe:</strong> ${escapeHtml(d.teamName)}</div>
+        <div class="line"><strong>Item:</strong> ${item?escapeHtml(item.name):"—"}</div>
+        <div class="line"><strong>Quantidade:</strong> ${d.quantity} ${item?item.unit:""}</div>
+        <div class="line"><strong>Quem entregou:</strong> ${escapeHtml(d.deliveredBy)}</div>
+        <div class="line"><strong>Quem recebeu:</strong> ${escapeHtml(d.receivedBy)}</div>
+        <div class="line"><strong>Data:</strong> ${new Date(d.date).toLocaleString()}</div>
+        <p style="text-align:center;margin-top:30px">
+          Dedicado com carinho a Vera Lima.
+        </p>
+      </div>
+      <script>
+        window.print();
+      <\/script>
+    </body>
+    </html>
+  `;
+
+  const win=window.open("","_blank");
+
+  if(win){
+    win.document.write(receipt);
+    win.document.close();
   }
 }
 
-/* =========================
-   SAÍDA
-   ========================= */
+/* ============================================================
+   RECUPERAÇÃO DE SENHA
+============================================================ */
 
-function logout(){
-
-  localStorage.removeItem("logged_in");
-
-  currentPage="dashboard";
-
-  renderLogin();
+function openRecovery(){
+  document.getElementById("recoveryModal").classList.add("show");
 }
 
-/* =========================
+function closeRecovery(){
+  document.getElementById("recoveryModal").classList.remove("show");
+}
+
+function recoverPassword(){
+
+  const keyword=document.getElementById("recoveryKeyword").value.trim();
+  const p1=document.getElementById("recoveryPassword").value;
+  const p2=document.getElementById("recoveryPassword2").value;
+
+  if(keyword!==currentData.keyword){
+
+    showMessage(
+      "recoveryMessage",
+      lang==="pt"?"Palavra-chave incorreta.":
+      lang==="en"?"Incorrect keyword.":
+      "Palabra clave incorrecta.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!p1||p1!==p2){
+
+    showMessage(
+      "recoveryMessage",
+      lang==="pt"?"As senhas não coincidem.":
+      lang==="en"?"Passwords do not match.":
+      "Las contraseñas no coinciden.",
+      "error"
+    );
+
+    return;
+  }
+
+  currentData.password=p1;
+  saveData();
+
+  showMessage(
+    "recoveryMessage",
+    lang==="pt"?"Senha alterada com sucesso.":
+    lang==="en"?"Password changed successfully.":
+    "Contraseña cambiada correctamente.",
+    "success"
+  );
+
+  setTimeout(closeRecovery,1000);
+}
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+function renderDashboard(){
+
+  document.getElementById("statFamilies").textContent=currentData.families.length;
+  document.getElementById("statItems").textContent=currentData.items.length;
+  document.getElementById("statTeams").textContent=currentData.teams.length;
+  document.getElementById("statDeliveries").textContent=currentData.deliveries.length;
+
+  document.getElementById("dashboardCampaign").textContent=
+    currentData.campaign ||
+    (
+      lang==="pt"?"Nenhuma campanha cadastrada.":
+      lang==="en"?"No campaign registered.":
+      "No hay campaña registrada."
+    );
+
+  document.getElementById("campaignInput").value=currentData.campaign||"";
+
+}
+
+/* ============================================================
+   RENDER GERAL
+============================================================ */
+
+function renderAll(){
+
+  if(!currentData)return;
+
+  renderDashboard();
+  renderItems();
+  renderFamilies();
+  renderEvent();
+  renderAccesses();
+  renderTeams();
+  renderRanking();
+  renderTeamDeliveries();
+
+  document.getElementById("languageSelect").value=lang;
+
+  if(currentData.event){
+
+    document.getElementById("eventDate").value=currentData.event.date||"";
+    document.getElementById("eventTime").value=currentData.event.time||"";
+    document.getElementById("eventLocation").value=currentData.event.location||"";
+    document.getElementById("eventMeeting").value=currentData.event.meeting||"";
+    document.getElementById("eventAddress").value=currentData.event.address||"";
+  }
+}
+
+/* ============================================================
+   UTILITÁRIOS
+============================================================ */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeAttr(value){
+  return escapeHtml(value).replace(/`/g,"&#096;");
+}
+
+function formatDate(value){
+
+  if(!value)return"—";
+
+  const parts=value.split("-");
+
+  if(parts.length===3){
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+
+  return value;
+}
+
+/* ============================================================
    INICIALIZAÇÃO
-   ========================= */
+============================================================ */
 
-function start(){
+loadData();
 
-  const logged=localStorage.getItem("logged_in")==="1";
-  const unlocked=localStorage.getItem("access_unlocked")==="1";
-  const unit=currentUnit();
+document.addEventListener("DOMContentLoaded",()=>{
 
-  if(logged && unit){
-    renderApp();
-  }else if(unlocked && unit){
-    renderLogin();
-  }else{
-    renderAccess();
+  document.documentElement.lang=lang==="pt"?"pt-BR":lang;
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.dataset.i18n;
+    if(translations[lang][key]){
+      el.textContent=translations[lang][key];
+    }
+  });
+
+  document.getElementById("languageSelect").value=lang;
+
+  const savedName=localStorage.getItem("APP_LOGIN_NAME");
+
+  if(savedName){
+    document.getElementById("loginName").value=savedName;
   }
-}
 
-start();
+  buildFamilyFields();
+});
 
 </script>
 

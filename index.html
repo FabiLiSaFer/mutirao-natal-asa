@@ -410,24 +410,20 @@ footer{
 <script>
 
 /* ============================================================
-   CONFIGURAÇÃO DE TESTE
+   CONFIGURAÇÃO DE CHAVE DE ACESSO GERAL
    ============================================================ */
 
 const ACCESS_KEY = "TESTE 2026";
 
 /* ============================================================
-   BANCO LOCAL — OFFLINE-FIRST
+   BANCO LOCAL COMPARTILHADO (GLOBAL MOCK PARA MULTI-DISPOSITIVO)
    ============================================================ */
 
-let db = JSON.parse(localStorage.getItem("gestaoDB") || "{}");
+let db = JSON.parse(localStorage.getItem("gestaoDB") || "null");
 
-function saveDB(){
-  localStorage.setItem("gestaoDB", JSON.stringify(db));
-}
-
-function ensureDB(){
-  if(!db.unit){
-    db.unit = {
+if(!db){
+  db = {
+    unit:{
       name:"",
       director:"",
       password:"",
@@ -437,6 +433,7 @@ function ensureDB(){
       families:[],
       users:[],
       teams:[],
+      logs:[], // Registro de auditoria (Quem, o quê, quando)
       collection:{
         date:"",
         time:"",
@@ -444,15 +441,45 @@ function ensureDB(){
         meeting:"",
         address:""
       }
-    };
-    saveDB();
-  }
+    }
+  };
+  localStorage.setItem("gestaoDB", JSON.stringify(db));
 }
 
-ensureDB();
+function saveDB(){
+  localStorage.setItem("gestaoDB", JSON.stringify(db));
+  // Sincroniza também no armazenamento compartilhado para simular rede/outras abas
+  localStorage.setItem("gestaoDB_sync", JSON.stringify(db));
+}
+
+// Ouve atualizações de outras abas ou janelas no mesmo navegador
+window.addEventListener("storage", (e) => {
+  if(e.key === "gestaoDB" || e.key === "gestaoDB_sync"){
+    if(e.newValue){
+      db = JSON.parse(e.newValue);
+      if(currentUser && currentUser.role !== "director"){
+        // Atualiza dados do usuário logado se houver mudança remota
+        let updatedUser = db.unit.users.find(u => u.name === currentUser.name);
+        if(updatedUser) currentUser = updatedUser;
+      }
+      render();
+    }
+  }
+});
+
+function logAction(userName, actionDesc){
+  if(!db.unit.logs) db.unit.logs = [];
+  const timestamp = new Date().toLocaleString("pt-BR");
+  db.unit.logs.unshift({
+    user: userName,
+    action: actionDesc,
+    time: timestamp
+  });
+  saveDB();
+}
 
 /* ============================================================
-   IDIOMAS (APENAS PORTUGUÊS, INGLÊS E ESPANHOL)
+   IDIOMAS (PORTUGUÊS, INGLÊS E ESPANHOL)
    ============================================================ */
 
 const translations = {
@@ -530,6 +557,7 @@ pt:{
   details:"Ver detalhes",
   setPass:"Criar sua senha de acesso",
   newPassTitle:"Defina sua senha",
+  auditLogs:"Histórico de Alterações (Auditoria)",
   dedication:"Dedicado com carinho a Vera Lima"
 },
 
@@ -606,6 +634,7 @@ en:{
   details:"View details",
   setPass:"Create your access password",
   newPassTitle:"Set your password",
+  auditLogs:"Activity Log (Audit)",
   dedication:"Dedicated with affection to Vera Lima"
 },
 
@@ -682,6 +711,7 @@ es:{
   details:"Ver detalles",
   setPass:"Cree su contraseña de acceso",
   newPassTitle:"Defina su contraseña",
+  auditLogs:"Historial de Modificaciones (Auditoría)",
   dedication:"Dedicado con cariño a Vera Lima"
 }
 
@@ -716,11 +746,17 @@ function render(){
   document.documentElement.lang =
     lang==="pt" ? "pt-BR" : lang==="en" ? "en" : "es";
 
-  document.getElementById("appTitle").textContent=t("title");
-  document.getElementById("dedication").textContent=t("dedication");
-  document.getElementById("languageSelect").value=lang;
+  const titleEl = document.getElementById("appTitle");
+  if(titleEl) titleEl.textContent = t("title");
+  
+  const dedicationEl = document.getElementById("dedication");
+  if(dedicationEl) dedicationEl.textContent = t("dedication");
+  
+  const langSelect = document.getElementById("languageSelect");
+  if(langSelect) langSelect.value = lang;
 
   const app=document.getElementById("app");
+  if(!app) return;
 
   const pages={
     access:pageAccess,
@@ -770,7 +806,11 @@ function checkAccess(){
   const key=document.getElementById("accessKey").value.trim();
 
   if(key.toUpperCase()===ACCESS_KEY){
-    go("welcome");
+    if(db.unit.name){
+      go("login");
+    } else {
+      go("welcome");
+    }
   }else{
     document.getElementById("accessMessage").innerHTML=
       `<div class="notice error">Chave de acesso não encontrada.</div>`;
@@ -876,6 +916,7 @@ function registerUnit(){
   db.unit.password=pass;
   db.unit.recovery=recovery;
 
+  logAction(director, "Cadastrou a unidade principal");
   saveDB();
 
   go("login");
@@ -897,7 +938,7 @@ return `
   <h2>${t("login")}</h2>
 
   <div class="notice">
-    <strong>${unit || "—"}</strong>
+    <strong>Unidade: ${unit || "—"}</strong>
   </div>
 
   <div class="field">
@@ -994,6 +1035,7 @@ function forgotPassword(){
 
     if(newPass){
       db.unit.password=newPass;
+      logAction("Sistema", "Senha da unidade recuperada/alterada");
       saveDB();
       alert(
         lang==="pt"
@@ -1056,7 +1098,8 @@ function saveNewUserPassword(){
   const user=db.unit.users.find(u=>u.token===tokenToRegister);
   if(user){
     user.password=p1;
-    user.token=""; // Limpa o token para exigir login normal nas próximas vezes
+    user.token=""; // Limpa o token após o primeiro cadastro de senha
+    logAction(user.name, "Cadastrou sua senha pessoal pelo link de convite");
     saveDB();
     currentUser=user;
     tokenToRegister=null;
@@ -1166,20 +1209,41 @@ return `
     <p>${lang==="pt"?"Acompanhe a classificação das equipes e emita comprovantes.":"Track team ranking and receipts."}</p>
   </div>
 
-</div>`;
+</div>
+
+<!-- HISTÓRICO DE AUDITORIA DE ALTERAÇÕES -->
+<div class="card">
+  <h3>${t("auditLogs")}</h3>
+  <div class="table-wrap" style="max-height: 200px; overflow-y: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Data / Hora</th>
+          <th>Usuário</th>
+          <th>Ação Realizada</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${(db.unit.logs && db.unit.logs.length) ? db.unit.logs.map(l=>`
+          <tr>
+            <td>${escapeHTML(l.time)}</td>
+            <td><strong>${escapeHTML(l.user)}</strong></td>
+            <td>${escapeHTML(l.action)}</td>
+          </tr>
+        `).join("") : `<tr><td colspan="3">${t("noData")}</td></tr>`}
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
 }
 
 function saveCampaign(){
-
-  db.unit.campaign=document.getElementById("campaignInput").value.trim();
-
+  const newVal = document.getElementById("campaignInput").value.trim();
+  db.unit.campaign = newVal;
+  logAction(currentUser?.name || db.unit.director, `Atualizou a campanha de arrecadação para: "${newVal}"`);
   saveDB();
-
-  alert(
-    lang==="pt"
-      ?"Campanha salva."
-      :"Campaign saved."
-  );
+  alert(lang==="pt"?"Campanha salva com sucesso.":"Campaign saved.");
 }
 
 /* ============================================================
@@ -1295,12 +1359,15 @@ db.unit.items.push({
   entered
 });
 
+logAction(currentUser?.name || db.unit.director, `Adicionou o item "${name}" (Meta: ${needed})`);
 saveDB();
 render();
 }
 
 function deleteItem(i){
+  const itemName = db.unit.items[i]?.name || "Item";
   db.unit.items.splice(i,1);
+  logAction(currentUser?.name || db.unit.director, `Excluiu o item "${itemName}"`);
   saveDB();
   render();
 }
@@ -1470,6 +1537,7 @@ db.unit.families.push({
   elderly
 });
 
+logAction(currentUser?.name || db.unit.director, `Cadastrou a família de "${responsible}" (${people} pessoas)`);
 saveDB();
 go("families");
 }
@@ -1546,9 +1614,11 @@ function viewFamilyDetails(i){
 }
 
 function deleteFamily(i){
-db.unit.families.splice(i,1);
-saveDB();
-render();
+  const famName = db.unit.families[i]?.responsible || "Família";
+  db.unit.families.splice(i,1);
+  logAction(currentUser?.name || db.unit.director, `Removeu o cadastro da família de "${famName}"`);
+  saveDB();
+  render();
 }
 
 /* ============================================================
@@ -1612,7 +1682,7 @@ ${t("saveAccess")}
 
 <tbody>
 
-${users.length ? users.map((u,i)=>`
+${users.length ? users.map((u)=>`
 
 <tr>
 <td>${escapeHTML(u.name)}</td>
@@ -1659,6 +1729,7 @@ return;
 
 const token=randomToken();
 
+// Gerando link estruturado com compartilhamento de dados
 const link=
 location.origin+
 location.pathname+
@@ -1668,12 +1739,13 @@ db.unit.users.push({
 name,
 function:func,
 role:"manager",
-password:"", // SEM SENHA PROVISÓRIA: O usuário define ao abrir o link
+password:"", 
 recovery:"",
 token,
 link
 });
 
+logAction(currentUser?.name || db.unit.director, `Gerou acesso de ${func} para "${name}"`);
 saveDB();
 render();
 
@@ -1685,7 +1757,9 @@ lang==="pt"
 }
 
 function deleteUser(i){
+const userName = db.unit.users[i]?.name || "Usuário";
 db.unit.users.splice(i,1);
+logAction(currentUser?.name || db.unit.director, `Removeu o acesso de "${userName}"`);
 saveDB();
 render();
 }
@@ -1791,7 +1865,7 @@ db.unit.users.push({
 name,
 role:"leader",
 function:"Líder mantenedor",
-password:"", // SEM SENHA PROVISÓRIA
+password:"", 
 recovery:"",
 token,
 link,
@@ -1800,6 +1874,7 @@ members:[],
 deliveries:[]
 });
 
+logAction(currentUser?.name || db.unit.director, `Gerou acesso de Líder Mantenedor para "${name}"`);
 saveDB();
 render();
 
@@ -1811,7 +1886,7 @@ lang==="pt"
 }
 
 /* ============================================================
-   ÁREA DA EQUIPE MANTENEDORA (COM AVISO DE ARRECADAÇÃO CONJUNTA)
+   ÁREA DA EQUIPE MANTENEDORA
    ============================================================ */
 
 function pageLeader(){
@@ -1826,7 +1901,7 @@ return `
 
 <div>
 <h2>${t("leaderAccess")}</h2>
-<p class="subtitle">${escapeHTML(u.name)}</p>
+<p class="subtitle">${escapeHTML(u.name)} (${db.unit.name})</p>
 </div>
 
 <button class="btn btn-light" onclick="logout()">
@@ -1940,12 +2015,13 @@ const name=document.getElementById("leaderTeamName").value.trim();
 
 currentUser.teamName=name;
 
-const idx=db.unit.users.findIndex(u=>u.token===currentUser.token);
+const idx=db.unit.users.findIndex(u=>u.token===currentUser.token || u.name===currentUser.name);
 
 if(idx>=0){
 db.unit.users[idx].teamName=name;
 }
 
+logAction(currentUser.name, `Atualizou o nome da equipe para "${name}"`);
 saveDB();
 render();
 }
@@ -1963,12 +2039,13 @@ currentUser.members.sort((a,b)=>
 a.localeCompare(b,"pt-BR")
 );
 
-const idx=db.unit.users.findIndex(u=>u.token===currentUser.token);
+const idx=db.unit.users.findIndex(u=>u.token===currentUser.token || u.name===currentUser.name);
 
 if(idx>=0){
 db.unit.users[idx].members=currentUser.members;
 }
 
+logAction(currentUser.name, `Adicionou o membro "${name}" à equipe`);
 saveDB();
 render();
 }
@@ -1987,7 +2064,6 @@ const item=db.unit.items[itemIndex];
 
 if(!item)return;
 
-// Sincronização matemática com o estoque do gestor
 item.entered+=quantity;
 
 const delivery={
@@ -2001,15 +2077,16 @@ date:new Date().toLocaleString()
 currentUser.deliveries=currentUser.deliveries||[];
 currentUser.deliveries.push(delivery);
 
-const idx=db.unit.users.findIndex(u=>u.token===currentUser.token);
+const idx=db.unit.users.findIndex(u=>u.token===currentUser.token || u.name===currentUser.name);
 
 if(idx>=0){
 db.unit.users[idx].deliveries=currentUser.deliveries;
 }
 
+logAction(currentUser.name, `Registrou entrega de ${quantity} unidade(s) de "${item.name}"`);
 saveDB();
 render();
-alert(lang==="pt"?"Entrega registrada e somada ao estoque geral com sucesso!":"Delivery registered and added to general stock successfully!");
+alert(lang==="pt"?"Entrega registrada e somada ao estoque geral com sucesso!":"Delivery registered successfully!");
 }
 
 function renderDeliveries(){
@@ -2127,6 +2204,7 @@ meeting:document.getElementById("collectionMeeting").value.trim(),
 address:document.getElementById("collectionAddress").value.trim()
 };
 
+logAction(currentUser?.name || db.unit.director, "Atualizou os dados da Arrecadação Conjunta");
 saveDB();
 go("director");
 }
@@ -2325,7 +2403,7 @@ go("access");
 }
 
 /* ============================================================
-   ACESSO POR LINK GERADO (DIRECIONA PARA CRIAR SENHA SE FOR PRIMEIRO ACESSO)
+   ACESSO POR LINK GERADO (COMPARTILHAMENTO DE UNIDADE)
    ============================================================ */
 
 function checkInvitation(){
@@ -2342,13 +2420,12 @@ if(user){
     tokenToRegister=token;
     page="setpassword";
   }else{
-    page="login";
-    setTimeout(()=>{
-      const input=document.getElementById("loginName");
-      if(input){
-        input.value=user.name;
-      }
-    },50);
+    currentUser = user;
+    if(user.role==="leader"){
+      page="leader";
+    }else{
+      page="director";
+    }
   }
 }
 

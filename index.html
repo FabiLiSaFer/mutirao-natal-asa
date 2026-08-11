@@ -1,989 +1,1357 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="txt-titulo-pagina">Plataforma de Gestão Solidária - Mutirão de Natal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FDFBF7; color: #2C3E50; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        .text-verde-asa { color: #1E5128; }
-        .bg-verde-asa { background-color: #1E5128; }
-        .border-verde-asa { border-color: #1E5128; }
-        .text-dourado { color: #C5A059; }
-        .bg-dourado { background-color: #C5A059; }
-        .border-dourado { border-color: #C5A059; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#efe5d3">
+<meta name="description" content="Plataforma de gestão do Mutirão de Natal">
+<title>Mutirão de Natal</title>
+
+<style>
+:root{
+  --areia:#efe5d3;
+  --areia2:#f7f1e6;
+  --creme:#fcf8ef;
+  --verde:#31563d;
+  --verde2:#466a50;
+  --dourado:#a78a4b;
+  --dourado2:#d3b875;
+  --texto:#29382d;
+  --cinza:#74796f;
+  --linha:#ded2bd;
+  --sombra:0 18px 50px rgba(76,60,34,.11);
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--texto);
+  background:
+    radial-gradient(circle at 80% 5%,rgba(211,184,117,.14),transparent 30%),
+    var(--areia);
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.app{
+  min-height:100vh;
+}
+
+/* TOPO */
+
+.topbar{
+  height:74px;
+  padding:0 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(247,241,230,.92);
+  border-bottom:1px solid rgba(167,138,75,.18);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(12px);
+}
+
+.logo{
+  border:0;
+  background:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--verde);
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:var(--verde);
+  color:#f8eacb;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+}
+
+.logo-name{
+  font-family:Georgia,serif;
+  font-size:18px;
+  font-weight:bold;
+  display:block;
+}
+
+.logo-sub{
+  display:block;
+  color:var(--dourado);
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.offline{
+  font-size:11px;
+  color:var(--cinza);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.offline-dot{
+  width:7px;
+  height:7px;
+  background:#9d8955;
+  border-radius:50%;
+}
+
+.lang-btn,
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid var(--linha);
+  background:var(--creme);
+  color:var(--verde);
+  display:grid;
+  place-items:center;
+}
+
+.avatar{
+  background:var(--verde);
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* GERAL */
+
+.page{
+  max-width:1180px;
+  margin:auto;
+  padding:45px 22px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.primary{
+  border:0;
+  background:var(--verde);
+  color:#fffaf0;
+  padding:13px 18px;
+  border-radius:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  box-shadow:0 9px 20px rgba(49,86,61,.17);
+}
+
+.secondary{
+  border:1px solid var(--linha);
+  background:rgba(255,255,255,.45);
+  color:var(--verde);
+  padding:13px 18px;
+  border-radius:13px;
+}
+
+.primary:hover{
+  background:#294a34;
+}
+
+.back{
+  border:0;
+  background:none;
+  color:var(--verde);
+  padding:0;
+  margin-bottom:20px;
+}
+
+/* INÍCIO */
+
+.hero{
+  min-height:570px;
+  border:1px solid rgba(167,138,75,.22);
+  border-radius:34px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#faf5ea,#e9ddc8);
+  box-shadow:var(--sombra);
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+}
+
+.hero-text{
+  padding:70px 65px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.eyebrow{
+  color:var(--dourado);
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  font-family:Georgia,serif;
+  color:var(--verde);
+  font-weight:normal;
+  font-size:clamp(42px,5vw,68px);
+  line-height:1;
+  margin:18px 0;
+}
+
+.hero-description{
+  color:#667060;
+  font-size:18px;
+  line-height:1.7;
+  max-width:530px;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:25px;
+}
+
+.dedication{
+  margin-top:50px;
+  font-family:Georgia,serif;
+  font-style:italic;
+  color:#927b49;
+  font-size:14px;
+}
+
+.natal{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#d8c7a7,#93805e);
+}
+
+.natal:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,245,200,.9),rgba(255,245,200,.2) 25%,transparent 52%);
+}
+
+.star{
+  position:absolute;
+  top:70px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff1b0;
+  font-size:38px;
+  text-shadow:0 0 25px #fff0aa;
+}
+
+.pres-barraca{
+  position:absolute;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  width:260px;
+  height:200px;
+}
+
+.teto{
+  position:absolute;
+  top:0;
+  left:0;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-bottom:95px solid #554937;
+}
+
+.abertura{
+  position:absolute;
+  bottom:0;
+  left:35px;
+  width:190px;
+  height:125px;
+  border-radius:6px 6px 22px 22px;
+  background:#604e38;
+}
+
+.manjedoura{
+  position:absolute;
+  bottom:24px;
+  left:65px;
+  width:130px;
+  height:35px;
+  border-radius:0 0 18px 18px;
+  border:4px solid #a98750;
+  background:#765e3c;
+}
+
+.luz{
+  position:absolute;
+  width:230px;
+  height:100px;
+  left:50%;
+  bottom:45px;
+  transform:translateX(-50%);
+  background:rgba(255,221,130,.35);
+  filter:blur(35px);
+}
+
+/* FORMULÁRIOS */
+
+.center{
+  min-height:calc(100vh - 74px);
+  display:grid;
+  place-items:center;
+  padding:35px 20px;
+}
+
+.form-card{
+  width:min(480px,100%);
+  background:var(--creme);
+  border:1px solid var(--linha);
+  border-radius:25px;
+  padding:32px;
+  box-shadow:var(--sombra);
+}
+
+.form-icon{
+  width:50px;
+  height:50px;
+  border-radius:15px;
+  background:#e6dac2;
+  color:var(--dourado);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+}
+
+.form-card h2{
+  font-family:Georgia,serif;
+  color:var(--verde);
+  font-weight:normal;
+  font-size:32px;
+  margin:17px 0 7px;
+}
+
+.muted{
+  color:var(--cinza);
+  font-size:14px;
+}
+
+.form-group{
+  margin-top:16px;
+}
+
+.form-group label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  color:#5e675c;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d9cdb8;
+  border-radius:11px;
+  background:#fffaf1;
+  color:var(--texto);
+  outline:none;
+}
+
+input:focus{
+  border-color:var(--dourado);
+  box-shadow:0 0 0 3px rgba(167,138,75,.1);
+}
+
+.checkbox{
+  margin-top:15px;
+  font-size:12px;
+  color:var(--cinza);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.checkbox input{
+  width:auto;
+}
+
+.full{
+  width:100%;
+  margin-top:18px;
+}
+
+.link{
+  display:block;
+  margin:17px auto 0;
+  border:0;
+  background:none;
+  color:var(--verde);
+  text-decoration:underline;
+  font-size:13px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+  max-width:1400px;
+  margin:auto;
+  min-height:calc(100vh - 74px);
+  display:grid;
+  grid-template-columns:240px 1fr;
+}
+
+.sidebar{
+  border-right:1px solid rgba(167,138,75,.17);
+  padding:27px 15px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.sidebar-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:0 8px 22px;
+  color:var(--verde);
+}
+
+.nav{
+  border:0;
+  background:none;
+  color:#6b7467;
+  padding:11px 12px;
+  border-radius:11px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+}
+
+.nav:hover,
+.nav.active{
+  background:#e5dac5;
+  color:var(--verde);
+  font-weight:bold;
+}
+
+.settings{
+  margin-top:auto;
+  color:#8c877b;
+  font-size:13px;
+  padding:12px;
+}
+
+.content{
+  padding:42px 4vw;
+}
+
+.heading{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.heading h1{
+  font-family:Georgia,serif;
+  color:var(--verde);
+  font-weight:normal;
+  font-size:42px;
+  margin:8px 0 4px;
+}
+
+.heading p{
+  color:var(--cinza);
+  font-size:13px;
+}
+
+.saved{
+  background:#e3dccb;
+  border-radius:20px;
+  padding:8px 11px;
+  color:#60705e;
+  font-size:11px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:30px 0 34px;
+}
+
+.stat{
+  background:rgba(251,247,239,.72);
+  border:1px solid var(--linha);
+  border-radius:17px;
+  padding:17px;
+}
+
+.stat-icon{
+  width:37px;
+  height:37px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#e6dcc8;
+  color:var(--dourado);
+  margin-bottom:10px;
+}
+
+.stat strong{
+  display:block;
+  font-family:Georgia,serif;
+  color:var(--verde);
+  font-size:26px;
+}
+
+.stat small{
+  color:var(--cinza);
+  font-size:11px;
+}
+
+.section-title{
+  font-family:Georgia,serif;
+  color:var(--verde);
+  font-size:21px;
+  font-weight:normal;
+  margin:0 0 14px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.quick{
+  border:1px solid var(--linha);
+  background:rgba(251,247,239,.72);
+  border-radius:17px;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  text-align:left;
+  color:var(--verde);
+}
+
+.quick:hover{
+  border-color:#c4aa6d;
+}
+
+.quick-icon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:#e6dcc8;
+  display:grid;
+  place-items:center;
+  color:var(--verde);
+}
+
+.quick-info{
+  flex:1;
+}
+
+.quick-info strong,
+.quick-info small{
+  display:block;
+}
+
+.quick-info small{
+  color:var(--cinza);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.panels{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:12px;
+  margin-top:20px;
+}
+
+.panel{
+  background:rgba(251,247,239,.6);
+  border:1px solid var(--linha);
+  border-radius:17px;
+  padding:20px;
+}
+
+.panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:var(--verde);
+  font-weight:bold;
+  font-size:13px;
+}
+
+.progress{
+  height:9px;
+  background:#ded5c5;
+  border-radius:20px;
+  overflow:hidden;
+  margin:18px 0 10px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  width:78%;
+  background:linear-gradient(90deg,var(--verde),var(--dourado2));
+}
+
+.panel p{
+  color:var(--cinza);
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:850px){
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .natal{
+    min-height:290px;
+    order:-1;
+  }
+
+  .hero-text{
+    padding:45px 30px 50px;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .panels{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:560px){
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .offline{
+    display:none;
+  }
+
+  .page{
+    padding:25px 13px;
+  }
+
+  .hero{
+    border-radius:24px;
+  }
+
+  .hero h1{
+    font-size:44px;
+  }
+
+  .quick-grid{
+    grid-template-columns:1fr;
+  }
+
+  .content{
+    padding:28px 16px;
+  }
+
+  .heading{
+    flex-direction:column;
+  }
+
+  .heading h1{
+    font-size:36px;
+  }
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- CABEÇALHO -->
-    <header class="w-full bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b border-dourado/30">
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-full overflow-hidden border border-dourado/40 shadow-sm flex-shrink-0 bg-[#F5EFEB] flex items-center justify-center">
-                <span class="text-xs font-bold text-dourado">🌟</span>
-            </div>
-            <div>
-                <h1 id="txt-logo-titulo" class="text-base font-bold text-verde-asa leading-tight">Mutirão de Natal</h1>
-                <p id="txt-sub-topo" class="text-[11px] text-dourado font-medium uppercase tracking-wider">Gestão Solidária</p>
-            </div>
+<body>
+
+<div class="app">
+
+<header class="topbar">
+
+  <button class="logo" onclick="show('home')">
+
+    <span class="logo-icon">♡</span>
+
+    <span>
+      <span class="logo-name">Mutirão</span>
+      <span class="logo-sub">de Natal</span>
+    </span>
+
+  </button>
+
+  <div class="top-actions">
+
+    <span class="offline">
+      <span class="offline-dot"></span>
+      <span data-i18n="offline">Modo offline</span>
+    </span>
+
+    <button class="lang-btn" onclick="changeLanguage()" title="Idioma">
+      A
+    </button>
+
+    <button class="avatar" onclick="show('director')">
+      VL
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- INÍCIO -->
+
+<section id="home" class="page">
+
+  <div class="hero">
+
+    <div class="hero-text">
+
+      <span class="eyebrow">
+        ✦ AMOR EM AÇÃO
+      </span>
+
+      <h1 data-i18n="welcome">
+        Bem-vindo ao Mutirão de Natal
+      </h1>
+
+      <p class="hero-description" data-i18n="subtitle">
+        Uma plataforma para organizar, mobilizar e acompanhar cada gesto de amor.
+      </p>
+
+      <div class="buttons">
+
+        <button class="primary" onclick="show('login')">
+          Entrar →
+        </button>
+
+        <button class="secondary" onclick="show('register')">
+          Cadastrar uma igreja
+        </button>
+
+      </div>
+
+      <p class="dedication" data-i18n="dedication">
+        Dedicado com carinho a Vera Lima.
+      </p>
+
+    </div>
+
+
+    <div class="natal">
+
+      <div class="star">✦</div>
+
+      <div class="pres-barraca">
+
+        <div class="teto"></div>
+
+        <div class="abertura"></div>
+
+        <div class="manjedoura"></div>
+
+      </div>
+
+      <div class="luz"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LOGIN -->
+
+<section id="login" class="center hidden">
+
+  <div class="form-card">
+
+    <button class="back" onclick="show('home')">
+      ← Voltar
+    </button>
+
+    <div class="form-icon">♧</div>
+
+    <h2 data-i18n="enter">
+      Entrar
+    </h2>
+
+    <p class="muted">
+      Igreja Adventista Central
+    </p>
+
+    <div class="form-group">
+      <label>Nome cadastrado</label>
+      <input placeholder="Nome do usuário">
+    </div>
+
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" placeholder="••••••••">
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox">
+      Lembrar meus dados de login
+    </label>
+
+    <button class="primary full" onclick="show('director')">
+      Entrar →
+    </button>
+
+    <button class="link">
+      Esqueci minha senha
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- CADASTRO -->
+
+<section id="register" class="center hidden">
+
+  <div class="form-card">
+
+    <button class="back" onclick="show('home')">
+      ← Voltar
+    </button>
+
+    <div class="form-icon">✧</div>
+
+    <h2>Cadastrar uma igreja</h2>
+
+    <p class="muted">
+      Crie o ambiente exclusivo da sua unidade.
+    </p>
+
+    <div class="form-group">
+      <label>Nome da igreja</label>
+      <input placeholder="Ex.: Igreja Adventista Central">
+    </div>
+
+    <div class="form-group">
+      <label>Nome do diretor(a)</label>
+      <input placeholder="Nome completo">
+    </div>
+
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" placeholder="Crie uma senha">
+    </div>
+
+    <div class="form-group">
+      <label>Confirmar senha</label>
+      <input type="password" placeholder="Repita a senha">
+    </div>
+
+    <div class="form-group">
+      <label>Palavra-chave para recuperar a senha</label>
+      <input placeholder="Uma palavra que você lembrará">
+    </div>
+
+    <p class="muted">
+      Guarde essa palavra, pois ela será usada se você precisar mudar sua senha.
+    </p>
+
+    <button class="primary full" onclick="show('login')">
+      Cadastrar ✓
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- DIRETOR -->
+
+<section id="director" class="dashboard hidden">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-title">
+
+      <span class="logo-icon">♡</span>
+
+      <strong>Área do diretor</strong>
+
+    </div>
+
+    <button class="nav active">
+      ⌂ &nbsp; Visão geral
+    </button>
+
+    <button class="nav">
+      ♡ &nbsp; Famílias beneficiadas
+    </button>
+
+    <button class="nav">
+      ▣ &nbsp; Itens da cesta
+    </button>
+
+    <button class="nav">
+      ♧ &nbsp; Equipes mantenedoras
+    </button>
+
+    <button class="nav">
+      ◷ &nbsp; Arrecadação conjunta
+    </button>
+
+    <button class="nav">
+      ♢ &nbsp; Acessos e permissões
+    </button>
+
+    <div class="settings">
+      ⚙ &nbsp; Configurações
+    </div>
+
+  </aside>
+
+
+  <main class="content">
+
+    <div class="heading">
+
+      <div>
+
+        <span class="eyebrow">
+          IGREJA • AMBIENTE PRIVADO
+        </span>
+
+        <h1 data-i18n="director">
+          Área do diretor
+        </h1>
+
+        <p>
+          Campanha atual:
+          <strong data-i18n="campaignValue">
+            Mutirão de Natal 2026
+          </strong>
+        </p>
+
+      </div>
+
+      <span class="saved">
+        ✓ Dados salvos neste dispositivo
+      </span>
+
+    </div>
+
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-icon">♧</div>
+        <strong>24</strong>
+        <small>Famílias</small>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">▣</div>
+        <strong>78%</strong>
+        <small>Alimentos</small>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">♡</div>
+        <strong>5</strong>
+        <small>Equipes mantenedoras</small>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">◇</div>
+        <strong>18/24</strong>
+        <small>Cestas entregues</small>
+      </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+      Acesso rápido
+    </h2>
+
+
+    <div class="quick-grid">
+
+      <button class="quick">
+
+        <span class="quick-icon">♧</span>
+
+        <span class="quick-info">
+          <strong>Famílias beneficiadas</strong>
+          <small>24 famílias cadastradas</small>
+        </span>
+
+        →
+
+      </button>
+
+
+      <button class="quick">
+
+        <span class="quick-icon">▣</span>
+
+        <span class="quick-info">
+          <strong>Itens da cesta</strong>
+          <small>12 itens • 78% da meta</small>
+        </span>
+
+        →
+
+      </button>
+
+
+      <button class="quick">
+
+        <span class="quick-icon">♡</span>
+
+        <span class="quick-info">
+          <strong>Equipes mantenedoras</strong>
+          <small>5 equipes ativas</small>
+        </span>
+
+        →
+
+      </button>
+
+
+      <button class="quick">
+
+        <span class="quick-icon">◷</span>
+
+        <span class="quick-info">
+          <strong>Arrecadação conjunta</strong>
+          <small>14 de novembro • 9h</small>
+        </span>
+
+        →
+
+      </button>
+
+    </div>
+
+
+    <div class="panels">
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <span>Meta de arrecadação</span>
+
+          <strong>78%</strong>
+
         </div>
-        <div class="flex items-center space-x-3">
-            <select id="seletor-idioma" onchange="mudarIdioma(this.value)" class="text-xs p-1.5 rounded-lg border border-dourado/40 bg-amber-50 text-dourado font-semibold focus:outline-none">
-                <option value="pt">🇧🇷 Português</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="es">🇪🇸 Español</option>
-            </select>
-            <span id="txt-badge-restrita" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-dourado border border-dourado/40 shadow-xs hidden md:inline-block">Área Restrita</span>
-        </div>
-    </header>
 
-    <!-- CONTEÚDO DINÂMICO -->
-    <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full flex items-center justify-center">
-
-        <!-- 0. TELA INICIAL -->
-        <div id="tela-boas-vindas" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
-            
-            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-5 border border-dourado/30 shadow-inner">
-                <svg class="w-9 h-9 text-dourado" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-            </div>
-
-            <h2 id="txt-bemvindo" class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)!</h2>
-            <p id="txt-desc-boasvindas" class="text-sm text-gray-600 mb-8 leading-relaxed">
-                Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.
-            </p>
-
-            <button onclick="irParaConfiguracaoOuLogin()" id="btn-entrar-sistema" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2">
-                <span>Entrar no Sistema</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+        <div class="progress">
+          <span></span>
         </div>
 
-        <!-- 1. TELA DE CADASTRO INICIAL -->
-        <div id="tela-cadastro-igreja" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-verde-asa via-dourado to-verde-asa"></div>
-            
-            <div class="text-center mb-6">
-                <h2 id="txt-config-titulo" class="text-2xl font-bold text-verde-asa">Configuração Inicial</h2>
-                <p id="txt-config-sub" class="text-xs text-gray-500 mt-1">Cadastre a unidade e o coordenador responsável</p>
-            </div>
+        <p>
+          Arrecadado até agora:
+          <strong>R$ 4.680</strong>
+        </p>
 
-            <div class="space-y-4">
-                <div>
-                    <label id="txt-label-unidade" class="block text-xs font-semibold text-gray-600 mb-1">Nome da Unidade / Projeto</label>
-                    <input type="text" id="reg-igreja" placeholder="Ex: Projeto Solidário Central" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
-                </div>
-                <div>
-                    <label id="txt-label-coord" class="block text-xs font-semibold text-gray-600 mb-1">Nome do Coordenador</label>
-                    <input type="text" id="reg-coordenador" placeholder="Ex: Vera Lima" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
-                </div>
-                <div>
-                    <label id="txt-label-senha" class="block text-xs font-semibold text-gray-600 mb-1">Senha de Acesso</label>
-                    <input type="password" id="reg-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
-                </div>
-                <div>
-                    <label id="txt-label-confsenha" class="block text-xs font-semibold text-gray-600 mb-1">Confirmar Senha</label>
-                    <input type="password" id="reg-confirma-senha" placeholder="••••••••" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:border-verde-asa">
-                </div>
-                <button onclick="salvarCadastroInicial()" id="btn-salvar-config" class="w-full bg-verde-asa hover:bg-[#163d20] text-white font-medium py-3 px-4 rounded-xl shadow-md transition duration-200">
-                    Acessar Painel do Coordenador
-                </button>
-            </div>
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+          <span>Segurança da unidade</span>
+          <span>♢</span>
         </div>
 
-        <!-- TELA DE LOGIN DO COORDENADOR -->
-        <div id="tela-login-coord" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md mx-auto w-full text-center space-y-4">
-            <h2 id="titulo-login-igreja" class="text-2xl font-bold text-verde-asa">Área Restrita</h2>
-            <p id="txt-login-sub" class="text-xs text-gray-500">Digite a senha da coordenação para entrar</p>
-            <input type="password" id="login-senha-coord" placeholder="Senha" class="w-full text-xs p-3 rounded-xl border border-gray-300">
-            <button onclick="fazerLoginCoordenador()" id="btn-login-entrar" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl">Entrar como Coordenador</button>
-        </div>
-
-        <!-- 2. PAINEL DE CONTROLE DO COORDENADOR -->
-        <div id="painel-coordenador" class="hidden w-full space-y-6">
-            <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-gray-100 gap-4">
-                    <div>
-                        <h3 id="txt-painel-coord-titulo" class="text-xl font-bold text-verde-asa">Painel de Gestão - Coordenador(a)</h3>
-                        <p id="info-coordenador-logado" class="text-xs text-dourado font-medium mt-0.5"></p>
-                    </div>
-                    <button onclick="sairDoSistema()" id="btn-sair-sistema" class="text-xs text-red-600 hover:underline font-semibold bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">Sair do Sistema</button>
-                </div>
-
-                <!-- ABAS DE NAVEGAÇÃO -->
-                <div class="flex space-x-2 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
-                    <button onclick="mudarAbaCoordenador('estoque')" id="btn-aba-estoque" class="text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap">Gestão de Itens & Estoque</button>
-                    <button onclick="mudarAbaCoordenador('destaques')" id="btn-aba-destaques" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">⭐ Destaques & Casadinhos</button>
-                    <button onclick="mudarAbaCoordenador('gincana')" id="btn-aba-gincana" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">🏆 Placar das Equipes</button>
-                    <button onclick="mudarAbaCoordenador('familias')" id="btn-aba-familias" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Cadastro de Famílias</button>
-                    <button onclick="mudarAbaCoordenador('voluntarios')" id="btn-aba-voluntarios" class="text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap">Voluntários e Links</button>
-                </div>
-
-                <!-- ESTOQUE / METAS -->
-                <div id="conteudo-aba-estoque" class="space-y-6">
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 id="txt-cad-item-titulo" class="text-sm font-bold text-verde-asa mb-3">Cadastrar Item para Arrecadação</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <input type="text" id="novo-produto-nome" placeholder="Nome (ex: Arroz 5kg)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <input type="number" id="novo-produto-meta" placeholder="Meta Necessária (Qtd)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="adicionarProdutoMeta()" id="btn-add-item" class="bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20]">Adicionar à Lista</button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 id="txt-acompanhamento-titulo" class="text-sm font-bold text-verde-asa mb-3">Acompanhamento de Estoque (Meta vs Entradas)</h4>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-xs text-left border-collapse">
-                                <thead class="bg-amber-50 text-dourado border-b border-dourado/30">
-                                    <tr>
-                                        <th id="th-item" class="p-3">Item</th>
-                                        <th id="th-meta" class="p-3">Meta Fixa Necessária</th>
-                                        <th id="th-arrecadado" class="p-3">Total Arrecadado (Entradas)</th>
-                                        <th id="th-falta" class="p-3">Falta para a Meta</th>
-                                        <th id="th-acoes" class="p-3">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabela-estoque-coordenador" class="divide-y divide-gray-100 text-gray-700">
-                                    <tr><td colspan="5" class="p-4 text-center text-gray-400">Nenhum item cadastrado ainda.</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DESTAQUES E CASADINHOS -->
-                <div id="conteudo-aba-destaques" class="hidden space-y-6">
-                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
-                        <h4 class="text-sm font-bold text-verde-asa">⭐ 1. Alimento em Destaque da Semana</h4>
-                        <p class="text-xs text-gray-600">Defina qual é o item prioritário da semana. Se precisar trocar, basta limpar ou substituir.</p>
-                        <div class="flex gap-2">
-                            <input type="text" id="input-destaque-semana" placeholder="Ex: Arroz ou Óleo" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="salvarDestaqueSemana()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
-                            <button onclick="limparDestaqueSemana()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar</button>
-                        </div>
-                        <div id="historico-destaques" class="text-[11px] text-gray-500 pt-2 border-t border-dourado/20">
-                            <strong>Histórico de Destaques Anteriores:</strong> Nenhum registro anterior.
-                        </div>
-                    </div>
-
-                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
-                        <h4 class="text-sm font-bold text-verde-asa">🎁 2. Combos Casadinhos (Reta Final)</h4>
-                        <p class="text-xs text-gray-600">Defina kits especiais combinados (ex: Macarrão + Molho de Tomate).</p>
-                        <div class="flex gap-2">
-                            <input type="text" id="input-casadinho" placeholder="Ex: Macarrão + Molho" class="flex-grow text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="salvarCasadinho()" class="bg-dourado text-white text-xs font-medium px-4 py-2.5 rounded-lg hover:bg-[#b08d4b]">Salvar</button>
-                            <button onclick="limparCasadinho()" class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-2.5 rounded-lg hover:bg-red-200">Limpar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PLACAR DAS EQUIPES (GINCANA) -->
-                <div id="conteudo-aba-gincana" class="hidden space-y-4">
-                    <h4 class="text-sm font-bold text-verde-asa mb-2">🏆 Ranking das Equipes</h4>
-                    <p class="text-xs text-gray-500 mb-4">Acompanhe o desempenho de cada equipe responsável e seus arrecadadores.</p>
-                    <div id="lista-placar-gincana" class="space-y-3">
-                        <p class="text-xs text-gray-400 text-center py-4">Nenhuma arrecadação registrada por equipes ainda.</p>
-                    </div>
-                </div>
-
-                <!-- FAMÍLIAS -->
-                <div id="conteudo-aba-familias" class="hidden space-y-6">
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
-                        <h4 class="text-sm font-bold text-verde-asa">Cadastrar Família Assistida</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <input type="text" id="fam-responsavel" placeholder="Nome do Responsável Principal" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <input type="number" id="fam-total-pessoas" placeholder="Total no Grupo Familiar (Ex: 5)" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <div>
-                                <label class="block text-[11px] text-gray-500 mb-1">Início da Assistência</label>
-                                <input type="date" id="fam-inicio-assistencia" class="w-full text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            </div>
-                            <input type="number" id="fam-qtd-criancas" placeholder="Quantidade de Crianças no Grupo" oninput="ajustarCamposCriancas()" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                        </div>
-
-                        <div id="container-criancas-detalhes" class="space-y-2 pt-2 border-t border-gray-200 hidden">
-                            <p class="text-xs font-bold text-verde-asa">Dados das Crianças (Idades e Gênero - Sem expor nomes):</p>
-                            <div id="lista-inputs-criancas" class="space-y-2"></div>
-                        </div>
-
-                        <button onclick="salvarFamiliaAssistida()" class="w-full bg-verde-asa text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#163d20] mt-2">Salvar Família no Sistema</button>
-                    </div>
-
-                    <div>
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Famílias Cadastradas (Protegidas)</h4>
-                        <div id="lista-familias-container" class="space-y-2 max-h-60 overflow-y-auto">
-                            <p class="text-xs text-gray-400 text-center py-4">Nenhuma família cadastrada.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VOLUNTÁRIOS E LINKS (SEM SENHA GERADA AUTOMATICAMENTE) -->
-                <div id="conteudo-aba-voluntarios" class="hidden space-y-4">
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Gerar Link de Acesso para Voluntário</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                            <input type="text" id="vol-nome-input" placeholder="Nome do Responsável / Líder da Equipe" class="text-xs p-2.5 rounded-lg border border-gray-300 bg-white">
-                            <button onclick="gerarLinkVoluntario()" class="bg-dourado text-white text-xs font-medium py-2.5 rounded-lg hover:bg-[#b08d4b]">Gerar Link Individual</button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-sm font-bold text-verde-asa mb-3">Voluntários e Links Ativos</h4>
-                        <div id="lista-links-voluntarios" class="space-y-2">
-                            <p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- 3. TELA DO VOLUNTÁRIO / LÍDER -->
-        <div id="painel-voluntario" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-lg mx-auto w-full">
-            <div class="text-center mb-6">
-                <span id="txt-badge-vol" class="bg-verde-asa text-white text-xs font-bold px-3 py-1 rounded-full">Área do Voluntário</span>
-                <h2 id="voluntario-titulo-nome" class="text-xl font-bold text-verde-asa mt-2">Bem-vindo(a) à Coleta</h2>
-                
-                <!-- BANNERS DINÂMICOS -->
-                <div id="banner-destaque-voluntario" class="mt-3 bg-amber-100/70 p-3 rounded-xl border border-dourado/40 hidden">
-                    <span id="txt-lbl-destaque-semana" class="text-[11px] font-bold text-dourado uppercase tracking-wider block">⭐ ALIMENTO EM DESTAQUE DA SEMANA:</span>
-                    <span id="texto-destaque-exibicao" class="text-xs font-extrabold text-verde-asa"></span>
-                </div>
-
-                <div id="banner-casadinho-voluntario" class="mt-2 bg-emerald-100/70 p-3 rounded-xl border border-emerald-400 hidden">
-                    <span id="txt-lbl-combo-casadinho" class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">🎁 COMBO CASADINHO DA SEMANA:</span>
-                    <span id="texto-casadinho-exibicao" class="text-xs font-extrabold text-emerald-900"></span>
-                </div>
-
-                <div class="mt-3 bg-amber-50 p-2.5 rounded-xl border border-dourado/30 inline-block">
-                    <span id="txt-placar-equipe-label" class="text-xs font-bold text-dourado">Total Arrecadado pela sua Equipe: <span id="placar-total-equipe" class="text-verde-asa font-extrabold text-sm">0</span> itens/kg</span>
-                </div>
-            </div>
-
-            <!-- CADASTRAR OU INSERIR SENHA PESSOAL DO VOLUNTÁRIO -->
-            <div id="box-voluntario-senha" class="space-y-4 bg-amber-50/60 p-4 rounded-xl border border-dourado/30 mb-4 hidden">
-                <p id="txt-vol-senha-msg" class="text-xs font-bold text-verde-asa">Crie ou digite sua senha de acesso pessoal para este link:</p>
-                <input type="password" id="vol-senha-cadastro" placeholder="Digite sua senha de acesso" class="w-full text-xs p-2.5 rounded-xl border border-gray-300 bg-white">
-                <button onclick="ativarSenhaVoluntario()" id="btn-vol-salvar-senha" class="w-full bg-dourado text-white text-xs font-medium py-2.5 rounded-xl hover:bg-[#b08d4b]">Salvar Senha e Entrar</button>
-            </div>
-
-            <!-- FORMULÁRIO DE REGISTRO DE DOAÇÕES -->
-            <div id="box-voluntario-formulario" class="space-y-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
-                
-                <div class="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
-                    <label id="txt-membros-fixos-lbl" class="block text-xs font-bold text-verde-asa">Membros Fixos da sua Equipe:</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="input-novo-membro-equipe" placeholder="Nome do membro da equipe" class="flex-grow text-xs p-2 rounded border border-gray-300">
-                        <button onclick="adicionarMembroEquipeFixo()" id="btn-add-membro" class="bg-dourado text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#b08d4b]">Adicionar</button>
-                    </div>
-                    <div id="lista-membros-fixos-badge" class="flex flex-wrap gap-1.5 pt-1"></div>
-                </div>
-
-                <div>
-                    <label id="txt-sel-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Selecione o Item</label>
-                    <select id="vol-select-produto" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
-                        <option value="">Carregando itens...</option>
-                    </select>
-                </div>
-                <div>
-                    <label id="txt-qtd-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Quantidade Arrecadada</label>
-                    <input type="number" id="vol-qtd-produto" placeholder="Ex: 5" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
-                </div>
-                <div>
-                    <label id="txt-doador-item-lbl" class="block text-xs font-semibold text-gray-600 mb-1">Quem doou ou entregou a você?</label>
-                    <input type="text" id="vol-quem-doou" placeholder="Nome do doador ou colaborador" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-verde-asa">
-                </div>
-
-                <button onclick="voluntarioRegistrarColeta()" id="btn-registrar-doacao" class="w-full bg-verde-asa text-white font-medium py-3 px-4 rounded-xl shadow-md hover:bg-[#163d20] transition duration-200">
-                    Registrar Doação (Modo Offline Seguro)
-                </button>
-            </div>
-
-            <div class="mt-6 text-center">
-                <button onclick="sairDoSistema()" id="btn-vol-sair" class="text-xs text-red-600 hover:underline font-medium">Sair / Trocar Acesso</button>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- RODAPÉ COM DEDICATÓRIA -->
-    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/20 mt-auto space-y-1">
-        <p>© 2026 Plataforma de Gestão Solidária. Todos os direitos reservados.</p>
-        <p class="text-dourado font-medium">Dedicado com carinho a Vera Lima.</p>
-    </footer>
-
-    <script>
-        const traducoes = {
-            pt: {
-                titulo: "Plataforma de Gestão Solidária - Mutirão de Natal",
-                logoTitulo: "Mutirão de Natal",
-                subTopo: "Gestão Solidária",
-                restrita: "Área Restrita",
-                bemVindo: "Bem-vindo(a)!",
-                descBoasVindas: "Plataforma de Gestão Solidária para controle de arrecadações, equipes e famílias assistidas.",
-                entrar: "Entrar no Sistema",
-                configTitulo: "Configuração Inicial",
-                configSub: "Cadastre a unidade e o coordenador responsável",
-                lblUnidade: "Nome da Unidade / Projeto",
-                lblCoord: "Nome do Coordenador",
-                lblSenha: "Senha de Acesso",
-                lblConfSenha: "Confirmar Senha",
-                btnSalvarConfig: "Acessar Painel do Coordenador",
-                tituloLogin: "Área Restrita",
-                loginSub: "Digite a senha da coordenação para entrar",
-                btnLoginEntrar: "Entrar como Coordenador",
-                painelCoordTitulo: "Painel de Gestão - Coordenador(a)",
-                btnSair: "Sair do Sistema",
-                abaEstoque: "Gestão de Itens & Estoque",
-                abaDestaques: "⭐ Destaques & Casadinhos",
-                abaGincana: "🏆 Placar das Equipes",
-                abaFamilias: "Cadastro de Famílias",
-                abaVoluntarios: "Voluntários e Links",
-                cadItemTitulo: "Cadastrar Item para Arrecadação",
-                btnAddItem: "Adicionar à Lista",
-                acompanhamentoTitulo: "Acompanhamento de Estoque (Meta vs Entradas)",
-                thItem: "Item",
-                thMeta: "Meta Fixa Necessária",
-                thArrecadado: "Total Arrecadado (Entradas)",
-                thFalta: "Falta para a Meta",
-                thAcoes: "Ações",
-                badgeVol: "Área do Voluntário",
-                lblDestaqueSem: "⭐ ALIMENTO EM DESTAQUE DA SEMANA:",
-                lblComboCas: "🎁 COMBO CASADINHO DA SEMANA:",
-                placarEquipe: "Total Arrecadado pela sua Equipe: ",
-                volSenhaMsg: "Crie ou digite sua senha de acesso pessoal para este link:",
-                btnVolSenha: "Salvar Senha e Entrar",
-                membrosFixosLbl: "Membros Fixos da sua Equipe:",
-                btnAddMembro: "Adicionar",
-                selItemLbl: "Selecione o Item",
-                qtdItemLbl: "Quantidade Arrecadada",
-                doadorItemLbl: "Quem doou ou entregou a você?",
-                btnRegDoacao: "Registrar Doação (Modo Offline Seguro)",
-                btnVolSair: "Sair / Trocar Acesso",
-                logOutBtn: "Sair"
-            },
-            en: {
-                titulo: "Solidarity Management Platform - Christmas Drive",
-                logoTitulo: "Christmas Drive",
-                subTopo: "Solidarity Management",
-                restrita: "Restricted Area",
-                bemVindo: "Welcome!",
-                descBoasVindas: "Solidarity Management Platform for fundraising, teams, and assisted families.",
-                entrar: "Enter System",
-                configTitulo: "Initial Configuration",
-                configSub: "Register the unit and the responsible coordinator",
-                lblUnidade: "Unit / Project Name",
-                lblCoord: "Coordinator Name",
-                lblSenha: "Password",
-                lblConfSenha: "Confirm Password",
-                btnSalvarConfig: "Access Coordinator Panel",
-                tituloLogin: "Restricted Area",
-                loginSub: "Enter coordination password to login",
-                btnLoginEntrar: "Login as Coordinator",
-                painelCoordTitulo: "Management Panel - Coordinator",
-                btnSair: "Log Out",
-                abaEstoque: "Items & Stock Management",
-                abaDestaques: "⭐ Highlights & Combos",
-                abaGincana: "🏆 Teams Scoreboard",
-                abaFamilias: "Families Registry",
-                abaVoluntarios: "Volunteers & Links",
-                cadItemTitulo: "Register Item for Fundraising",
-                btnAddItem: "Add to List",
-                acompanhamentoTitulo: "Stock Tracking (Goal vs Inputs)",
-                thItem: "Item",
-                thMeta: "Required Fixed Goal",
-                thArrecadado: "Total Raised (Inputs)",
-                thFalta: "Remaining to Goal",
-                thAcoes: "Actions",
-                badgeVol: "Volunteer Area",
-                lblDestaqueSem: "⭐ WEEKLY HIGHLIGHT FOOD:",
-                lblComboCas: "🎁 WEEKLY COMBO CASADINHO:",
-                placarEquipe: "Total Raised by your Team: ",
-                volSenhaMsg: "Create or enter your personal access password for this link:",
-                btnVolSenha: "Save Password & Enter",
-                membrosFixosLbl: "Fixed Members of your Team:",
-                btnAddMembro: "Add",
-                selItemLbl: "Select Item",
-                qtdItemLbl: "Quantity Raised",
-                doadorItemLbl: "Who donated or delivered to you?",
-                btnRegDoacao: "Register Donation (Secure Offline Mode)",
-                btnVolSair: "Log Out / Change Access",
-                logOutBtn: "Log Out"
-            },
-            es: {
-                titulo: "Plataforma de Gestión Solidaria - Mutirón de Navidad",
-                logoTitulo: "Mutirón de Navidad",
-                subTopo: "Gestión Solidaria",
-                restrita: "Área Restringida",
-                bemVindo: "¡Bienvenido/a!",
-                descBoasVindas: "Plataforma de Gestión Solidaria para el control de donaciones, equipos y familias asistidas.",
-                entrar: "Entrar al Sistema",
-                configTitulo: "Configuración Inicial",
-                configSub: "Registre la unidad y el coordinador responsable",
-                lblUnidade: "Nombre de la Unidad / Proyecto",
-                lblCoord: "Nombre del Coordinador",
-                lblSenha: "Contraseña",
-                lblConfSenha: "Confirmar Contraseña",
-                btnSalvarConfig: "Acceder al Panel del Coordinador",
-                tituloLogin: "Área Restringida",
-                loginSub: "Ingrese la contraseña de coordinación para entrar",
-                btnLoginEntrar: "Entrar como Coordinador",
-                painelCoordTitulo: "Panel de Gestión - Coordinador(a)",
-                btnSair: "Salir del Sistema",
-                abaEstoque: "Gestión de Ítems y Stock",
-                abaDestaques: "⭐ Destacados y Combos",
-                abaGincana: "🏆 Tablero de Equipos",
-                abaFamilias: "Registro de Familias",
-                abaVoluntarios: "Voluntarios y Enlaces",
-                cadItemTitulo: "Registrar Ítem para Recaudación",
-                btnAddItem: "Añadir a la Lista",
-                acompanhamentoTitulo: "Seguimiento de Stock (Meta vs Entradas)",
-                thItem: "Ítem",
-                thMeta: "Meta Fija Necesaria",
-                thArrecadado: "Total Recaudado (Entradas)",
-                thFalta: "Falta para la Meta",
-                thAcoes: "Acciones",
-                badgeVol: "Área del Voluntario",
-                lblDestaqueSem: "⭐ ALIMENTO DESTACADO DE LA SEMANA:",
-                lblComboCas: "🎁 COMBO CASADINHO DE LA SEMANA:",
-                placarEquipe: "Total Recaudado por su Equipo: ",
-                volSenhaMsg: "Cree o ingrese su contraseña de acceso personal para este enlace:",
-                btnVolSenha: "Guardar Contraseña y Entrar",
-                membrosFixosLbl: "Miembros Fijos de su Equipo:",
-                btnAddMembro: "Añadir",
-                selItemLbl: "Seleccionar Ítem",
-                qtdItemLbl: "Cantidad Recaudada",
-                doadorItemLbl: "¿Quién donó o entregó a usted?",
-                btnRegDoacao: "Registrar Donación (Modo Sin Conexión Seguro)",
-                btnVolSair: "Salir / Cambiar Acceso",
-                logOutBtn: "Salir"
-            }
-        };
-
-        function mudarIdioma(lang) {
-            let t = traducoes[lang];
-            document.getElementById('txt-titulo-pagina').innerText = t.titulo;
-            document.getElementById('txt-logo-titulo').innerText = t.logoTitulo;
-            document.getElementById('txt-sub-topo').innerText = t.subTopo;
-            document.getElementById('txt-badge-restrita').innerText = t.restrita;
-            document.getElementById('txt-bemvindo').innerText = t.bemVindo;
-            document.getElementById('txt-desc-boasvindas').innerText = t.descBoasVindas;
-            document.getElementById('btn-entrar-sistema').querySelector('span').innerText = t.entrar;
-            
-            document.getElementById('txt-config-titulo').innerText = t.configTitulo;
-            document.getElementById('txt-config-sub').innerText = t.configSub;
-            document.getElementById('txt-label-unidade').innerText = t.lblUnidade;
-            document.getElementById('txt-label-coord').innerText = t.lblCoord;
-            document.getElementById('txt-label-senha').innerText = t.lblSenha;
-            document.getElementById('txt-label-confsenha').innerText = t.lblConfSenha;
-            document.getElementById('btn-salvar-config').innerText = t.btnSalvarConfig;
-
-            document.getElementById('titulo-login-igreja').innerText = t.tituloLogin;
-            document.getElementById('txt-login-sub').innerText = t.loginSub;
-            document.getElementById('btn-login-entrar').innerText = t.btnLoginEntrar;
-
-            document.getElementById('txt-painel-coord-titulo').innerText = t.painelCoordTitulo;
-            document.getElementById('btn-sair-sistema').innerText = t.btnSair;
-
-            document.getElementById('btn-aba-estoque').innerText = t.abaEstoque;
-            document.getElementById('btn-aba-destaques').innerText = t.abaDestaques;
-            document.getElementById('btn-aba-gincana').innerText = t.abaGincana;
-            document.getElementById('btn-aba-familias').innerText = t.abaFamilias;
-            document.getElementById('btn-aba-voluntarios').innerText = t.abaVoluntarios;
-
-            document.getElementById('txt-cad-item-titulo').innerText = t.cadItemTitulo;
-            document.getElementById('btn-add-item').innerText = t.btnAddItem;
-            document.getElementById('txt-acompanhamento-titulo').innerText = t.acompanhamentoTitulo;
-            document.getElementById('th-item').innerText = t.thItem;
-            document.getElementById('th-meta').innerText = t.thMeta;
-            document.getElementById('th-arrecadado').innerText = t.thArrecadado;
-            document.getElementById('th-falta').innerText = t.thFalta;
-            document.getElementById('th-acoes').innerText = t.thAcoes;
-
-            document.getElementById('txt-badge-vol').innerText = t.badgeVol;
-            document.getElementById('txt-lbl-destaque-semana').innerText = t.lblDestaqueSem;
-            document.getElementById('txt-lbl-combo-casadinho').innerText = t.lblComboCas;
-            document.getElementById('txt-vol-senha-msg').innerText = t.volSenhaMsg;
-            document.getElementById('btn-vol-salvar-senha').innerText = t.btnVolSenha;
-            document.getElementById('txt-membros-fixos-lbl').innerText = t.membrosFixosLbl;
-            document.getElementById('btn-add-membro').innerText = t.btnAddMembro;
-            document.getElementById('txt-sel-item-lbl').innerText = t.selItemLbl;
-            document.getElementById('txt-qtd-item-lbl').innerText = t.qtdItemLbl;
-            document.getElementById('txt-doador-item-lbl').innerText = t.doadorItemLbl;
-            document.getElementById('btn-registrar-doacao').innerText = t.btnRegDoacao;
-            document.getElementById('btn-vol-sair').innerText = t.btnVolSair;
-
-            localStorage.setItem('sys_idioma', lang);
-        }
-
-        let dadosSistema = JSON.parse(localStorage.getItem('sys_campanha_data')) || {
-            igreja: '',
-            coordenador: '',
-            senha: '',
-            destaqueSemana: '',
-            comboCasadinho: '',
-            historicoDestaques: [],
-            produtos: [], 
-            familias: [], 
-            voluntarios: [] 
-        };
-
-        let voluntarioLogadoNome = '';
-
-        function salvarDadosLocal() {
-            localStorage.setItem('sys_campanha_data', JSON.stringify(dadosSistema));
-        }
-
-        window.onload = function() {
-            const savedLang = localStorage.getItem('sys_idioma') || 'pt';
-            document.getElementById('seletor-idioma').value = savedLang;
-            mudarIdioma(savedLang);
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const voluntarioParam = urlParams.get('vol');
-
-            if (voluntarioParam) {
-                voluntarioLogadoNome = voluntarioParam;
-                document.getElementById('tela-boas-vindas').classList.add('hidden');
-                document.getElementById('painel-voluntario').classList.remove('hidden');
-                document.getElementById('voluntario-titulo-nome').innerText = `Voluntário(a) / Líder: ${voluntarioParam}`;
-                if(dadosSistema.igreja) {
-                    document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
-                }
-
-                if(dadosSistema.destaqueSemana) {
-                    document.getElementById('banner-destaque-voluntario').classList.remove('hidden');
-                    document.getElementById('texto-destaque-exibicao').innerText = dadosSistema.destaqueSemana;
-                }
-
-                if(dadosSistema.comboCasadinho) {
-                    document.getElementById('banner-casadinho-voluntario').classList.remove('hidden');
-                    document.getElementById('texto-casadinho-exibicao').innerText = dadosSistema.comboCasadinho;
-                }
-
-                let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioParam);
-                if (volObj && volObj.senha) {
-                    let senhaDigitada = prompt(`Digite sua senha de acesso para ${voluntarioParam}:`);
-                    if (senhaDigitada === volObj.senha) {
-                        document.getElementById('box-voluntario-senha').classList.add('hidden');
-                        document.getElementById('box-voluntario-formulario').classList.remove('hidden');
-                        atualizarPlacarE1EquipeVoluntario();
-                        popularSelectProdutos();
-                    } else {
-                        alert('Senha incorreta!');
-                        window.location.href = window.location.pathname;
-                    }
-                } else {
-                    document.getElementById('box-voluntario-senha').classList.remove('hidden');
-                    document.getElementById('box-voluntario-formulario').classList.add('hidden');
-                }
-            } else if (dadosSistema.igreja) {
-                document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
-            }
-
-            atualizarHistoricoDestaquesInterface();
-        };
-
-        function salvarDestaqueSemana() {
-            const destaque = document.getElementById('input-destaque-semana').value.trim();
-            if(!destaque) return alert('Digite o alimento em destaque.');
-            
-            const dataHoje = new Date().toLocaleDateString('pt-BR');
-            if(!dadosSistema.historicoDestaques) dadosSistema.historicoDestaques = [];
-            dadosSistema.historicoDestaques.unshift({ texto: destaque, data: dataHoje });
-
-            dadosSistema.destaqueSemana = destaque;
-            salvarDadosLocal();
-            alert('Alimento em destaque da semana atualizado com sucesso!');
-            document.getElementById('input-destaque-semana').value = '';
-            atualizarHistoricoDestaquesInterface();
-        }
-
-        function limparDestaqueSemana() {
-            dadosSistema.destaqueSemana = '';
-            salvarDadosLocal();
-            alert('Destaque da semana limpo!');
-            atualizarHistoricoDestaquesInterface();
-        }
-
-        function salvarCasadinho() {
-            const casadinho = document.getElementById('input-casadinho').value.trim();
-            if(!casadinho) return alert('Digite o combo casadinho.');
-            dadosSistema.comboCasadinho = casadinho;
-            salvarDadosLocal();
-            alert('Combo casadinho atualizado com sucesso!');
-            document.getElementById('input-casadinho').value = '';
-        }
-
-        function limparCasadinho() {
-            dadosSistema.comboCasadinho = '';
-            salvarDadosLocal();
-            alert('Combo casadinho limpo!');
-        }
-
-        function atualizarHistoricoDestaquesInterface() {
-            const container = document.getElementById('historico-destaques');
-            if(!container) return;
-            if(!dadosSistema.historicoDestaques || dadosSistema.historicoDestaques.length === 0) {
-                container.innerHTML = '<strong>Histórico de Destaques Anteriores:</strong> Nenhum registro anterior.';
-            } else {
-                let html = '<strong>Histórico de Destaques Anteriores:</strong><ul class="list-disc pl-4 mt-1 space-y-0.5">';
-                dadosSistema.historicoDestaques.forEach(h => {
-                    html += `<li>[${h.data}] ${h.texto}</li>`;
-                });
-                html += '</ul>';
-                container.innerHTML = html;
-            }
-        }
-
-        function ativarSenhaVoluntario() {
-            const novaSenha = document.getElementById('vol-senha-cadastro').value.trim();
-            if(!novaSenha) return alert('Digite uma senha válida.');
-
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(volObj) {
-                volObj.senha = novaSenha;
-                if(!volObj.equipeFixa) volObj.equipeFixa = [];
-                if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
-                salvarDadosLocal();
-            }
-            alert('Senha cadastrada com sucesso!');
-            document.getElementById('box-voluntario-senha').classList.add('hidden');
-            document.getElementById('box-voluntario-formulario').classList.remove('hidden');
-            atualizarPlacarE1EquipeVoluntario();
-            popularSelectProdutos();
-        }
-
-        function irParaConfiguracaoOuLogin() {
-            document.getElementById('tela-boas-vindas').classList.add('hidden');
-            if (dadosSistema.igreja) {
-                document.getElementById('titulo-login-igreja').innerText = `Área Restrita - ${dadosSistema.igreja}`;
-                document.getElementById('tela-login-coord').classList.remove('hidden');
-            } else {
-                document.getElementById('tela-cadastro-igreja').classList.remove('hidden');
-            }
-        }
-
-        function salvarCadastroInicial() {
-            const igreja = document.getElementById('reg-igreja').value.trim();
-            const coord = document.getElementById('reg-coordenador').value.trim();
-            const senha = document.getElementById('reg-senha').value.trim();
-            const confirma = document.getElementById('reg-confirma-senha').value.trim();
-
-            if(!igreja || !coord || !senha) {
-                alert('Por favor, preencha todos os campos!');
-                return;
-            }
-            if(senha !== confirma) {
-                alert('As senhas não conferem!');
-                return;
-            }
-
-            dadosSistema.igreja = igreja;
-            dadosSistema.coordenador = coord;
-            dadosSistema.senha = senha;
-            salvarDadosLocal();
-
-            abrirPainelCoordenador();
-        }
-
-        function fazerLoginCoordenador() {
-            const digitada = document.getElementById('login-senha-coord').value.trim();
-            if(digitada === dadosSistema.senha) {
-                document.getElementById('tela-login-coord').classList.add('hidden');
-                abrirPainelCoordenador();
-            } else {
-                alert('Senha incorreta!');
-            }
-        }
-
-        function abrirPainelCoordenador() {
-            document.getElementById('tela-boas-vindas').classList.add('hidden');
-            document.getElementById('tela-cadastro-igreja').classList.add('hidden');
-            document.getElementById('tela-login-coord').classList.add('hidden');
-            document.getElementById('painel-coordenador').classList.remove('hidden');
-            document.getElementById('txt-sub-topo').innerText = `Unidade: ${dadosSistema.igreja}`;
-            document.getElementById('info-coordenador-logado').innerText = `Coordenador(a): ${dadosSistema.coordenador}`;
-            atualizarTabelaEstoque();
-            atualizarPlacarGincanaCoordenador();
-            atualizarListaFamilias();
-            atualizarListaVoluntarios();
-            atualizarHistoricoDestaquesInterface();
-        }
-
-        function sairDoSistema() {
-            window.location.href = window.location.pathname;
-        }
-
-        function mudarAbaCoordenador(aba) {
-            ['estoque', 'destaques', 'gincana', 'familias', 'voluntarios'].forEach(a => {
-                let elConteudo = document.getElementById(`conteudo-aba-${a}`);
-                let elBtn = document.getElementById(`btn-aba-${a}`);
-                if(elConteudo) elConteudo.classList.add('hidden');
-                if(elBtn) elBtn.className = 'text-xs font-bold px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap';
-            });
-
-            document.getElementById(`conteudo-aba-${aba}`).classList.remove('hidden');
-            document.getElementById(`btn-aba-${aba}`).className = 'text-xs font-bold px-4 py-2 rounded-lg bg-verde-asa text-white whitespace-nowrap';
-        }
-
-        function adicionarProdutoMeta() {
-            const nome = document.getElementById('novo-produto-nome').value.trim();
-            const meta = parseInt(document.getElementById('novo-produto-meta').value) || 0;
-            if(!nome) return alert('Informe o nome do item.');
-            dadosSistema.produtos.push({ nome, meta, estoque: 0 });
-            salvarDadosLocal();
-            atualizarTabelaEstoque();
-            document.getElementById('novo-produto-nome').value = '';
-            document.getElementById('novo-produto-meta').value = '';
-        }
-
-        function atualizarTabelaEstoque() {
-            let html = '';
-            if (dadosSistema.produtos.length === 0) {
-                html = '<tr><td colspan="5" class="p-4 text-center text-gray-400">Nenhum item cadastrado ainda.</td></tr>';
-            } else {
-                dadosSistema.produtos.forEach((p, idx) => {
-                    let falta = p.meta - p.estoque;
-                    if (falta < 0) falta = 0;
-                    html += `
-                        <tr class="border-b border-gray-100">
-                            <td class="p-3 font-semibold">${p.nome}</td>
-                            <td class="p-3">${p.meta}</td>
-                            <td class="p-3 font-bold text-verde-asa">${p.estoque}</td>
-                            <td class="p-3 font-bold text-dourado">${falta}</td>
-                            <td class="p-3">
-                                <button onclick="darSaidaEstoque(${idx})" class="text-red-600 hover:underline text-xs font-medium">Dar Baixa / Saída</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            }
-            document.getElementById('tabela-estoque-coordenador').innerHTML = html;
-        }
-
-        function atualizarPlacarGincanaCoordenador() {
-            let html = '';
-            if (!dadosSistema.voluntarios || dadosSistema.voluntarios.length === 0) {
-                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma equipe de voluntário cadastrada.</p>';
-            } else {
-                let ordenados = [...dadosSistema.voluntarios].sort((a, b) => (b.totalArrecadado || 0) - (a.totalArrecadado || 0));
-                ordenados.forEach((v, index) => {
-                    let membrosStr = v.equipeFixa && v.equipeFixa.length > 0 ? v.equipeFixa.join(', ') : 'Nenhum membro cadastrado';
-                    let posicaoBadge = index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index+1}º`;
-                    html += `
-                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                            <div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-dourado border border-dourado/30">${posicaoBadge}</span>
-                                    <h5 class="text-sm font-bold text-verde-asa">Líder: ${v.nome}</h5>
-                                </div>
-                                <p class="text-xs text-gray-600 mt-1"><strong>Membros da Equipe:</strong> ${membrosStr}</p>
-                            </div>
-                            <div class="text-right bg-white p-3 rounded-lg border border-dourado/30 w-full md:w-auto">
-                                <span class="text-[11px] text-gray-500 block">Total Arrecadado</span>
-                                <span class="text-lg font-extrabold text-verde-asa">${v.totalArrecadado || 0}</span> <span class="text-xs text-gray-500">itens/kg</span>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('lista-placar-gincana').innerHTML = html;
-        }
-
-        function darSaidaEstoque(idx) {
-            const qtd = parseInt(prompt("Quantidade para retirada (atendimento emergencial):"));
-            if(qtd && qtd > 0) {
-                if(qtd <= dadosSistema.produtos[idx].estoque) {
-                    dadosSistema.produtos[idx].estoque -= qtd;
-                    salvarDadosLocal();
-                    atualizarTabelaEstoque();
-                } else {
-                    alert("Quantidade indisponível em estoque!");
-                }
-            }
-        }
-
-        function ajustarCamposCriancas() {
-            const qtd = parseInt(document.getElementById('fam-qtd-criancas').value) || 0;
-            const container = document.getElementById('container-criancas-detalhes');
-            const lista = document.getElementById('lista-inputs-criancas');
-            if (qtd > 0) {
-                container.classList.remove('hidden');
-                let html = '';
-                for (let i = 0; i < qtd; i++) {
-                    html += `
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white p-2 rounded border border-gray-200">
-                            <input type="number" placeholder="Idade da ${i+1}ª criança" class="crianca-idade text-xs p-2 rounded border border-gray-300">
-                            <select class="crianca-genero text-xs p-2 rounded border border-gray-300 bg-white">
-                                <option value="Menino">Menino</option>
-                                <option value="Menina">Menina</option>
-                            </select>
-                        </div>
-                    `;
-                }
-                lista.innerHTML = html;
-            } else {
-                container.classList.add('hidden');
-                lista.innerHTML = '';
-            }
-        }
-
-        function salvarFamiliaAssistida() {
-            const responsavel = document.getElementById('fam-responsavel').value.trim();
-            const totalPessoas = document.getElementById('fam-total-pessoas').value.trim();
-            const inicioAssistencia = document.getElementById('fam-inicio-assistencia').value;
-            const qtdCriancas = parseInt(document.getElementById('fam-qtd-criancas').value) || 0;
-
-            if(!responsavel || !totalPessoas) {
-                alert('Preencha pelo menos o responsável e o total de pessoas.');
-                return;
-            }
-
-            let criancasDetalhes = [];
-            if (qtdCriancas > 0) {
-                const idades = document.querySelectorAll('.crianca-idade');
-                const generos = document.querySelectorAll('.crianca-genero');
-                for (let i = 0; i < qtdCriancas; i++) {
-                    criancasDetalhes.push({ idade: idades[i].value.trim() || '?', genero: generos[i].value });
-                }
-            }
-
-            dadosSistema.familias.push({ responsavel, totalPessoas, inicioAssistencia, criancas: criancasDetalhes });
-            salvarDadosLocal();
-            atualizarListaFamilias();
-
-            document.getElementById('fam-responsavel').value = '';
-            document.getElementById('fam-total-pessoas').value = '';
-            document.getElementById('fam-inicio-assistencia').value = '';
-            document.getElementById('fam-qtd-criancas').value = '';
-            document.getElementById('container-criancas-detalhes').classList.add('hidden');
-            document.getElementById('lista-inputs-criancas').innerHTML = '';
-            alert('Família cadastrada com sucesso!');
-        }
-
-        function atualizarListaFamilias() {
-            let html = '';
-            if(dadosSistema.familias.length === 0) {
-                html = '<p class="text-xs text-gray-400 text-center py-4">Nenhuma família cadastrada.</p>';
-            } else {
-                dadosSistema.familias.forEach(f => {
-                    let criancasHtml = Array.isArray(f.criancas) && f.criancas.length > 0 ? f.criancas.map(c => `${c.idade} anos (${c.genero})`).join(', ') : 'Nenhuma';
-                    html += `
-                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p><strong>Responsável:</strong> ${f.responsavel} (${f.totalPessoas} pessoas no grupo)</p>
-                            <p><strong>Início Assistência:</strong> ${f.inicioAssistencia || 'Não informada'}</p>
-                            <p><strong>Crianças:</strong> ${criancasHtml}</p>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('lista-familias-container').innerHTML = html;
-        }
-
-        function gerarLinkVoluntario() {
-            const nome = document.getElementById('vol-nome-input').value.trim();
-            if(!nome) return alert('Digite o nome do voluntário / líder.');
-            // Garante que o voluntário é criado limpo, sem senha gerada automática
-            dadosSistema.voluntarios.push({ nome, senha: '', equipeFixa: [], totalArrecadado: 0 });
-            salvarDadosLocal();
-            atualizarListaVoluntarios();
-            document.getElementById('vol-nome-input').value = '';
-        }
-
-        function atualizarListaVoluntarios() {
-            let html = '';
-            const baseUrl = window.location.origin + window.location.pathname;
-            if(dadosSistema.voluntarios.length === 0) {
-                html = '<p class="text-xs text-gray-400">Nenhum link gerado ainda.</p>';
-            } else {
-                dadosSistema.voluntarios.forEach(v => {
-                    const linkUnico = `${baseUrl}?vol=${encodeURIComponent(v.nome)}`;
-                    html += `
-                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1">
-                            <p class="font-bold text-verde-asa">${v.nome} ${v.senha ? '(Senha Ativa)' : '(Aguardando cadastro de senha)'} - Arrecadado: ${v.totalArrecadado || 0} kg</p>
-                            <input type="text" readonly value="${linkUnico}" class="w-full p-1.5 bg-white border rounded text-[11px] text-gray-600 select-all">
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('lista-links-voluntarios').innerHTML = html;
-        }
-
-        function popularSelectProdutos() {
-            const select = document.getElementById('vol-select-produto');
-            let html = '<option value="">Selecione o item arrecadado</option>';
-            dadosSistema.produtos.forEach((p, idx) => {
-                html += `<option value="${idx}">${p.nome}</option>`;
-            });
-            select.innerHTML = html;
-        }
-
-        function adicionarMembroEquipeFixo() {
-            const input = document.getElementById('input-novo-membro-equipe');
-            const nomeMembro = input.value.trim();
-            if(!nomeMembro) return alert('Digite o nome do membro.');
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(volObj) {
-                if(!volObj.equipeFixa) volObj.equipeFixa = [];
-                volObj.equipeFixa.push(nomeMembro);
-                salvarDadosLocal();
-                input.value = '';
-                atualizarPlacarE1EquipeVoluntario();
-            }
-        }
-
-        function removerMembroEquipeFixo(index) {
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(volObj && volObj.equipeFixa) {
-                volObj.equipeFixa.splice(index, 1);
-                salvarDadosLocal();
-                atualizarPlacarE1EquipeVoluntario();
-            }
-        }
-
-        function atualizarPlacarE1EquipeVoluntario() {
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(!volObj) return;
-            document.getElementById('placar-total-equipe').innerText = volObj.totalArrecadado || 0;
-            let html = '';
-            if(volObj.equipeFixa && volObj.equipeFixa.length > 0) {
-                volObj.equipeFixa.forEach((membro, i) => {
-                    html += `<span class="bg-amber-100 text-dourado text-[11px] font-semibold px-2.5 py-1 rounded-full border border-dourado/30">${membro} <button onclick="removerMembroEquipeFixo(${i})" class="text-red-500 ml-1 font-bold">×</button></span>`;
-                });
-            } else {
-                html = '<span class="text-[11px] text-gray-400">Nenhum membro fixo cadastrado ainda.</span>';
-            }
-            document.getElementById('lista-membros-fixos-badge').innerHTML = html;
-        }
-
-        function voluntarioRegistrarColeta() {
-            const selectIdx = document.getElementById('vol-select-produto').value;
-            const qtd = parseInt(document.getElementById('vol-qtd-produto').value);
-            const quemDoou = document.getElementById('vol-quem-doou').value.trim();
-
-            if(selectIdx === "" || isNaN(qtd) || qtd <= 0) {
-                alert('Selecione um item e informe uma quantidade válida.');
-                return;
-            }
-
-            dadosSistema.produtos[selectIdx].estoque = Number(dadosSistema.produtos[selectIdx].estoque) + qtd;
-            let volObj = dadosSistema.voluntarios.find(v => v.nome === voluntarioLogadoNome);
-            if(volObj) {
-                if(volObj.totalArrecadado === undefined) volObj.totalArrecadado = 0;
-                volObj.totalArrecadado += qtd;
-            }
-
-            salvarDadosLocal();
-            alert(`Doação de ${qtd} registrada com sucesso! Doador: ${quemDoou || 'Não informado'}. O placar da sua equipe foi atualizado.`);
-            document.getElementById('vol-qtd-produto').value = '';
-            document.getElementById('vol-quem-doou').value = '';
-            atualizarPlacarE1EquipeVoluntario();
-        }
-    </script>
+        <p>
+          Cada igreja possui seu próprio ambiente de dados.
+          As informações de outras unidades não aparecem neste painel.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   NAVEGAÇÃO
+========================================== */
+
+function show(page){
+
+  document.querySelectorAll(
+    '#home,#login,#register,#director'
+  ).forEach(function(el){
+
+    el.classList.add('hidden');
+
+  });
+
+  const selected =
+    document.getElementById(page);
+
+  if(selected){
+    selected.classList.remove('hidden');
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* ==========================================
+   IDIOMAS
+========================================== */
+
+const translations={
+
+  'pt-BR':{
+
+    welcome:'Bem-vindo ao Mutirão de Natal',
+
+    subtitle:
+    'Uma plataforma para organizar, mobilizar e acompanhar cada gesto de amor.',
+
+    enter:'Entrar',
+
+    dedication:
+    'Dedicado com carinho a Vera Lima.',
+
+    offline:'Modo offline',
+
+    director:'Área do diretor',
+
+    campaignValue:'Mutirão de Natal 2026'
+
+  },
+
+  'en':{
+
+    welcome:'Welcome to the Christmas Drive',
+
+    subtitle:
+    'A platform to organize, mobilize and follow every act of love.',
+
+    enter:'Sign in',
+
+    dedication:
+    'Dedicated with affection to Vera Lima.',
+
+    offline:'Offline mode',
+
+    director:'Director area',
+
+    campaignValue:'Christmas Drive 2026'
+
+  },
+
+  'es':{
+
+    welcome:'Bienvenido al Mutirão de Navidad',
+
+    subtitle:
+    'Una plataforma para organizar, movilizar y acompañar cada gesto de amor.',
+
+    enter:'Entrar',
+
+    dedication:
+    'Dedicado con cariño a Vera Lima.',
+
+    offline:'Modo sin conexión',
+
+    director:'Área del director',
+
+    campaignValue:'Mutirão de Navidad 2026'
+
+  }
+
+};
+
+
+let currentLanguage='pt-BR';
+
+
+function changeLanguage(){
+
+  if(currentLanguage==='pt-BR'){
+
+    currentLanguage='en';
+
+  }else if(currentLanguage==='en'){
+
+    currentLanguage='es';
+
+  }else{
+
+    currentLanguage='pt-BR';
+
+  }
+
+  applyLanguage();
+
+}
+
+
+function applyLanguage(){
+
+  const data=
+    translations[currentLanguage];
+
+  document.documentElement.lang=
+    currentLanguage;
+
+  document
+    .querySelectorAll('[data-i18n]')
+    .forEach(function(element){
+
+      const key=
+        element.getAttribute('data-i18n');
+
+      if(data[key]){
+        element.textContent=data[key];
+      }
+
+    });
+
+}
+
+
+/* ==========================================
+   SALVAMENTO LOCAL
+========================================== */
+
+const STORAGE_KEY=
+  'mutirao_natal_config';
+
+
+function saveLocal(data){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function loadLocal(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+/* ==========================================
+   PREPARAÇÃO PWA
+========================================== */
+
+if('serviceWorker' in navigator){
+
+  window.addEventListener(
+    'load',
+    function(){
+
+      /*
+       Nesta primeira versão o aplicativo
+       funciona como uma SPA única.
+
+       O service worker definitivo será
+       acrescentado na próxima etapa para:
+
+       - cache dos arquivos
+       - funcionamento offline
+       - fila de sincronização
+       - sincronização automática quando
+         a internet voltar
+      */
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   INICIALIZAÇÃO
+========================================== */
+
+applyLanguage();
+
+</script>
+
 </body>
 </html>

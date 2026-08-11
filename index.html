@@ -416,7 +416,7 @@ footer{
 const ACCESS_KEY = "TESTE 2026";
 
 /* ============================================================
-   BANCO LOCAL COMPARTILHADO (COM SUPORTE A SINCRONIZAÇÃO DE PERFIS)
+   BANCO LOCAL COMPARTILHADO
    ============================================================ */
 
 let db = JSON.parse(localStorage.getItem("gestaoDB") || localStorage.getItem("gestaoDB_sync") || "null");
@@ -452,7 +452,6 @@ function saveDB(){
   localStorage.setItem("gestaoDB_sync", JSON.stringify(db));
 }
 
-// Sincronização em tempo real entre abas e perfis do mesmo navegador
 window.addEventListener("storage", (e) => {
   if(e.key === "gestaoDB" || e.key === "gestaoDB_sync"){
     if(e.newValue){
@@ -483,7 +482,7 @@ function logAction(userName, actionDesc){
 }
 
 /* ============================================================
-   IDIOMAS (PORTUGUÊS, INGLÊS E ESPANHOL)
+   IDIOMAS
    ============================================================ */
 
 const translations = {
@@ -716,7 +715,7 @@ es:{
   setPass:"Cree su contraseña de acceso",
   newPassTitle:"Defina su contraseña",
   auditLogs:"Historial de Modificaciones (Auditoría)",
-  dedication:"Dedicado con cariño a Vera Lima"
+  dedication:"Dedicado com cariño a Vera Lima"
 }
 
 };
@@ -1058,17 +1057,18 @@ function forgotPassword(){
 }
 
 /* ============================================================
-   PRIMEIRO ACESSO POR LINK (CRIAÇÃO DE SENHA PELO PRÓPRIO USUÁRIO)
+   PRIMEIRO ACESSO POR LINK (COM NOME IDENTIFICADO)
    ============================================================ */
 
 function pageSetPassword(){
 
 const user=db.unit.users.find(u=>u.token===tokenToRegister);
+const userName = user ? user.name : "Usuário";
 
 return `
 <div class="card center" style="max-width:500px">
   <h2>${t("newPassTitle")}</h2>
-  <p class="subtitle"><strong>${escapeHTML(user?.name || "")}</strong> (${escapeHTML(db.unit.name)}), ${t("setPass").toLowerCase()}:</p>
+  <p class="subtitle"><strong>${escapeHTML(userName)}</strong> (${escapeHTML(db.unit.name)}), ${t("setPass").toLowerCase()}:</p>
 
   <div class="field">
     <label>${t("password")}</label>
@@ -1103,7 +1103,7 @@ function saveNewUserPassword(){
   if(user){
     user.password=p1;
     user.token=""; // Limpa o token após definir a senha
-    logAction(user.name, "Cadastrou sua senha pessoal pelo link de convite");
+    logAction(user.name, "Cadastrou sua senha pessoal pelo link de convite e iniciou sessão");
     saveDB();
     currentUser=user;
     tokenToRegister=null;
@@ -1733,10 +1733,12 @@ return;
 
 const token=randomToken();
 
+// Link incorporando o nome limpo para rastreabilidade imediata
 const link=
 location.origin+
 location.pathname+
 "?access="+token+
+"&nome="+encodeURIComponent(name)+
 "&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
@@ -1860,10 +1862,12 @@ return;
 
 const token=randomToken();
 
+// Link incorporando o nome e indicando claramente o papel de líder/mantenedor
 const link=
 location.origin+
 location.pathname+
 "?access="+token+
+"&nome="+encodeURIComponent(name)+
 "&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
@@ -2408,21 +2412,20 @@ go("access");
 }
 
 /* ============================================================
-   ACESSO POR LINK GERADO (FORÇA O RECONHECIMENTO DA MATRIZ EM PERFIS DIFERENTES)
+   ACESSO POR LINK GERADO (ROTEAMENTO EXATO COM NOME IDENTIFICADO)
    ============================================================ */
 
 function checkInvitation(){
 
 const params=new URLSearchParams(location.search);
 const token=params.get("access");
+const nomeParam = params.get("nome");
 const unitNameParam = params.get("unit");
 
 if(!token) return;
 
-// Verifica se o usuário já existe no banco local atual
 let targetUser = db.unit.users.find(u => u.token === token);
 
-// Se não estiver no perfil local, simula a recuperação dos dados principais da unidade matriz
 if(!targetUser){
   const shared = localStorage.getItem("gestaoDB_sync");
   if(shared){
@@ -2439,12 +2442,10 @@ if(!targetUser){
   }
 }
 
-// Se o banco ainda estiver vazio no novo perfil mas tivermos o nome da unidade na URL, injeta a unidade base para evitar tela de cadastro novo
 if(!targetUser && unitNameParam){
   db.unit.name = decodeURIComponent(unitNameParam);
-  // Cria um usuário temporário para validar o token na sessão isolada
   targetUser = {
-    name: "Convidado",
+    name: nomeParam ? decodeURIComponent(nomeParam) : "Convidado",
     role: "manager",
     password: "",
     token: token,
@@ -2463,9 +2464,9 @@ if(targetUser){
   }else{
     currentUser = targetUser;
     if(targetUser.role === "leader"){
-      page = "leader";
+      page = "leader"; // Redireciona rigorosamente para a tela do mantenedor
     }else{
-      page = "director";
+      page = "director"; // Redireciona para a área de gestão (associado/secretário)
     }
   }
 }

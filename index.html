@@ -715,7 +715,7 @@ es:{
   setPass:"Cree su contraseña de acceso",
   newPassTitle:"Defina su contraseña",
   auditLogs:"Historial de Modificaciones (Auditoría)",
-  dedication:"Dedicado com cariño a Vera Lima"
+  dedication:"Dedicado con cariño a Vera Lima"
 }
 
 };
@@ -1057,7 +1057,7 @@ function forgotPassword(){
 }
 
 /* ============================================================
-   PRIMEIRO ACESSO POR LINK (COM NOME IDENTIFICADO)
+   PRIMEIRO ACESSO POR LINK
    ============================================================ */
 
 function pageSetPassword(){
@@ -1381,7 +1381,7 @@ function clearItemForm(){
 }
 
 /* ============================================================
-   FAMÍLIAS (COM VISUALIZAÇÃO DETALHADA)
+   FAMÍLIAS
    ============================================================ */
 
 function pageFamilies(){
@@ -1733,12 +1733,12 @@ return;
 
 const token=randomToken();
 
-// Link incorporando o nome limpo para rastreabilidade imediata
 const link=
 location.origin+
 location.pathname+
 "?access="+token+
 "&nome="+encodeURIComponent(name)+
+"&role=manager"+
 "&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
@@ -1862,12 +1862,12 @@ return;
 
 const token=randomToken();
 
-// Link incorporando o nome e indicando claramente o papel de líder/mantenedor
 const link=
 location.origin+
 location.pathname+
 "?access="+token+
 "&nome="+encodeURIComponent(name)+
+"&role=leader"+
 "&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
@@ -2219,7 +2219,7 @@ go("director");
 }
 
 /* ============================================================
-   CLASSIFICAÇÃO E COMPROVANTES (CONTROLADO PELO GESTOR)
+   CLASSIFICAÇÃO E COMPROVANTES
    ============================================================ */
 
 function pageScoreboard(){
@@ -2412,7 +2412,7 @@ go("access");
 }
 
 /* ============================================================
-   ACESSO POR LINK GERADO (ROTEAMENTO EXATO COM NOME IDENTIFICADO)
+   ACESSO POR LINK CORRIGIDO (BLINDADO)
    ============================================================ */
 
 function checkInvitation(){
@@ -2420,6 +2420,7 @@ function checkInvitation(){
 const params=new URLSearchParams(location.search);
 const token=params.get("access");
 const nomeParam = params.get("nome");
+const roleParam = params.get("role");
 const unitNameParam = params.get("unit");
 
 if(!token) return;
@@ -2443,16 +2444,22 @@ if(!targetUser){
 }
 
 if(!targetUser && unitNameParam){
-  db.unit.name = decodeURIComponent(unitNameParam);
+  if(unitNameParam) db.unit.name = decodeURIComponent(unitNameParam);
+  
+  const userRole = roleParam === "leader" ? "leader" : "manager";
+  const userFunc = userRole === "leader" ? "Líder mantenedor" : "Diretor associado";
+  
   targetUser = {
-    name: nomeParam ? decodeURIComponent(nomeParam) : "Convidado",
-    role: "manager",
+    name: nomeParam ? decodeURIComponent(nomeParam) : "Usuário",
+    role: userRole,
+    function: userFunc,
     password: "",
     token: token,
     deliveries: [],
     members: [],
     teamName: ""
   };
+  
   db.unit.users.push(targetUser);
   saveDB();
 }
@@ -2464,9 +2471,9 @@ if(targetUser){
   }else{
     currentUser = targetUser;
     if(targetUser.role === "leader"){
-      page = "leader"; // Redireciona rigorosamente para a tela do mantenedor
+      page = "leader"; 
     }else{
-      page = "director"; // Redireciona para a área de gestão (associado/secretário)
+      page = "director"; 
     }
   }
 }

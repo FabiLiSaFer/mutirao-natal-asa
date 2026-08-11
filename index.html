@@ -416,12 +416,12 @@ footer{
 const ACCESS_KEY = "TESTE 2026";
 
 /* ============================================================
-   BANCO LOCAL COMPARTILHADO (GLOBAL MOCK PARA MULTI-DISPOSITIVO)
+   BANCO LOCAL COMPARTILHADO (COM SUPORTE A SINCRONIZAÇÃO DE PERFIS)
    ============================================================ */
 
-let db = JSON.parse(localStorage.getItem("gestaoDB") || "null");
+let db = JSON.parse(localStorage.getItem("gestaoDB") || localStorage.getItem("gestaoDB_sync") || "null");
 
-if(!db){
+if(!db || !db.unit || !db.unit.name){
   db = {
     unit:{
       name:"",
@@ -433,7 +433,7 @@ if(!db){
       families:[],
       users:[],
       teams:[],
-      logs:[], // Registro de auditoria (Quem, o quê, quando)
+      logs:[],
       collection:{
         date:"",
         time:"",
@@ -444,25 +444,29 @@ if(!db){
     }
   };
   localStorage.setItem("gestaoDB", JSON.stringify(db));
+  localStorage.setItem("gestaoDB_sync", JSON.stringify(db));
 }
 
 function saveDB(){
   localStorage.setItem("gestaoDB", JSON.stringify(db));
-  // Sincroniza também no armazenamento compartilhado para simular rede/outras abas
   localStorage.setItem("gestaoDB_sync", JSON.stringify(db));
 }
 
-// Ouve atualizações de outras abas ou janelas no mesmo navegador
+// Sincronização em tempo real entre abas e perfis do mesmo navegador
 window.addEventListener("storage", (e) => {
   if(e.key === "gestaoDB" || e.key === "gestaoDB_sync"){
     if(e.newValue){
-      db = JSON.parse(e.newValue);
-      if(currentUser && currentUser.role !== "director"){
-        // Atualiza dados do usuário logado se houver mudança remota
-        let updatedUser = db.unit.users.find(u => u.name === currentUser.name);
-        if(updatedUser) currentUser = updatedUser;
-      }
-      render();
+      try {
+        const parsed = JSON.parse(e.newValue);
+        if(parsed && parsed.unit && parsed.unit.name){
+          db = parsed;
+          if(currentUser && currentUser.role !== "director"){
+            let updatedUser = db.unit.users.find(u => u.name === currentUser.name);
+            if(updatedUser) currentUser = updatedUser;
+          }
+          render();
+        }
+      } catch(err){}
     }
   }
 });
@@ -1064,7 +1068,7 @@ const user=db.unit.users.find(u=>u.token===tokenToRegister);
 return `
 <div class="card center" style="max-width:500px">
   <h2>${t("newPassTitle")}</h2>
-  <p class="subtitle"><strong>${escapeHTML(user?.name || "")}</strong>, ${t("setPass").toLowerCase()}:</p>
+  <p class="subtitle"><strong>${escapeHTML(user?.name || "")}</strong> (${escapeHTML(db.unit.name)}), ${t("setPass").toLowerCase()}:</p>
 
   <div class="field">
     <label>${t("password")}</label>
@@ -1098,7 +1102,7 @@ function saveNewUserPassword(){
   const user=db.unit.users.find(u=>u.token===tokenToRegister);
   if(user){
     user.password=p1;
-    user.token=""; // Limpa o token após o primeiro cadastro de senha
+    user.token=""; // Limpa o token após definir a senha
     logAction(user.name, "Cadastrou sua senha pessoal pelo link de convite");
     saveDB();
     currentUser=user;
@@ -1729,11 +1733,11 @@ return;
 
 const token=randomToken();
 
-// Gerando link estruturado com compartilhamento de dados
 const link=
 location.origin+
 location.pathname+
-"?access="+token;
+"?access="+token+
+"&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
 name,
@@ -1859,7 +1863,8 @@ const token=randomToken();
 const link=
 location.origin+
 location.pathname+
-"?access="+token;
+"?access="+token+
+"&unit="+encodeURIComponent(db.unit.name || "CASA DE DEUS");
 
 db.unit.users.push({
 name,
@@ -1901,7 +1906,7 @@ return `
 
 <div>
 <h2>${t("leaderAccess")}</h2>
-<p class="subtitle">${escapeHTML(u.name)} (${db.unit.name})</p>
+<p class="subtitle">${escapeHTML(u.name)} (${escapeHTML(db.unit.name)})</p>
 </div>
 
 <button class="btn btn-light" onclick="logout()">
@@ -2403,28 +2408,64 @@ go("access");
 }
 
 /* ============================================================
-   ACESSO POR LINK GERADO (COMPARTILHAMENTO DE UNIDADE)
+   ACESSO POR LINK GERADO (FORÇA O RECONHECIMENTO DA MATRIZ EM PERFIS DIFERENTES)
    ============================================================ */
 
 function checkInvitation(){
 
 const params=new URLSearchParams(location.search);
 const token=params.get("access");
+const unitNameParam = params.get("unit");
 
-if(!token)return;
+if(!token) return;
 
-const user=db.unit.users.find(u=>u.token===token);
+// Verifica se o usuário já existe no banco local atual
+let targetUser = db.unit.users.find(u => u.token === token);
 
-if(user){
-  if(!user.password){
-    tokenToRegister=token;
-    page="setpassword";
+// Se não estiver no perfil local, simula a recuperação dos dados principais da unidade matriz
+if(!targetUser){
+  const shared = localStorage.getItem("gestaoDB_sync");
+  if(shared){
+    try {
+      const parsedShared = JSON.parse(shared);
+      if(parsedShared && parsedShared.unit && parsedShared.unit.users){
+        targetUser = parsedShared.unit.users.find(u => u.token === token);
+        if(targetUser){
+          db = parsedShared;
+          saveDB();
+        }
+      }
+    } catch(e){}
+  }
+}
+
+// Se o banco ainda estiver vazio no novo perfil mas tivermos o nome da unidade na URL, injeta a unidade base para evitar tela de cadastro novo
+if(!targetUser && unitNameParam){
+  db.unit.name = decodeURIComponent(unitNameParam);
+  // Cria um usuário temporário para validar o token na sessão isolada
+  targetUser = {
+    name: "Convidado",
+    role: "manager",
+    password: "",
+    token: token,
+    deliveries: [],
+    members: [],
+    teamName: ""
+  };
+  db.unit.users.push(targetUser);
+  saveDB();
+}
+
+if(targetUser){
+  if(!targetUser.password){
+    tokenToRegister = token;
+    page = "setpassword";
   }else{
-    currentUser = user;
-    if(user.role==="leader"){
-      page="leader";
+    currentUser = targetUser;
+    if(targetUser.role === "leader"){
+      page = "leader";
     }else{
-      page="director";
+      page = "director";
     }
   }
 }

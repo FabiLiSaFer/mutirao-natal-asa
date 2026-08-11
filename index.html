@@ -2,74 +2,772 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Gestão e Logística</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Gestão e Logística</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FDFBF7; color: #2C3E50; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .text-verde-asa { color: #1E5128; }
+        .bg-verde-asa { background-color: #1E5128; }
+        .border-verde-asa { border-color: #1E5128; }
+        .text-dourado { color: #C5A059; }
+        .bg-dourado { background-color: #C5A059; }
+        .border-dourado { border-color: #C5A059; }
+    </style>
 </head>
-<body class="bg-stone-50 p-4">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- PAINEL DO GESTOR -->
-    <div id="painel-gestor" class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border border-stone-200">
-        <h2 class="text-2xl font-bold text-emerald-900 mb-4">Painel de Gestão e Logística</h2>
-        
-        <!-- ABAS -->
-        <div class="flex gap-2 mb-6 border-b pb-2 overflow-x-auto">
-            <button onclick="mudarAba('evento')" class="px-4 py-2 bg-emerald-800 text-white rounded-lg text-sm font-bold">🎯 Evento</button>
-            <button onclick="mudarAba('estoque')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg text-sm font-bold">📦 Estoque</button>
-            <button onclick="mudarAba('familias')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg text-sm font-bold">🏠 Famílias</button>
-            <button onclick="mudarAba('equipes')" class="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg text-sm font-bold">🤝 Equipes</button>
+    <!-- CABEÇALHO GLOBAL -->
+    <header class="w-full bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b border-dourado/35">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full overflow-hidden border border-dourado/40 shadow-xs bg-[#F5EFEB] flex items-center justify-center">
+                <span class="text-xs font-bold text-dourado">📊</span>
+            </div>
+            <div>
+                <h1 class="text-base font-bold text-verde-asa leading-tight">Plataforma de Gestão</h1>
+                <p class="text-[10px] text-dourado font-medium uppercase tracking-wider">Logística & Operações</p>
+            </div>
+        </div>
+        <div id="status-usuario-topo" class="text-xs font-semibold text-verde-asa"></div>
+    </header>
+
+    <!-- CONTEÚDO DINÂMICO DAS TELAS -->
+    <main class="flex-grow p-4 md:p-6 max-w-4xl mx-auto w-full flex items-center justify-center">
+
+        <!-- 1. PÁGINA DE CHAVE DE ACESSO -->
+        <div id="tela-1-chave" class="hidden bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20">
+            <h2 class="text-2xl font-bold text-verde-asa mb-2">Chave de Acesso</h2>
+            <p class="text-xs text-gray-600 mb-6">Insira a chave de licença para desbloquear o sistema neste dispositivo.</p>
+            <input type="text" id="input-chave-mestre" placeholder="EX: MUTIRAO-2026-OFICIAL" class="w-full text-xs p-3 rounded-xl border border-gray-300 text-center font-mono uppercase tracking-wider mb-4">
+            <button onclick="validarChaveMestre()" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl text-xs shadow-md">Verificar Chave</button>
         </div>
 
-        <!-- CONTEÚDO EVENTO -->
-        <div id="aba-evento" class="space-y-4">
-            <input type="text" id="gestor-evento" placeholder="Nome do Evento" class="w-full p-3 border rounded-xl text-sm">
-            <input type="text" id="gestor-data" placeholder="Data e Ponto de Encontro" class="w-full p-3 border rounded-xl text-sm">
-            <input type="text" id="gestor-destaque" placeholder="Alimento da Semana" class="w-full p-3 border rounded-xl text-sm">
-            <input type="text" id="gestor-casadinho" placeholder="Alimentos Casadinhos" class="w-full p-3 border rounded-xl text-sm">
-            <button onclick="salvarEvento()" class="w-full bg-emerald-800 text-white p-3 rounded-xl font-bold">Salvar Logística do Evento</button>
+        <!-- 2. PÁGINA DE BOAS-VINDAS -->
+        <div id="tela-2-boas-vindas" class="hidden bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center border border-dourado/20">
+            <div class="mx-auto w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mb-4 border border-dourado/30">
+                <span class="text-xl">🌟</span>
+            </div>
+            <h2 class="text-2xl font-bold text-verde-asa mb-2">Bem-vindo(a)</h2>
+            <p class="text-xs text-gray-600 mb-6">Sistema inteligente para controle de arrecadação, estoque e equipes.</p>
+            <div class="space-y-3">
+                <button onclick="irParaTela('cadastro')" class="w-full bg-verde-asa text-white font-medium py-3 rounded-xl text-xs">Fazer Cadastro da Igreja</button>
+                <button onclick="irParaTela('login')" class="w-full bg-amber-50 text-verde-asa border border-verde-asa font-medium py-3 rounded-xl text-xs">Já tenho cadastro (Entrar)</button>
+            </div>
         </div>
 
-        <!-- CONTEÚDO FAMÍLIAS -->
-        <div id="aba-familias" class="hidden space-y-3">
-            <input type="text" id="fam-responsavel" placeholder="Responsável" class="w-full p-2 border rounded text-sm">
-            <input type="number" id="fam-total" placeholder="Total de membros" class="w-full p-2 border rounded text-sm">
-            <input type="number" id="fam-criancas" placeholder="Qtd de Crianças" class="w-full p-2 border rounded text-sm">
-            <button onclick="cadastrarFamilia()" class="w-full bg-emerald-700 text-white p-2 rounded">Cadastrar Família</button>
-            <div id="lista-familias" class="mt-4 text-xs"></div>
+        <!-- 3. PÁGINA DE CADASTRO -->
+        <div id="tela-3-cadastro" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md w-full">
+            <h2 class="text-2xl font-bold text-verde-asa mb-1">Cadastro do Diretor(a)</h2>
+            <p class="text-xs text-gray-500 mb-4">Configure os dados principais da instituição.</p>
+            <div class="space-y-3 text-xs">
+                <input type="text" id="cad-igreja" placeholder="Nome da igreja" class="w-full p-3 rounded-xl border">
+                <input type="text" id="cad-diretor" placeholder="Nome do diretor(a)" class="w-full p-3 rounded-xl border">
+                <input type="password" id="cad-senha" placeholder="Senha" class="w-full p-3 rounded-xl border">
+                <input type="password" id="cad-confirma-senha" placeholder="Confirmar senha" class="w-full p-3 rounded-xl border">
+                <div>
+                    <input type="text" id="cad-palavra" placeholder="Palavra-chave de recuperação" class="w-full p-3 rounded-xl border">
+                    <p class="text-[10px] text-gray-500 mt-1 italic">* Guarde essa palavra pois ela será usada se você precisar mudar sua senha.</p>
+                </div>
+                <button onclick="realizarCadastro()" class="w-full bg-verde-asa text-white font-bold py-3 rounded-xl shadow-md mt-2">Cadastrar</button>
+                <button onclick="irParaTela('boas-vindas')" class="w-full text-gray-500 py-1">Voltar</button>
+            </div>
         </div>
-        
-        <!-- (Outras abas seriam adicionadas aqui...) -->
-    </div>
 
-    <!-- PAINEL DO VOLUNTÁRIO -->
-    <div id="painel-voluntario" class="hidden max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg mt-6 border border-emerald-100">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold text-emerald-800">Missão: <span id="vol-nome-evento"></span></h2>
-            <span class="text-2xl animate-bounce">👣</span> <!-- O sapatinho caminhando! -->
+        <!-- 4. PÁGINA DE LOGIN -->
+        <div id="tela-4-login" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 max-w-md w-full">
+            <h2 class="text-2xl font-bold text-verde-asa mb-1">Entrar no Sistema</h2>
+            <p id="login-sub-igreja" class="text-xs text-dourado font-bold mb-4 uppercase tracking-wider"></p>
+            <div class="space-y-3 text-xs">
+                <input type="text" id="login-nome" placeholder="Seu nome cadastrado (Diretor ou Líder)" class="w-full p-3 rounded-xl border">
+                <input type="password" id="login-senha" placeholder="Senha" class="w-full p-3 rounded-xl border">
+                <div class="flex items-center justify-between text-gray-600">
+                    <label class="flex items-center space-x-2"><input type="checkbox" id="login-lembrar" class="rounded"> <span>Lembrar dados</span></label>
+                    <button onclick="esqueciSenha()" class="text-verde-asa font-semibold hover:underline">Esqueci a senha</button>
+                </div>
+                <button onclick="realizarLogin()" class="w-full bg-verde-asa text-white font-bold py-3 rounded-xl shadow-md">Entrar</button>
+                <button onclick="irParaTela('boas-vindas')" class="w-full text-gray-500 py-1">Voltar</button>
+            </div>
         </div>
-        <div id="vol-info-logistica" class="bg-emerald-50 p-3 rounded-lg text-sm text-emerald-900 mb-4"></div>
-        <div id="vol-destaques" class="grid grid-cols-2 gap-2 mb-4"></div>
-        <div id="lista-registro" class="space-y-2"></div>
-    </div>
 
+        <!-- 5. PÁGINA DO DIRETOR -->
+        <div id="tela-5-diretor" class="hidden w-full space-y-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-dourado/20">
+                <div class="flex justify-between items-center mb-6 pb-3 border-b">
+                    <div>
+                        <h3 class="text-xl font-bold text-verde-asa">Painel do Diretor(a)</h3>
+                        <p id="diretor-info-logado" class="text-xs text-dourado font-medium mt-0.5"></p>
+                    </div>
+                    <button onclick="sairDoSistema()" class="text-xs text-red-600 font-semibold bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">Sair</button>
+                </div>
+
+                <!-- ABAS DO PAINEL DO DIRETOR -->
+                <div class="flex gap-2 border-b mb-6 pb-2 overflow-x-auto text-xs">
+                    <button onclick="mudarAbaDiretor('campanha')" id="btn-aba-campanha" class="px-3 py-2 rounded-lg bg-verde-asa text-white font-bold whitespace-nowrap">📢 Campanha</button>
+                    <button onclick="mudarAbaDiretor('estoque')" id="btn-aba-estoque" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 font-bold whitespace-nowrap">📦 Estoque</button>
+                    <button onclick="mudarAbaDiretor('familias')" id="btn-aba-familias" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 font-bold whitespace-nowrap">🏠 Famílias</button>
+                    <button onclick="mudarAbaDiretor('equipes')" id="btn-aba-equipes" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 font-bold whitespace-nowrap">🤝 Mantenedoras</button>
+                    <button onclick="mudarAbaDiretor('acessos')" id="btn-aba-acessos" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 font-bold whitespace-nowrap">🔑 Gerar Acessos</button>
+                </div>
+
+                <!-- ABA 1: CAMPANHA E ARRECADAÇÃO CONJUNTA -->
+                <div id="conteudo-aba-campanha" class="space-y-4 text-xs">
+                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
+                        <h4 class="font-bold text-verde-asa text-sm">Campanha de Arrecadação Atual</h4>
+                        <input type="text" id="dir-campanha-atual" placeholder="Ex: Mutirão de Natal / Quilo do Amor" class="w-full p-2.5 rounded-lg border bg-white">
+                        <button onclick="salvarCampanha()" class="bg-dourado text-white font-bold px-4 py-2 rounded-lg">Atualizar Campanha</button>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border space-y-3">
+                        <h4 class="font-bold text-verde-asa text-sm">📅 Arrecadação Conjunta (Logística)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <input type="date" id="log-data" class="p-2.5 rounded-lg border bg-white">
+                            <input type="time" id="log-hora" class="p-2.5 rounded-lg border bg-white">
+                        </div>
+                        <input type="text" id="log-local" placeholder="Local da arrecadação" class="w-full p-2.5 rounded-lg border bg-white">
+                        <input type="text" id="log-ponto" placeholder="Ponto de encontro" class="w-full p-2.5 rounded-lg border bg-white">
+                        <input type="text" id="log-endereco" placeholder="Endereço completo" class="w-full p-2.5 rounded-lg border bg-white">
+                        <button onclick="salvarLogistica()" class="bg-verde-asa text-white font-bold px-4 py-2 rounded-lg">Salvar Dados da Arrecadação</button>
+                    </div>
+                </div>
+
+                <!-- ABA 2: ESTOQUE E ITENS -->
+                <div id="conteudo-aba-estoque" class="hidden space-y-4 text-xs">
+                    <div class="bg-gray-50 p-4 rounded-xl border">
+                        <h4 class="font-bold text-verde-asa text-sm mb-3">Cadastrar Item para Doação</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+                            <input type="text" id="item-nome" placeholder="Nome do item (ex: Arroz 5kg)" class="p-2.5 rounded-lg border bg-white">
+                            <input type="number" id="item-meta" placeholder="Quantidade necessária (Meta)" class="p-2.5 rounded-lg border bg-white">
+                            <button onclick="adicionarItemEstoque()" class="bg-verde-asa text-white font-bold py-2.5 rounded-lg">Adicionar Item</button>
+                        </div>
+                    </div>
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-amber-50 text-dourado border-b border-dourado/30">
+                            <tr><th class="p-2.5">Item</th><th class="p-2.5">Meta</th><th class="p-2.5">Atual</th><th class="p-2.5">Falta</th><th class="p-2.5">Ações</th></tr>
+                        </thead>
+                        <tbody id="tabela-estoque-diretor" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+
+                <!-- ABA 3: FAMÍLIAS BENEFICIADAS -->
+                <div id="conteudo-aba-familias" class="hidden space-y-4 text-xs">
+                    <div class="bg-gray-50 p-4 rounded-xl border space-y-2">
+                        <h4 class="font-bold text-verde-asa text-sm mb-2">Cadastrar Família Beneficiada</h4>
+                        <input type="text" id="fam-resp" placeholder="Nome do responsável" class="w-full p-2.5 rounded-lg border bg-white">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <input type="number" id="fam-total" placeholder="Total de pessoas" class="p-2.5 rounded-lg border bg-white">
+                            <input type="number" id="fam-criancas" placeholder="Qtd de crianças" class="p-2.5 rounded-lg border bg-white">
+                            <input type="text" id="fam-meninos" placeholder="Meninos (idades)" class="p-2.5 rounded-lg border bg-white">
+                            <input type="text" id="fam-meninas" placeholder="Meninas (idades)" class="p-2.5 rounded-lg border bg-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="fam-idosos" placeholder="Idosos > 65 anos" class="p-2.5 rounded-lg border bg-white">
+                            <input type="text" id="fam-idades-idosos" placeholder="Idade dos idosos" class="p-2.5 rounded-lg border bg-white">
+                        </div>
+                        <button onclick="cadastrarFamilia()" class="bg-verde-asa text-white font-bold px-4 py-2.5 rounded-lg mt-2">Salvar Família</button>
+                    </div>
+                    <div id="lista-familias-diretor" class="space-y-2"></div>
+                </div>
+
+                <!-- ABA 4: EQUIPES MANTENEDORAS (CLASSIFICAÇÃO) -->
+                <div id="conteudo-aba-equipes" class="hidden space-y-4 text-xs">
+                    <h4 class="font-bold text-verde-asa text-sm">Classificação & Relatório de Entregas</h4>
+                    <div id="painel-classificacao-equipes" class="space-y-2"></div>
+                </div>
+
+                <!-- ABA 5: GERAR ACESSOS (DIRETOR ASSOCIADO E LÍDER) -->
+                <div id="conteudo-aba-acessos" class="hidden space-y-6 text-xs">
+                    <div class="bg-amber-50 p-4 rounded-xl border border-dourado/30 space-y-3">
+                        <h4 class="font-bold text-verde-asa text-sm">Gerar Acesso: Diretor Associado / Secretário(a)</h4>
+                        <input type="text" id="assoc-nome-input" placeholder="Nome do Diretor Associado / Secretário" class="w-full p-2.5 rounded-lg border bg-white">
+                        <button onclick="gerarLinkAcesso('associado')" class="bg-dourado text-white font-bold px-4 py-2.5 rounded-lg">Gerar Link e Senha</button>
+                        <div id="lista-links-associados" class="space-y-2 mt-2"></div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border space-y-3">
+                        <h4 class="font-bold text-verde-asa text-sm">Gerar Acesso: Líder da Equipe Mantenedora</h4>
+                        <input type="text" id="lider-nome-input" placeholder="Nome do Líder da Equipe" class="w-full p-2.5 rounded-lg border bg-white">
+                        <button onclick="gerarLinkAcesso('lider')" class="bg-verde-asa text-white font-bold px-4 py-2.5 rounded-lg">Gerar Link de Mantenedora</button>
+                        <div id="lista-links-lideres" class="space-y-2 mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PÁGINA DA EQUIPE MANTENEDORA -->
+        <div id="tela-6-mantenedora" class="hidden w-full max-w-lg mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-dourado/20 space-y-4 text-xs">
+            <div class="flex justify-between items-center border-b pb-3">
+                <div>
+                    <h2 id="mant-titulo-nome" class="text-xl font-bold text-verde-asa">Área da Mantenedora</h2>
+                    <p id="mant-campanha-exibicao" class="text-xs text-dourado font-bold uppercase tracking-wider mt-0.5"></p>
+                </div>
+                <!-- Sapatilhas caminhando para notificação -->
+                <div id="icone-sapatinhos" class="hidden flex items-center bg-amber-100 px-3 py-1.5 rounded-full border border-amber-300 text-amber-900 font-bold animate-pulse cursor-pointer" onclick="verNotificacaoLogistica()" title="Nova Arrecadação Conjunta!">
+                    <span class="text-base mr-1">👣</span> Notificação
+                </div>
+            </div>
+
+            <!-- CARD DE DESTAQUE: QUILO DO AMOR / ITEM DA SEMANA -->
+            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 space-y-1">
+                <span class="text-[10px] font-bold text-emerald-800 uppercase bg-emerald-200 px-2 py-0.5 rounded">Quilo do Amor - Item da Semana</span>
+                <p id="mant-item-semana" class="text-sm font-bold text-verde-asa mt-1">Carregando item em destaque...</p>
+            </div>
+
+            <!-- CADASTRO DE MEMBROS DA EQUIPE (ORDEM ALFABÉTICA) -->
+            <div class="bg-gray-50 p-4 rounded-xl border space-y-2">
+                <h4 class="font-bold text-verde-asa text-sm">Membros da Equipe</h4>
+                <div class="flex gap-2">
+                    <input type="text" id="mant-novo-membro" placeholder="Nome do membro da equipe" class="flex-grow p-2.5 rounded-lg border bg-white">
+                    <button onclick="adicionarMembroEquipe()" class="bg-dourado text-white font-bold px-4 py-2.5 rounded-lg">Adicionar</button>
+                </div>
+                <div id="lista-membros-alfabetica" class="max-h-28 overflow-y-auto space-y-1 pt-1 text-gray-700"></div>
+            </div>
+
+            <!-- REGISTRO DE DOAÇÃO / ENTREGA -->
+            <div class="bg-amber-50/50 p-4 rounded-xl border border-dourado/30 space-y-3">
+                <h4 class="font-bold text-verde-asa text-sm">Registrar Entrada de Doação</h4>
+                
+                <label class="block font-semibold">Selecione o Item (Cadastrado pelo Diretor):</label>
+                <select id="mant-select-item" class="w-full p-2.5 rounded-lg border bg-white"></select>
+
+                <label class="block font-semibold">Quantidade Entregue:</label>
+                <input type="number" id="mant-qtd-doada" placeholder="Ex: 10" class="w-full p-2.5 rounded-lg border bg-white">
+
+                <label class="block font-semibold">Quem fez a entrega (Membro):</label>
+                <select id="mant-select-membro-entrega" class="w-full p-2.5 rounded-lg border bg-white"></select>
+
+                <label class="block font-semibold">Quem recebeu na equipe:</label>
+                <input type="text" id="mant-quem-recebeu" placeholder="Nome de quem registrou/recebeu" class="w-full p-2.5 rounded-lg border bg-white">
+
+                <button onclick="registrarDoacaoMantenedora()" class="w-full bg-verde-asa text-white font-bold py-3 rounded-xl shadow-md mt-1">Confirmar e Gerar Comprovante</button>
+            </div>
+
+            <!-- BOTÃO DE SAÍDA -->
+            <button onclick="sairDoSistema()" class="w-full text-red-600 font-semibold py-2">Sair / Trocar Acesso</button>
+        </div>
+
+        <!-- MODAL DE COMPROVANTE DE ENTREGA -->
+        <div id="modal-comprovante" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl p-6 max-w-sm w-full space-y-4 text-xs">
+                <div class="text-center border-b pb-3">
+                    <h3 class="text-base font-bold text-verde-asa">COMPROVANTE DE DOAÇÃO</h3>
+                    <p id="comp-igreja" class="text-gray-500 font-semibold"></p>
+                </div>
+                <div class="space-y-1.5 text-gray-700">
+                    <p><b>Equipe / Líder:</b> <span id="comp-lider"></span></p>
+                    <p><b>Item:</b> <span id="comp-item"></span></p>
+                    <p><b>Quantidade:</b> <span id="comp-qtd"></span></p>
+                    <p><b>Entregue por:</b> <span id="comp-membro"></span></p>
+                    <p><b>Recebido por:</b> <span id="comp-recebeu"></span></p>
+                    <p><b>Data/Hora:</b> <span id="comp-data"></span></p>
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="window.print()" class="flex-grow bg-verde-asa text-white font-bold py-2 rounded-lg">Imprimir / Salvar</button>
+                    <button onclick="fecharComprovante()" class="bg-gray-200 text-gray-700 font-bold px-4 py-2 rounded-lg">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ GLOBAL COM A DEDICATÓRIA -->
+    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t border-dourado/25 mt-auto space-y-1">
+        <p class="font-medium text-verde-asa">Plataforma PWA Offline-First de Gestão Solidária</p>
+        <p class="text-[11px] text-dourado font-bold italic">Dedicado com carinho, Vera Lima</p>
+    </footer>
+
+    <!-- SCRIPT DE CONTROLE COMPLETO -->
     <script>
-        // Lógica simplificada de teste
-        function mudarAba(aba) {
-            document.getElementById('aba-evento').classList.add('hidden');
-            document.getElementById('aba-familias').classList.add('hidden');
-            document.getElementById('aba-' + aba).classList.remove('hidden');
+        const CHAVE_MESTRE_VALIDA = "MUTIRAO-2026-OFICIAL";
+
+        // Banco de dados central no LocalStorage
+        let db = JSON.parse(localStorage.getItem('sys_gestao_db')) || {
+            ativado: false,
+            igreja: '',
+            diretor: '',
+            senha: '',
+            palavraChave: '',
+            campanhaAtual: 'Quilo do Amor',
+            logistica: { data: '', hora: '', local: '', ponto: '', endereco: '' },
+            itensEstoque: [],
+            familias: [],
+            acessos: [], // Guarda associados e líderes com suas respectivas senhas
+            registrosDoacoes: []
+        };
+
+        let sessaoAtiva = JSON.parse(localStorage.getItem('sys_sessao_atual')) || null;
+
+        function salvarDB() {
+            localStorage.setItem('sys_gestao_db', JSON.stringify(db));
         }
 
-        function salvarEvento() {
-            const ev = document.getElementById('gestor-evento').value;
-            localStorage.setItem('evento', ev);
-            localStorage.setItem('logistica', document.getElementById('gestor-data').value);
-            alert('Logística salva!');
+        // Navegação de telas
+        function irParaTela(nomeTela) {
+            ['1-chave', '2-boas-vindas', '3-cadastro', '4-login', '5-diretor', '6-mantenedora'].forEach(t => {
+                const el = document.getElementById(`tela-${t}`);
+                if(el) el.classList.add('hidden');
+            });
+
+            if(nomeTela === 'chave') document.getElementById('tela-1-chave').classList.remove('hidden');
+            if(nomeTela === 'boas-vindas') document.getElementById('tela-2-boas-vindas').classList.remove('hidden');
+            if(nomeTela === 'cadastro') document.getElementById('tela-3-cadastro').classList.remove('hidden');
+            if(nomeTela === 'login') {
+                document.getElementById('login-sub-igreja').innerText = db.igreja ? `Igreja: ${db.igreja}` : '';
+                document.getElementById('tela-4-login').classList.remove('hidden');
+            }
+            if(nomeTela === 'diretor') {
+                document.getElementById('tela-5-diretor').classList.remove('hidden');
+                carregarPainelDiretor();
+            }
+            if(nomeTela === 'mantenedora') {
+                document.getElementById('tela-6-mantenedora').classList.remove('hidden');
+                carregarPainelMantenedora();
+            }
         }
 
+        window.onload = function() {
+            // Verifica URL para logins via link dedicado (associado ou líder)
+            const urlParams = new URLSearchParams(window.location.search);
+            const linkTipo = urlParams.get('tipo'); // 'associado' ou 'lider'
+            const linkNome = urlParams.get('nome');
+
+            if(linkTipo && linkNome) {
+                // Abre tela de login específica para o link gerado
+                irParaTela('login');
+                document.getElementById('login-nome').value = linkNome;
+                document.getElementById('login-nome').disabled = true; // Nome fixo pelo link
+                return;
+            }
+
+            if(!db.ativado) {
+                irParaTela('chave');
+            } else if(!db.igreja) {
+                irParaTela('boas-vindas');
+            } else if(sessaoAtiva) {
+                if(sessaoAtiva.tipo === 'diretor' || sessaoAtiva.tipo === 'associado') {
+                    irParaTela('diretor');
+                } else {
+                    irParaTela('mantenedora');
+                }
+            } else {
+                irParaTela('boas-vindas');
+            }
+        };
+
+        // 1. Validar Chave Mestre
+        function validarChaveMestre() {
+            const val = document.getElementById('input-chave-mestre').value.trim().toUpperCase();
+            if(val === CHAVE_MESTRE_VALIDA) {
+                db.ativado = true;
+                salvarDB();
+                if(db.igreja) irParaTela('login');
+                else irParaTela('boas-vindas');
+            } else {
+                alert('Chave de licença inválida!');
+            }
+        }
+
+        // 3. Cadastro do Diretor
+        function realizarCadastro() {
+            const igreja = document.getElementById('cad-igreja').value.trim();
+            const diretor = document.getElementById('cad-diretor').value.trim();
+            const senha = document.getElementById('cad-senha').value;
+            const confirma = document.getElementById('cad-confirma-senha').value;
+            const palavra = document.getElementById('cad-palavra').value.trim();
+
+            if(!igreja || !diretor || !senha || !palavra) return alert('Preencha todos os campos!');
+            if(senha !== confirma) return alert('As senhas não coincidem!');
+
+            db.igreja = igreja;
+            db.diretor = diretor;
+            db.senha = senha;
+            db.palavraChave = palavra;
+            salvarDB();
+
+            alert('Cadastro realizado com sucesso!');
+            sessaoAtiva = { nome: diretor, tipo: 'diretor' };
+            localStorage.setItem('sys_sessao_atual', JSON.stringify(sessaoAtiva));
+            irParaTela('diretor');
+        }
+
+        // 4. Login Geral
+        function realizarLogin() {
+            const nomeDigitado = document.getElementById('login-nome').value.trim();
+            const senhaDigitada = document.getElementById('login-senha').value;
+
+            if(!nomeDigitado || !senhaDigitada) return alert('Preencha o nome e a senha.');
+
+            // Verifica se é o Diretor Principal
+            if(nomeDigitado.toLowerCase() === db.diretor.toLowerCase() && senhaDigitada === db.senha) {
+                sessaoAtiva = { nome: db.diretor, tipo: 'diretor' };
+                localStorage.setItem('sys_sessao_atual', JSON.stringify(sessaoAtiva));
+                irParaTela('diretor');
+                return;
+            }
+
+            // Verifica nos acessos gerados (Associados ou Líderes)
+            const achado = db.acessos.find(a => a.nome.toLowerCase() === nomeDigitado.toLowerCase() && a.senha === senhaDigitada);
+            if(achado) {
+                sessaoAtiva = { nome: achado.nome, tipo: achado.tipo };
+                localStorage.setItem('sys_sessao_atual', JSON.stringify(sessaoAtiva));
+                if(achado.tipo === 'associado') irParaTela('diretor');
+                else irParaTela('mantenedora');
+                return;
+            }
+
+            alert('Nome ou senha incorretos.');
+        }
+
+        function esqueciSenha() {
+            const nome = prompt('Digite seu nome cadastrado:');
+            const palavraUser = prompt('Digite sua palavra-chave de recuperação cadastrada:');
+            
+            if(nome && palavraUser) {
+                if(nome.toLowerCase() === db.diretor.toLowerCase() && palavraUser === db.palavraChave) {
+                    const novaSenha = prompt('Palavra-chave correta! Digite a nova senha:');
+                    if(novaSenha) {
+                        db.senha = novaSenha;
+                        salvarDB();
+                        alert('Senha alterada com sucesso!');
+                    }
+                } else {
+                    const acc = db.acessos.find(a => a.nome.toLowerCase() === nome.toLowerCase() && a.palavra === palavraUser);
+                    if(acc) {
+                        const novaSenha = prompt('Palavra-chave correta! Digite a nova senha:');
+                        if(novaSenha) {
+                            acc.senha = novaSenha;
+                            salvarDB();
+                            alert('Senha alterada com sucesso!');
+                        }
+                    } else {
+                        alert('Nome ou palavra-chave não conferem.');
+                    }
+                }
+            }
+        }
+
+        function sairDoSistema() {
+            localStorage.removeItem('sys_sessao_atual');
+            sessaoAtiva = null;
+            window.location.href = window.location.pathname; // Recarrega limpo
+        }
+
+        // --- PAINEL DO DIRETOR ---
+        function mudarAbaDiretor(aba) {
+            ['campanha', 'estoque', 'familias', 'equipes', 'acessos'].forEach(a => {
+                const elCont = document.getElementById(`conteudo-aba-${a}`);
+                const elBtn = document.getElementById(`btn-aba-${a}`);
+                if(elCont) elCont.classList.add('hidden');
+                if(elBtn) elBtn.className = 'px-3 py-2 rounded-lg bg-gray-100 text-gray-600 font-bold whitespace-nowrap';
+            });
+            document.getElementById(`conteudo-aba-${aba}`).classList.remove('hidden');
+            document.getElementById(`btn-aba-${aba}`).className = 'px-3 py-2 rounded-lg bg-verde-asa text-white font-bold whitespace-nowrap';
+        }
+
+        function carregarPainelDiretor() {
+            document.getElementById('diretor-info-logado').innerText = `${sessaoAtiva.nome} (${db.igreja})`;
+            document.getElementById('status-usuario-topo').innerText = sessaoAtiva.nome;
+            document.getElementById('dir-campanha-atual').value = db.campanhaAtual;
+
+            // Carrega inputs de logística se houver
+            document.getElementById('log-data').value = db.logistica.data || '';
+            document.getElementById('log-hora').value = db.logistica.hora || '';
+            document.getElementById('log-local').value = db.logistica.local || '';
+            document.getElementById('log-ponto').value = db.logistica.ponto || '';
+            document.getElementById('log-endereco').value = db.logistica.endereco || '';
+
+            atualizarTabelaEstoqueDiretor();
+            atualizarListaFamiliasDiretor();
+            atualizarLinksGerados();
+            atualizarClassificacaoEquipes();
+        }
+
+        function salvarCampanha() {
+            const nova = document.getElementById('dir-campanha-atual').value.trim();
+            if(!nova) return alert('Digite a campanha.');
+            db.campanhaAtual = nova;
+            salvarDB();
+            alert('Campanha atualizada!');
+        }
+
+        function salvarLogistica() {
+            db.logistica = {
+                data: document.getElementById('log-data').value,
+                hora: document.getElementById('log-hora').value,
+                local: document.getElementById('log-local').value,
+                ponto: document.getElementById('log-ponto').value,
+                endereco: document.getElementById('log-endereco').value
+            };
+            salvarDB();
+            alert('Dados da arrecadação conjunta salvos com sucesso! Os mantenedores receberão a notificação.');
+        }
+
+        // Estoque
+        function adicionarItemEstoque() {
+            const nome = document.getElementById('item-nome').value.trim();
+            const meta = parseInt(document.getElementById('item-meta').value) || 0;
+            if(!nome) return alert('Digite o nome do item.');
+            db.itensEstoque.push({ nome, meta, atual: 0 });
+            salvarDB();
+            document.getElementById('item-nome').value = '';
+            document.getElementById('item-meta').value = '';
+            atualizarTabelaEstoqueDiretor();
+        }
+
+        function atualizarTabelaEstoqueDiretor() {
+            let html = '';
+            if(db.itensEstoque.length === 0) {
+                html = '<tr><td colspan="5" class="p-4 text-center text-gray-400">Nenhum item cadastrado.</td></tr>';
+            } else {
+                db.itensEstoque.forEach((item, idx) => {
+                    const falta = Math.max(0, item.meta - item.atual);
+                    html += `
+                        <tr class="border-b">
+                            <td class="p-2.5 font-semibold">${item.nome}</td>
+                            <td class="p-2.5">${item.meta}</td>
+                            <td class="p-2.5 font-bold text-verde-asa">${item.atual}</td>
+                            <td class="p-2.5 text-amber-700 font-medium">${falta}</td>
+                            <td class="p-2.5 space-x-2">
+                                <button onclick="limparItemEstoque(${idx})" class="text-amber-600 hover:underline">Zerar</button>
+                                <button onclick="excluirItemEstoque(${idx})" class="text-red-600 hover:underline">Excluir</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            document.getElementById('tabela-estoque-diretor').innerHTML = html;
+        }
+
+        function limparItemEstoque(idx) {
+            db.itensEstoque[idx].atual = 0;
+            salvarDB();
+            atualizarTabelaEstoqueDiretor();
+        }
+
+        function excluirItemEstoque(idx) {
+            db.itensEstoque.splice(idx, 1);
+            salvarDB();
+            atualizarTabelaEstoqueDiretor();
+        }
+
+        // Famílias
         function cadastrarFamilia() {
-            const nome = document.getElementById('fam-responsavel').value;
-            document.getElementById('lista-familias').innerHTML += `<p class="border-b py-1">${nome}</p>`;
+            const resp = document.getElementById('fam-resp').value.trim();
+            const total = document.getElementById('fam-total').value;
+            const criancas = document.getElementById('fam-criancas').value;
+            const meninos = document.getElementById('fam-meninos').value;
+            const meninas = document.getElementById('fam-meninas').value;
+            const idosos = document.getElementById('fam-idosos').value;
+            const idadesIdosos = document.getElementById('fam-idades-idosos').value;
+
+            if(!resp) return alert('Digite o nome do responsável.');
+            db.familias.push({ resp, total, criancas, meninos, meninas, idosos, idadesIdosos });
+            salvarDB();
+            alert('Família cadastrada!');
+            document.getElementById('fam-resp').value = '';
+            document.getElementById('fam-total').value = '';
+            document.getElementById('fam-criancas').value = '';
+            document.getElementById('fam-meninos').value = '';
+            document.getElementById('fam-meninas').value = '';
+            document.getElementById('fam-idosos').value = '';
+            document.getElementById('fam-idades-idosos').value = '';
+            atualizarListaFamiliasDiretor();
+        }
+
+        function atualizarListaFamiliasDiretor() {
+            let html = '';
+            db.familias.forEach((f, idx) => {
+                html += `
+                    <div class="bg-gray-50 p-3 rounded-lg border text-xs flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-verde-asa">${f.resp} (${f.total} pessoas)</p>
+                            <p class="text-gray-500">Crianças: ${f.criancas || 0} (Meninos: ${f.meninos || 'N/A'}, Meninas: ${f.meninas || 'N/A'}) | Idosos >65: ${f.idosos || 0} (${f.idadesIdosos || 'N/A'})</p>
+                        </div>
+                        <button onclick="db.familias.splice(${idx},1);salvarDB();atualizarListaFamiliasDiretor();" class="text-red-600 font-semibold">Excluir</button>
+                    </div>
+                `;
+            });
+            document.getElementById('lista-familias-diretor').innerHTML = html || '<p class="text-gray-400">Nenhuma família cadastrada.</p>';
+        }
+
+        // Gerar Links (Associados e Líderes)
+        function gerarLinkAcesso(tipo) {
+            const inputId = tipo === 'associado' ? 'assoc-nome-input' : 'lider-nome-input';
+            const nome = document.getElementById(inputId).value.trim();
+            if(!nome) return alert('Digite o nome.');
+
+            // Gera uma senha padrão aleatória ou palavra-chave inicial se não existir
+            const senhaPadrao = Math.random().toString(36).slice(-6);
+            db.acessos.push({ nome, tipo, senha: senhaPadrao, palavra: 'mudar123' });
+            salvarDB();
+            document.getElementById(inputId).value = '';
+            atualizarLinksGerados();
+            alert(`Acesso gerado para ${nome}!\nSenha inicial temporária: ${senhaPadrao}`);
+        }
+
+        function atualizarLinksGerados() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            let htmlAssoc = '';
+            let htmlLider = '';
+
+            db.acessos.forEach(acc => {
+                const link = `${baseUrl}?tipo=${acc.tipo}&nome=${encodeURIComponent(acc.nome)}`;
+                const card = `
+                    <div class="bg-white p-2.5 rounded-lg border flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-verde-asa">${acc.nome} <span class="text-gray-400 text-[10px]">(${acc.senha})</span></p>
+                            <p class="text-[10px] text-gray-500 truncate max-w-xs">${link}</p>
+                        </div>
+                        <button onclick="navigator.clipboard.writeText('${link}');alert('Link copiado!');" class="bg-verde-asa text-white px-3 py-1.5 rounded-lg font-bold">Copiar Link</button>
+                    </div>
+                `;
+                if(acc.tipo === 'associado') htmlAssoc += card;
+                else htmlLider += card;
+            });
+
+            document.getElementById('lista-links-associados').innerHTML = htmlAssoc || '<p class="text-gray-400">Nenhum associado cadastrado.</p>';
+            document.getElementById('lista-links-lideres').innerHTML = htmlLider || '<p class="text-gray-400">Nenhum líder cadastrado.</p>';
+        }
+
+        function atualizarClassificacaoEquipes() {
+            let html = '';
+            // Agrupa doações por líder
+            const resumo = {};
+            db.registrosDoacoes.forEach(r => {
+                resumo[r.lider] = (resumo[r.lider] || 0) + parseInt(r.qtd);
+            });
+
+            // Ordena do maior para o menor
+            const ordenados = Object.keys(resumo).sort((a,b) => resumo[b] - resumo[a]);
+
+            if(ordenados.length === 0) {
+                html = '<p class="text-gray-400">Nenhuma entrega registrada pelas equipes ainda.</p>';
+            } else {
+                ordenados.forEach((lider, i) => {
+                    html += `
+                        <div class="bg-gray-50 p-3 rounded-lg border flex justify-between items-center text-xs">
+                            <span class="font-bold text-verde-asa">${i+1}º Lugar - Equipe / Líder: ${lider}</span>
+                            <span class="font-bold bg-amber-100 px-2 py-1 rounded text-amber-900">${resumo[lider]} itens entregues</span>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('painel-classificacao-equipes').innerHTML = html;
+        }
+
+        // --- PAINEL DA EQUIPE MANTENEDORA ---
+        function carregarPainelMantenedora() {
+            document.getElementById('mant-titulo-nome').innerText = `Mantenedora: ${sessaoAtiva.nome}`;
+            document.getElementById('mant-campanha-exibicao').innerText = db.campanhaAtual;
+            document.getElementById('status-usuario-topo').innerText = sessaoAtiva.nome;
+
+            // Exibe o item da semana em destaque (pega o primeiro do estoque ou aviso)
+            if(db.itensEstoque.length > 0) {
+                document.getElementById('mant-item-semana').innerText = `${db.itensEstoque[0].nome} (Meta: ${db.itensEstoque[0].meta})`;
+            } else {
+                document.getElementById('mant-item-semana').innerText = 'Aguardando definição do diretor...';
+            }
+
+            // Verifica se há dados de logística para acender os sapatinhos
+            if(db.logistica && db.logistica.local) {
+                document.getElementById('icone-sapatinhos').classList.remove('hidden');
+            }
+
+            atualizarSelectItensMantenedora();
+            atualizarMembrosEquipe();
+        }
+
+        function verNotificacaoLogistica() {
+            const l = db.logistica;
+            alert(`👣 AVISO DE ARRECADAÇÃO CONJUNTA 👣\n\nData: ${l.data || 'A definir'} às ${l.hora || ''}\nLocal: ${l.local}\nPonto de Encontro: ${l.ponto}\nEndereço: ${l.endereco}`);
+        }
+
+        function adicionarMembroEquipe() {
+            if(!db.membrosEquipe) db.membrosEquipe = {};
+            if(!db.membrosEquipe[sessaoAtiva.nome]) db.membrosEquipe[sessaoAtiva.nome] = [];
+
+            const nomeMembro = document.getElementById('mant-novo-membro').value.trim();
+            if(!nomeMembro) return alert('Digite o nome do membro.');
+
+            db.membrosEquipe[sessaoAtiva.nome].push(nomeMembro);
+            // Ordena em ordem alfabética automática
+            db.membrosEquipe[sessaoAtiva.nome].sort((a,b) => a.localeCompare(b));
+            salvarDB();
+            document.getElementById('mant-novo-membro').value = '';
+            atualizarMembrosEquipe();
+        }
+
+        function atualizarMembrosEquipe() {
+            const membros = (db.membrosEquipe && db.membrosEquipe[sessaoAtiva.nome]) ? db.membrosEquipe[sessaoAtiva.nome] : [];
+            let html = '';
+            let htmlSelect = '<option value="">Selecione o membro que entregou</option>';
+
+            membros.forEach(m => {
+                html += `<div class="bg-white p-1.5 rounded border text-xs">• ${m}</div>`;
+                htmlSelect += `<option value="${m}">${m}</option>`;
+            });
+
+            document.getElementById('lista-membros-alfabetica').innerHTML = html || '<p class="text-gray-400">Nenhum membro cadastrado na equipe.</p>';
+            document.getElementById('mant-select-membro-entrega').innerHTML = htmlSelect;
+        }
+
+        function atualizarSelectItensMantenedora() {
+            let html = '<option value="">Selecione o item</option>';
+            db.itensEstoque.forEach((item, idx) => {
+                html += `<option value="${idx}">${item.nome} (Falta: ${Math.max(0, item.meta - item.atual)})</option>`;
+            });
+            document.getElementById('mant-select-item').innerHTML = html;
+        }
+
+        function registrarDoacaoMantenedora() {
+            const itemIdx = document.getElementById('mant-select-item').value;
+            const qtd = parseInt(document.getElementById('mant-qtd-doada').value);
+            const membro = document.getElementById('mant-select-membro-entrega').value;
+            const recebeu = document.getElementById('mant-quem-recebeu').value.trim();
+
+            if(itemIdx === "" || isNaN(qtd) || qtd <= 0 || !membro || !recebeu) {
+                return alert('Preencha todos os campos do registro corretamente.');
+            }
+
+            // Soma no estoque global do diretor
+            db.itensEstoque[itemIdx].atual += qtd;
+
+            // Salva registro de entrega para o ranking/classificação
+            const itemNome = db.itensEstoque[itemIdx].nome;
+            const dataHora = new Date().toLocaleString('pt-BR');
+            
+            db.registrosDoacoes.push({
+                lider: sessaoAtiva.nome,
+                item: itemNome,
+                qtd,
+                membro,
+                recebeu,
+                data: dataHora
+            });
+
+            salvarDB();
+
+            // Exibe Comprovante
+            document.getElementById('comp-igreja').innerText = db.igreja;
+            document.getElementById('comp-lider').innerText = sessaoAtiva.nome;
+            document.getElementById('comp-item').innerText = itemNome;
+            document.getElementById('comp-qtd').innerText = qtd;
+            document.getElementById('comp-membro').innerText = membro;
+            document.getElementById('comp-recebeu').innerText = recebeu;
+            document.getElementById('comp-data').innerText = dataHora;
+
+            document.getElementById('modal-comprovante').classList.remove('hidden');
+            document.getElementById('mant-qtd-doada').value = '';
+            document.getElementById('mant-quem-recebeu').value = '';
+            atualizarSelectItensMantenedora();
+        }
+
+        function fecharComprovante() {
+            document.getElementById('modal-comprovante').classList.add('hidden');
+            carregarPainelMantenedora();
         }
     </script>
 </body>
+</html>
 </html>
